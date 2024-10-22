@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/logo_png.png" type="image/x-icon" />
     <!-- FOnt awesome -->
     <link
       rel="stylesheet"
@@ -13,9 +13,8 @@
       referrerpolicy="no-referrer"
     />
     <script src="config.js"></script>
-    <script src="dynamic.js"></script>
-    <link rel="stylesheet" href="/styles/product_list.css">
-    <link rel="stylesheet" href="/styles/index.css" />
+    <link rel="stylesheet" href="styles/product_list.css">
+    <link rel="stylesheet" href="styles/index.css" />
     <!-- Aos animation css link= -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Bootstrap css -->
@@ -367,7 +366,7 @@
       function openLoginPage() {
         auth.onAuthStateChanged((user) => {
           if (!user) {
-            window.location.href = "/templates/login.html";
+            window.location.href = "templates/login.html";
           }else{
             alert("User already logged in!")
           }
