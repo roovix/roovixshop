@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo_png.png" type="image/x-icon" />
+    <!-- FOnt awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="config.js"></script>
+    <script src="dynamic.js"></script>
+    <link rel="stylesheet" href="/styles/product_list.css">
+    <link rel="stylesheet" href="/styles/index.css" />
+    <!-- Aos animation css link= -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Bootstrap css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <title>Roovix Shop - Buy Online</title>
+  
+  </head>
+  <body class="body">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <!-- Logo Image -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img
+            src="images/logo_png.png"
+            alt="Logo"
+            class="d-inline-block"
+            style="width: 40px; height: auto"
+          />
+          <p id="name" class="mb-0 ms-2"></p>
+          <!-- Use ms-2 for left margin on smaller screens -->
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Contact
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-user-secret"></i> About us</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-headset"></i> Help Center</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item" id="open-user-login">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                style="cursor: pointer"
+                ><i class="fa-solid fa-crown"></i> Premium Account</a
+              >
+            </li>
+          </ul>
+          <i id="info" class="fa-solid fa-circle-info"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- button for scroll to top -->
+    <i id="scroll-up-btn" class="fa-solid fa-chevron-up"></i>
+
+    <section class="search-product">
+      <div class="container">
+        <div class="slow_gun">
+          <i class="fa-solid fa-crown"></i>
+          <h3 id="welcome-title">Find your favorite things to order!</h3>
+        </div>
+        <form accept="submit" onsubmit="return false;">
+          <!-- Prevent form submission -->
+          <label for="search" class="visually-hidden"
+            >Search for products</label
+          >
+          <!-- Accessible label -->
+          <input
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Search for products"
+            aria-label="Search for products"
+          />
+          <button type="submit" id="searchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section id="product-list">
+      <div class="action_top">
+        <ul id="categoryList">
+          <li id="all" class="selected" onclick="selectCategory(this)">All</li>
+          <li id="fashions" onclick="selectCategory(this)">Fashions</li>
+          <li id="toys" onclick="selectCategory(this)">Toys</li>
+          <li id="electronics" onclick="selectCategory(this)">Electronics</li>
+        </ul>
+      </div>
+      <i id="spinner" class="fa-solid fa-spinner"></i>
+      <div id="products_list_container" class="list-container">
+        <!-- Product cards will be dynamically generated here -->
+      </div>
+    </section>
+
+    <script>
+      // Set the website name by name id
+      document.getElementById("name").innerText = name;
+            // Function to handle category selection
+            function selectCategory(selectedItem) {
+            // Remove 'selected' class from all list items
+            const items = document.querySelectorAll('#categoryList li');
+            items.forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Add 'selected' class and custom styles to the clicked item
+            selectedItem.classList.add('selected');
+            
+        }
+
+        // Default selection: Select the first item when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultItem = document.querySelector('#categoryList li.selected');
+            if(defaultItem){
+              selectCategory(defaultItem);
+            }
+        });
+    </script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        get,
+        set,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      let isUser = false;
+      let category = "all";
+
+      auth.onAuthStateChanged((user)=>{
+        if(user){
+          isUser = true;
+          document.getElementById("open-user-login").style.display = "none";
+        }else{
+          isUser = false;
+        }
+      });
+
+
+      // Handle category click
+      const categoryList = document.getElementById("categoryList");
+      categoryList.addEventListener("click", (event)=>{
+        if(event.target.id){
+          if(event.target.id === "categoryList"){
+            category = "all";
+            return;
+          }
+          category = event.target.id;
+          fetchProduct();
+        }
+      });
+
+
+      // Fetch product
+      function fetchProduct(){
+        const products_list_container = document.getElementById("products_list_container");
+        products_list_container.innerHTML = "";
+        const productsRef = ref(db, `products`);
+        onValue(productsRef, (snapshot)=>{
+
+          if(snapshot){
+
+            const products = snapshot.val();
+
+            let product_html = ''; // Accumulate HTML
+
+            for(const productId in products) {
+              const product = products[productId];
+              const product_link = product.link;
+
+              if(category === "all" || product.category === category) {
+                // Generate product HTML with a unique class or ID for the button
+                product_html += `
+                  <div class="container">
+                    <div class="image_container">
+                      <img id="image_click_${productId}" class="image" src="${product.image}">
+                    </div>
+                    <div class="details_container">
+                      <div class="product_description_container">
+                        <p class="description">${product.description}</p>
+                      </div>
+                      <div class="price_container">
+                      </div>
+                      <div class="action_container">
+                        <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
+                        <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-copy"></i></button>
+                      </div>
+                      <div class="verify_container">
+                        <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }
+            }
+
+            // Set the accumulated HTML to the container at once
+            products_list_container.innerHTML = product_html;
+            document.getElementById("spinner").style.display = "none";
+
+            // Add event listeners after the HTML is rendered
+            for(const productId in products) {
+              const product = products[productId];
+              const product_link = product.link;
+
+              if(category === "all" || product.category === category) {
+                // Handle open product url
+                const button = document.getElementById(`action_btn_${productId}`);
+                if (button) {
+                  button.addEventListener('click', function() {
+                    window.open(product_link, '_blank'); // Open the product link in a new tab
+                  });
+                }
+                const image = document.getElementById(`image_click_${productId}`);
+                if (image) {
+                  image.addEventListener('click', function() {
+                    window.open(product_link, '_blank'); // Open the product link in a new tab
+                  });
+                }
+
+                // Handle share click
+                const shareButton = document.getElementById(`share_btn_${productId}`);
+                if (shareButton) { 
+                  shareButton.addEventListener('click', function() {
+                    const product_url = `http://your-live-domain.com/show_product.html?product_id=${productId}&user_id=test`;
+
+                    if (navigator.clipboard) {
+                      // Attempt to use modern clipboard API
+                      navigator.clipboard.writeText(product_url).then(() => {
+                      }).catch(err => {
+                        console.error('Clipboard copy failed: ', err);
+                      });
+                    } else {
+                      // Fallback for older or unsupported browsers
+                      const tempInput = document.createElement('textarea');
+                      tempInput.value = product_url;
+                      document.body.appendChild(tempInput);
+                      tempInput.select();
+                      try {
+                        document.execCommand('copy');
+                      } catch (err) {
+                        alert("Failed to copy URL (Fallback).");
+                        console.error('Fallback: Unable to copy', err);
+                      }
+                      document.body.removeChild(tempInput);
+                    }
+                  });
+                }
+              }
+            }
+
+          }else{
+            products_list_container.innerHTML = `<p>No products fond</p>`;
+            document.getElementById("spinner").style.display = "none";
+          }
+
+        });
+      }
+      fetchProduct();
+
+
+      // Show welcome title
+      function showWelcomeTitle() {
+        const welRef = ref(db, "admin/welcome_title");
+        onValue(welRef, (snapshot) => {
+          const welcomeTitle = snapshot.val();
+          document.getElementById("welcome-title").innerText = welcomeTitle;
+        });
+      }
+      showWelcomeTitle();
+
+      // Function to get visitor IP and save to Firebase
+      async function saveVisitorInfo() {
+        try {
+          // Get visitor's IP address
+          const ipResponse = await fetch("https://api.ipify.org?format=json");
+          const ipData = await ipResponse.json();
+          const visitorIP = ipData.ip;
+
+          // Replace dots in the IP address with underscores
+          const safeVisitorIP = visitorIP.replace(/\./g, "_"); // Replace '.' with '_'
+
+          // Get visitor's geolocation
+          const geoResponse = await fetch(
+            `https://ipapi.co/${visitorIP}/json/`
+          );
+          const geoData = await geoResponse.json();
+
+          // Gather visitor details
+          const visitorData = {
+            ip: visitorIP,
+            country: geoData.country_name || "Unknown",
+            region: geoData.region || "Unknown",
+            city: geoData.city || "Unknown",
+            latitude: geoData.latitude || null,
+            longitude: geoData.longitude || null,
+            userAgent: navigator.userAgent,
+            language: navigator.language || navigator.userLanguage,
+            referrer: document.referrer || "Direct",
+            screenResolution: `${window.screen.width}x${window.screen.height}`,
+            timestamp: new Date().toISOString(),
+          };
+
+          // Save the visitor details to Firebase using the modified IP address
+          const visitorRef = ref(db, "/visitors/" + safeVisitorIP);
+          await set(visitorRef, visitorData);
+        } catch (error) {
+          console.error("Error saving visitor information:", error);
+        }
+      }
+
+      // Open user login page
+      function openLoginPage() {
+        auth.onAuthStateChanged((user) => {
+          if (!user) {
+            window.location.href = "/templates/login.html";
+          }else{
+            alert("User already logged in!")
+          }
+        });
+      }
+      document
+        .getElementById("open-user-login")
+        .addEventListener("click", () => {
+          openLoginPage();
+        });
+
+    </script>
+
+
+    <!-- Aos animation on scroll -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        offset: 100,
+        duration: 500,
+      });
+
+      // scroll to top logic
+      // Get the button element
+      const scrollToTopBtn = document.getElementById("scroll-up-btn");
+
+      // Show the button when the user scrolls down 100px from the top
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 100 ||
+          document.documentElement.scrollTop > 300
+        ) {
+          scrollToTopBtn.style.display = "block";
+        } else {
+          scrollToTopBtn.style.display = "none";
+        }
+      };
+
+      // Scroll the page back to the top when the button is clicked
+      scrollToTopBtn.onclick = function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    </script>
+
+    <!-- Bootstrap js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
