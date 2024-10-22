@@ -275,7 +275,7 @@
                 const shareButton = document.getElementById(`share_btn_${productId}`);
                 if (shareButton) { 
                   shareButton.addEventListener('click', function() {
-                    const product_url = `https://roovix.com/product.html?product_id=${productId}&user_id=test`;
+                    const product_url = `https://roovix.com/product?product_id=${productId}&user_id=test`;
 
                     if (navigator.clipboard) {
                       // Attempt to use modern clipboard API
@@ -366,7 +366,7 @@
       function openLoginPage() {
         auth.onAuthStateChanged((user) => {
           if (!user) {
-            window.location.href = "templates/login";
+            window.location.href = "/login";
           }else{
             alert("User already logged in!")
           }
