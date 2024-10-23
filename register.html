@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon: Consistent with the main company -->
+    <link rel="icon" href="images/logo_png.png" type="image/x-icon" />
+    <link rel="icon" href="images/logo_png.png" type="image/png" />
+
+    <!-- Link to assets -->
+    <script src="config.js"></script>
+
+    <!-- Meta Description: Describe the login for both the main company and sub-brand -->
+    <meta
+      name="description"
+      content="Register new Roovix account - Access your account for all Roovix platforms, including Roovix Shop. Manage orders, track shipments, and enjoy exclusive deals from our trusted e-commerce platform in Bangladesh."
+    />
+
+    <!-- Meta Keywords: Keywords relevant to the login page under the main brand -->
+    <meta
+      name="keywords"
+      content="Roovix register, Roovix Shop register, user account, register page, e-commerce Bangladesh, online shopping BD, access Roovix account, manage orders, track shipments, secure register, Roovix platform"
+    />
+
+    <!-- Author: Your main company name -->
+    <meta name="author" content="Roovix" />
+
+    <!-- Open Graph Meta Tags for better sharing on social media -->
+    <meta property="og:title" content="Login - Roovix" />
+    <meta
+      property="og:description"
+      content="Log in to access your Roovix account, including Roovix Shop. Manage your orders and explore exclusive offers on our trusted platforms in Bangladesh."
+    />
+    <meta
+      property="og:image"
+      content="https://firebasestorage.googleapis.com/v0/b/ec-affiliate.appspot.com/o/e%20-%20commerce%20logo%20circle.png?alt=media&token=f4fc5b89-acb2-48a2-924e-e4ae6c6886ee"
+    />
+    <meta property="og:url" content="https://roovix.com/login" />
+    <meta property="og:type" content="website" />
+    <link rel="shortcut icon" href="images/logo_png.png" type="image/x-icon" />
+    <title>Login Roovix</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+      :root {
+        --color-background: #fff;
+        --color-primary: #f36944;
+        --color-base: #fec92b;
+        --color-sky: #74c0fc;
+        --color-green-gray: #63e6be;
+        --color-pink-gray: #e599f7;
+        --text-black-color: #000;
+        --text-white-color: #fff;
+        --text-gray-color: rgb(59, 59, 59);
+        --logo-size: 5rem;
+        --name-size: 1.5rem;
+        --navber-height: 60px;
+        --mneu-item-font-size: 15px;
+        --left-right-padding-size: 10vw;
+        --primary-border-radius: 10px;
+        --background-base-color: #74c1fc15;
+      }
+      * {
+        padding: 0%;
+        margin: 0%;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        font-family: "Roboto", sans-serif;
+        padding-top: 10%;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .container .roovix_title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .container .roovix_title img {
+        width: var(--logo-size);
+      }
+      .container .roovix_title p {
+        font-size: var(--name-size);
+      }
+      .container .form_container {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .container form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .container form label {
+        margin-top: 10px;
+      }
+      .container form input {
+        padding: 15px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        width: 100%;
+      }
+      .container form input:focus {
+        outline-color: #74c0fc;
+      }
+      .container .register_account {
+        margin-top: 50px;
+      }
+      .container .register_account p {
+        font-size: 1rem;
+        color: #000;
+        text-align: center;
+      }
+      .container .register_account a {
+        color: var(--color-sky);
+        margin-left: 5px;
+        text-decoration: none;
+        transition: 0.5s ease;
+      }
+      .container .register_account a:hover {
+        opacity: 0.5;
+      }
+      #login_btn {
+        margin-top: 5px;
+        transition: 0.5s ease;
+        font-weight: 700;
+      }
+      #login_btn:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 30px rgba(128, 128, 128, 0.404);
+      }
+      .login_with_social {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .login_with_social #login_with_google {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 10px;
+        border-radius: 5px;
+        border: 1px solid gray;
+      }
+      .login_with_social #login_with_google img {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="roovix_title">
+        <img src="images/logo_png.png" alt="Roovix Shop" />
+        <p>Login to Roovix</p>
+      </div>
+      <div class="form_container">
+        <form id="register">
+          <label for="name">Name</label>
+          <input type="name" name="name" id="name" required />
+
+          <label for="phone">Phone Number</label>
+          <input type="phone" name="phone" id="phone" required />
+            
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required />
+
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" required />
+
+          <input id="login_btn" type="submit" value="Login" />
+        </form>
+        <p>-----Or-----</p>
+        <div class="login_with_social" style="display: none;">
+          <button id="login_with_google"><img src="images/google-png.png" alt="google login"> Continue with google</button>
+        </div>
+      </div>
+      <div class="register_account">
+        <p>Already have a account? <a href="/login.html">Register</a></p>
+      </div>
+    </div>
+
+    <!-- Script for login to Roovix -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        get,
+        set,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithRedirect,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+      let user_id = "";
+      let isUser = false;
+
+      function chekForUser(){
+        auth.onAuthStateChanged((user)=>{
+        if(user){
+          user_id = user.uid;
+          isUser = true;
+          console.log(user);
+        }else{
+          console.log("User not found")
+        }
+      });
+      }
+      chekForUser();
+
+      const loginForm = document.getElementById("register");
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        if(isUser){
+          alert("User already logged in");
+          window.location.href = "https://roovix.com";
+          return;
+        }else{
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const name = document.getElementById("name").value;
+          const phone_number = document.getElementById("phone").value;
+
+          try {
+            // Corrected to use the function properly
+            await createUserWithEmailAndPassword(auth, email, password).then((user)=>{
+                chekForUser();
+                const userRef = ref(db, `users/${user_id}`);
+                const userData = {
+                    uid: user_id,
+                    name: name,
+                    email: email,
+                    profile_picture: null,
+                    phone_number: phone_number
+                }
+                set(userRef, userData).then(()=>{
+                    window.location.href = "https://roovix.com";
+                }).catch((err)=>{
+                    console.log("Error while saving user information ",err);
+                });
+            }).catch((err)=>{
+                alert("Account not Created, Try again later.");
+            })
+          } catch (error) {
+            console.error("Error signing in:", error.message);
+          }
+        }
+      });
+
+      // Google Sign-In
+      const googleSignInBtn = document.getElementById("login_with_google");
+      googleSignInBtn.addEventListener("click", async () => {
+        if (isUser) {
+          alert("User already logged in");
+          window.location.href = "https://roovix.com";
+          return;
+        } else {
+          try {
+            await signInWithRedirect(auth, provider);
+            // Wait for the sign-in result after the redirect
+            const result = await getRedirectResult(auth);
+            
+            if (result) {
+              // The signed-in user info
+              const user = result.user;
+              const userUid = user.uid;
+              
+              // Check if the user exists in the Realtime Database
+              const userRef = ref(db, `users/${userUid}`);
+              const snapshot = await get(userRef);
+              
+              if (!snapshot.exists()) {
+                // If user does not exist, save user data
+                const userData = {
+                  uid: userUid,
+                  name: user.displayName,
+                  email: user.email,
+                  profile_picture: user.photoURL
+                  // Add any other data you want from the user object
+                };
+                
+                await set(userRef, userData);
+                console.log("User data saved to database");
+              } else {
+                console.log("User already exists in the database");
+              }
+
+              // Redirect to your site
+              window.location.href = "https://roovix.com";
+            }
+          } catch (error) {
+            console.error("Error signing in with Google:", error.message);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
