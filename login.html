@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="SSyij4KacvwvJPeCSbqRFWQ6L-RrX2cUkDiEGrrOpwM" />
     <!-- Favicon: Consistent with the main company -->
-    <link rel="icon" href="https://roovix.com/images/logo.png" type="image/x-icon" />
-    <link rel="icon" href="https://roovix.com/images/logo.png" type="image/png" />
+    <link rel="icon" href="images/logo_png.png" type="image/x-icon" />
+    <link rel="icon" href="images/logo_png.png" type="image/png" />
 
     <!-- Link to assets -->
-    <script src="/config.js"></script>
+    <script src="config.js"></script>
 
     <!-- Meta Description: Describe the login for both the main company and sub-brand -->
     <meta
@@ -38,7 +37,7 @@
     />
     <meta property="og:url" content="https://roovix.com/login" />
     <meta property="og:type" content="website" />
-    <link rel="shortcut icon" href="https://roovix.com/images/logo.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/logo_png.png" type="image/x-icon" />
     <title>Login Roovix</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
@@ -131,6 +130,11 @@
       .container .register_account a {
         color: var(--color-sky);
         margin-left: 5px;
+        text-decoration: none;
+        transition: 0.5s ease;
+      }
+      .container .register_account a:hover {
+        opacity: 0.5;
       }
       #login_btn {
         margin-top: 5px;
@@ -179,12 +183,12 @@
           <input id="login_btn" type="submit" value="Login" />
         </form>
         <p>-----Or-----</p>
-        <div class="login_with_social">
+        <div class="login_with_social" style="display: none;">
           <button id="login_with_google"><img src="images/google-png.png" alt="google login"> Continue with google</button>
         </div>
       </div>
       <div class="register_account">
-        <p>New to Roovix? <a href="">Register Account</a></p>
+        <p>New to Roovix? <a href="/register">Register Account</a></p>
       </div>
     </div>
 
@@ -204,6 +208,7 @@
         signInWithEmailAndPassword,
         GoogleAuthProvider,
         signInWithRedirect,
+        getRedirectResult,
         signOut,
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
