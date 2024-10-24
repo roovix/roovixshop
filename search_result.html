@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roovix Shop - Your Online Store for Unique Products</title>
+    <meta name="description" content="Roovix Shop offers a wide selection of unique products at competitive prices. Shop now to find the best deals!">
+    <meta name="keywords" content="Roovix Shop, online store, unique products, shop, deals, discounts, fashion, electronics, home decor">
+    <meta name="author" content="Roovix Shop">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.roovixshop.com/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://roovix.com/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://roovix.com/images/logo.png">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Roovix Shop - Your Online Store for Unique Products">
+    <meta property="og:description" content="Shop unique products at Roovix Shop. Discover great deals today!">
+    <meta property="og:image" content="https://www.roovixshop.com/image.jpg"> <!-- Replace with actual image URL -->
+    <meta property="og:url" content="https://www.roovixshop.com/">
+    <meta property="og:type" content="website">
+
+    <!-- Link css -->
+     <link rel="stylesheet" href="styles/index.css">
+     <link rel="stylesheet" href="styles/product_list.css">
+
+     <!-- Link to js -->
+      <script src="config.js"></script>
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Roovix Shop - Your Online Store for Unique Products">
+    <meta name="twitter:description" content="Shop unique products at Roovix Shop. Discover great deals today!">
+    <meta name="twitter:image" content="https://roovix.com/images/logo.png"> <!-- Replace with actual image URL -->
+</head>
+
+<body style="padding: 20px;">
+  <h1 id="show_query" style="font-size: 1.5rem; font-weight: 500;"></h1>
+  <section id="product-list">
+    <div id="products_list_container" class="list-container">
+      <!-- Product cards will be dynamically generated here -->
+    </div>
+  </section>  
+
+      <script>
+              // Function to handle category selection
+              function selectCategory(selectedItem) {
+              // Remove 'selected' class from all list items
+              const items = document.querySelectorAll('#categoryList li');
+              items.forEach(item => {
+                  item.classList.remove('selected');
+              });
+  
+              // Add 'selected' class and custom styles to the clicked item
+              selectedItem.classList.add('selected');
+              
+          }
+  
+          // Default selection: Select the first item when the page loads
+          document.addEventListener('DOMContentLoaded', () => {
+              const defaultItem = document.querySelector('#categoryList li.selected');
+              if(defaultItem){
+                selectCategory(defaultItem);
+              }
+          });
+      </script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+    import {
+      getDatabase,
+      ref,
+      onValue,
+    } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+    } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+    let isUser = false;
+    let selectedCategory = "all"; // Default category set to 'all'
+    let user_id = "";
+  
+    function checkForUser() {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          isUser = true;
+          user_id = user.uid;
+          console.log(user);
+        } else {
+          isUser = false;
+        }
+      });
+    }
+    checkForUser();
+  
+    // Function to get the search query from URL
+    function getQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      document.getElementById("show_query").innerText = `Your query: ${urlParams.get('query')}`;
+      return urlParams.get('query')?.toLowerCase() || ''; // Get the query and convert to lowercase
+    }
+  
+    // Function to handle category selection
+    function selectCategory(categoryElement) {
+      // Remove 'selected' class from all category items
+      document.querySelectorAll('#categoryList li').forEach((item) => {
+        item.classList.remove('selected');
+      });
+      
+      // Add 'selected' class to the clicked category
+      categoryElement.classList.add('selected');
+      
+      // Update the selected category
+      selectedCategory = categoryElement.innerText.toLowerCase(); // Get inner text in lowercase
+      
+      // Re-render products based on the new category
+      renderProducts(getQuery());
+    }
+
+    // Fetch and render products based on search query and selected category
+    function renderProducts(query) {
+      const productRef = ref(db, `products/`);
+      const productListContainer = document.getElementById("products_list_container");
+
+      onValue(productRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const products = snapshot.val();
+          productListContainer.innerHTML = "";
+
+          // Accumulate HTML for matching products
+          let productHtml = '';
+
+          for (const productId in products) {
+            const product = products[productId];
+            const descriptionLower = product.description.toLowerCase();
+            const categoryLower = product.category.toLowerCase();
+
+            // Check if the product matches the search query and category
+            if (
+              (selectedCategory === "all" || categoryLower === selectedCategory) &&
+              (descriptionLower.includes(query) || categoryLower.includes(query))
+            ) {
+              // If there's a match, generate product HTML
+              productHtml += `
+                <div class="container">
+                  <div class="image_container">
+                    <img id="image_click_${productId}" class="image" src="${product.image}">
+                  </div>
+                  <div class="details_container">
+                    <div class="product_description_container">
+                      <p class="description">${product.description}</p>
+                    </div>
+                    <div class="price_container">
+                    </div>
+                    <div class="action_container">
+                      <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
+                      <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                    <div class="verify_container">
+                      <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }
+          }
+
+          // Display matching products or show 'No products found' message
+          if (productHtml) {
+            productListContainer.innerHTML = productHtml;
+          } else {
+            productListContainer.innerHTML = `<p>No products found matching your query or category.</p>`;
+          }
+
+          // Add event listeners after the HTML is rendered
+          for (const productId in products) {
+            const product = products[productId];
+            const productLink = product.link;
+
+            if (
+              (selectedCategory === "all" || product.category.toLowerCase() === selectedCategory) &&
+              (product.description.toLowerCase().includes(query) || product.category.toLowerCase().includes(query))
+            ) {
+              // Handle open product URL
+              const button = document.getElementById(`action_btn_${productId}`);
+              if (button) {
+                button.addEventListener('click', function () {
+                  window.open(productLink, '_blank');
+                });
+              }
+
+              const image = document.getElementById(`image_click_${productId}`);
+              if (image) {
+                image.addEventListener('click', function () {
+                  window.open(productLink, '_blank');
+                });
+              }
+
+              // Handle share click
+              const shareButton = document.getElementById(`share_btn_${productId}`);
+              if (shareButton) {
+                shareButton.addEventListener('click', function () {
+                  const productUrl = `https://roovix.com/product?product_id=${productId}&user_id=${user_id}`;
+
+                  if (navigator.clipboard) {
+                    navigator.clipboard.writeText(productUrl).then(() => {
+                      // Show a message if needed
+                    }).catch(err => {
+                      console.error('Clipboard copy failed: ', err);
+                    });
+                  } else {
+                    const tempInput = document.createElement('textarea');
+                    tempInput.value = productUrl;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    try {
+                      document.execCommand('copy');
+                    } catch (err) {
+                      alert("Failed to copy URL (Fallback).");
+                      console.error('Fallback: Unable to copy', err);
+                    }
+                    document.body.removeChild(tempInput);
+                  }
+                });
+              }
+            }
+          }
+        } else {
+          productListContainer.innerHTML = `<p>No products found.</p>`;
+        }
+      });
+    }
+    
+    // Get the search query and render products
+    const searchQuery = getQuery();
+    renderProducts(searchQuery);
+  </script>  
+</body>
+
+</html>
