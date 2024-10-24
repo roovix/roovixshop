@@ -35,11 +35,98 @@
     <meta name="twitter:title" content="Roovix Shop - Your Online Store for Unique Products">
     <meta name="twitter:description" content="Shop unique products at Roovix Shop. Discover great deals today!">
     <meta name="twitter:image" content="https://roovix.com/images/logo.png"> <!-- Replace with actual image URL -->
-</head>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+      :root {
+          --color-background: #fff;
+          --color-primary: #F36944;
+          --color-base: #FEC92B;
+          --color-sky: #74C0FC;
+          --color-green-gray: #63E6BE;
+          --color-pink-gray: #E599F7;
+          --text-black-color: #000;
+          --text-white-color: #fff;
+          --text-gray-color: rgb(59, 59, 59);
+          --logo-size: 50px;
+          --name-size: 20px;
+          --navber-height: 60px;
+          --mneu-item-font-size: 15px;
+          --left-right-padding-size: 10vw;
+          --primary-border-radius: 10px;
+          --background-base-color: #74c1fc15;
+      }
+
+      *{
+          padding: 0%;
+          margin: 0%;
+          box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--background-base-color);
+      }
+      #search_form {
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      #search_form input {
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid rgba(128, 128, 128, 0.644);
+        border-radius: 5px;
+      }
+      #search_form input:focus {
+        outline-color: #74C0FC;
+      }
+      #search_form button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        padding: 15px;
+        border: none;
+        border-radius: 50%;
+        color: #74C0FC;
+        background-color: #a5d7fd77;
+      }
+      #search_form button i {
+        padding: 0;
+        margin: 0;
+      }
+      .logo {
+        width: 3rem;
+      }.title {
+        cursor: pointer;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+    </style>
+  </head>
 
 <body>
-  <h1 id="show_query" style="font-size: 1.5rem; font-weight: 500; margin: 20px;"></h1>
+  <form id="search_form">
+    <input type="search" name="search" id="search" placeholder="Search product or category...">
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    
+    <div class="title" id="logo_container">
+      <img class="logo" src="images/logo_png.png" alt="roovix_shop">
+      <p>Roovix Shop</p>
+    </div>
+  </form>
+  <h1 id="show_query" style="font-size: 1rem; font-weight: 500; margin-left: 20px; color: gray;"></h1>
   <section id="product-list">
+    <i id="spinner" class="fa-solid fa-spinner"></i>
     <div id="products_list_container" class="list-container">
       <!-- Product cards will be dynamically generated here -->
     </div>
@@ -102,8 +189,8 @@
     // Function to get the search query from URL
     function getQuery() {
       const urlParams = new URLSearchParams(window.location.search);
-      document.getElementById("show_query").innerText = `Your query: ${urlParams.get('query')}`;
-      return urlParams.get('query')?.toLowerCase() || ''; // Get the query and convert to lowercase
+      document.getElementById("show_query").innerText = `Showing results for -> ${urlParams.get('search')}`;
+      return urlParams.get('search')?.toLowerCase() || ''; // Get the query and convert to lowercase
     }
   
     // Function to handle category selection
@@ -141,6 +228,11 @@
             const descriptionLower = product.description.toLowerCase();
             const categoryLower = product.category.toLowerCase();
 
+            let price_div = ``;
+            if(product.price && product.currency && product.discount){
+              price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`
+            }
+
             // Check if the product matches the search query and category
             if (
               (selectedCategory === "all" || categoryLower === selectedCategory) &&
@@ -157,6 +249,7 @@
                       <p class="description">${product.description}</p>
                     </div>
                     <div class="price_container">
+                      ${price_div}
                     </div>
                     <div class="action_container">
                       <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
@@ -174,6 +267,8 @@
           // Display matching products or show 'No products found' message
           if (productHtml) {
             productListContainer.innerHTML = productHtml;
+            //  Hide spinner
+            document.getElementById("spinner").style.display = "none";
           } else {
             productListContainer.innerHTML = `<p>No products found matching your query or category.</p>`;
           }
@@ -238,8 +333,22 @@
     }
     
     // Get the search query and render products
-    const searchQuery = getQuery();
+    const searchInput = document.getElementById("search");
+    if (searchInput) {
+      searchInput.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          let searchQuery = getQuery();
+          renderProducts(searchQuery);
+        }
+      });
+    }
+    let searchQuery = getQuery();
     renderProducts(searchQuery);
+
+    // Open home page 
+    document.getElementById("logo_container").addEventListener("click", function(){
+      window.location.replace("https://roovix.com");
+    })
   </script>  
 </body>
 
