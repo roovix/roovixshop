@@ -230,6 +230,12 @@
         }
       });
 
+      if(isUser){
+        alert("User already logged in");
+        window.location.href = "https://roovix.com";
+        return;
+      }
+
       const loginForm = document.getElementById("login");
       loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
