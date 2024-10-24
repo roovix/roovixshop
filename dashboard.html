@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="language" content="en" />
+    <meta name="author" content="Roovix" />
+    <meta name="publisher" content="Roovix" />
+    <meta
+      name="description"
+      content="Roovix Shop is your ultimate destination for quality products and deals. Explore our online store for the best shopping experience!"
+    />
+    <meta
+      name="keywords"
+      content="Roovix Shop, online shopping, quality products, best deals, e-commerce, Roovix"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Roovix Shop - Quality Products & Best Deals"
+    />
+    <meta
+      property="og:description"
+      content="Explore Roovix Shop for quality products and great deals. Your trusted online store for the best shopping experience!"
+    />
+    <meta property="og:url" content="https://yourdomain.com" />
+    <meta
+      property="og:image"
+      content="https://yourdomain.com/assets/roovix-shop-banner.jpg"
+    />
+    <meta property="og:site_name" content="Roovix Shop" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Roovix Shop - Quality Products & Best Deals"
+    />
+    <meta
+      name="twitter:description"
+      content="Check out Roovix Shop for quality products and unbeatable deals. Shop online with us today!"
+    />
+
+        <!-- FOnt awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+
+    <!-- Google Verification -->
+    <meta
+      name="google-site-verification"
+      content="your-google-site-verification-code"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://roovix.com/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://roovix.com/images/logo.png">
+
+    <!-- LInk too css -->
+     <link rel="stylesheet" href="styles/dashboard.css">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roovix - My Dashboard</title>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Side left start-->
+      <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
+       <div id="side_left" class="side_left">
+        <div class="side_left_title">
+          <img src="images/difault_user_logo.png" alt="profile_picture">
+          <p class="user_name">Your name</p>
+          <button id="side_left_close"><i class="fa-solid fa-circle-xmark"></i></button>
+        </div>
+        <ul class="side_left_ul">
+          <li>
+            <span><i class="fa-solid fa-chart-line"></i> Charts <i class="fa-solid list_arrow fa-chevron-down"></i></span>
+            <ul class="sub_list">
+              <li class="sub_list_item"><i class="fa-regular fa-credit-card"></i> Card</li>
+              <li class="sub_list_item"><i class="fa-solid roate_27deg fa-table-columns"></i> Dashboard</li>
+              <li class="sub_list_item"><i class="fa-solid fa-chart-simple"></i> Analytics</li>
+              <li class="sub_list_item"><i class="fa-solid fa-clock-rotate-left"></i> Income history</li>
+            </ul>
+          </li>
+          <li>
+            <span><i class="fa-solid fa-user"></i> Account <i class="fa-solid list_arrow fa-chevron-down"></i></span>
+            <ul class="sub_list">
+              <li class="sub_list_item" id="add_account"><i class="fa-regular fa-user"></i> Add account</li>
+              <li class="sub_list_item"><i class="fa-solid fa-repeat"></i> Switch account</li>
+              <li class="sub_list_item"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</li>
+            </ul>
+          </li>
+        </ul>
+       </div>
+       <!-- Side left end -->
+
+       <!-- Main start -->
+        <div class="main">
+          <p class="dashboard_title">Your dashboard</p>
+        </div>
+        <!-- Main end -->
+
+        <!-- Side right start -->
+         <button id="side_right_toggle">
+          <img src="images/notification_icon.png" alt="notification_icon">
+         </button>
+         <div id="side_right" class="side_right">
+          <div class="side_right_title">
+            <button id="side_right_close"><i class="fa-solid fa-circle-xmark"></i></button>
+            <img src="images/notification_icon.png" alt="notification_icon">
+            <p class="notification_count">0</p>
+            <p class="tag_comment">Recent</p>
+          </div>
+          <ul>
+            
+          </ul>
+         </div>
+        <!-- Side right end -->
+    </div>
+
+    <!-- Js login to functional the page -->
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const items = document.querySelectorAll('.side_left_ul > li');
+
+            // Select the first item and its first sub-item by default
+            if (items.length > 0) {
+                const firstItem = items[0];
+                const firstSubList = firstItem.querySelector('.sub_list');
+                const firstArrow = firstItem.querySelector('.list_arrow');
+
+                // Make the first main item selected by default
+                firstItem.classList.add('list_hover_design');
+                if (firstSubList) {
+                    firstSubList.classList.add('show');
+                    firstArrow.style.transform = 'rotate(180deg)';
+
+                    // Set the first sub-item of the first item as selected by default
+                    const firstSubItem = firstSubList.querySelector('.sub_list_item');
+                    if (firstSubItem) {
+                        firstSubItem.classList.add('sub_item_selected');
+                    }
+                }
+            }
+
+            items.forEach((item) => {
+                const arrow = item.querySelector('.list_arrow');
+                const subList = item.querySelector('.sub_list');
+
+                // Handle main item click
+                item.addEventListener('click', function () {
+                    // Hide other opened sub-lists, remove hover design, and clear selected sub-items
+                    items.forEach((el) => {
+                        if (el !== item) {
+                            const otherSubList = el.querySelector('.sub_list');
+                            const otherArrow = el.querySelector('.list_arrow');
+                            const otherSubItems = el.querySelectorAll('.sub_list_item');
+
+                            // Hide sub-list and reset styles
+                            otherSubList?.classList.remove('show');
+                            otherArrow.style.transform = 'rotate(0deg)';
+                            el.classList.remove('list_hover_design');
+
+                            // Remove selected style from all sub-items of other lists
+                            otherSubItems.forEach((si) => si.classList.remove('sub_item_selected'));
+                        }
+                    });
+
+                    // Toggle the current sub-list
+                    const isVisible = subList && subList.classList.contains('show');
+                    if (isVisible) {
+                        subList.classList.remove('show');
+                        arrow.style.transform = 'rotate(0deg)';
+                        item.classList.remove('list_hover_design');
+                    } else {
+                        subList?.classList.add('show');
+                        arrow.style.transform = 'rotate(180deg)';
+                        item.classList.add('list_hover_design');
+                    }
+                });
+
+                // Handle sub-item click
+                if (subList) {
+                    const subItems = subList.querySelectorAll('.sub_list_item');
+
+                    subItems.forEach((subItem) => {
+                        subItem.addEventListener('click', function (event) {
+                            // Prevent parent item from collapsing
+                            event.stopPropagation();
+
+                            // Remove selected style from all sub-items of the same parent
+                            subItems.forEach((si) => si.classList.remove('sub_item_selected'));
+
+                            // Apply selected style to clicked sub-item
+                            subItem.classList.add('sub_item_selected');
+                        });
+                    });
+                }
+            });
+        });
+
+      // Side hide show functionality
+      const sideLeftToggle = document.getElementById('side_left_toggle');
+      const sideLeft = document.getElementById('side_left');
+      const sideRightToggle = document.getElementById('side_right_toggle');
+      const sideRight = document.getElementById('side_right');
+
+      // Close buttons for both side panels
+      const sideLeftClose = document.getElementById('side_left_close');
+      const sideRightClose = document.getElementById('side_right_close');
+
+      // Function to show the left panel
+      function showLeftPanel() {
+          sideLeftClose.style.display = 'block';
+          sideLeft.style.position = 'fixed';
+          sideLeft.style.top = '0px';
+          sideLeft.style.left = '0px';
+          sideLeft.style.display = 'block'; // Show the left side panel
+
+          // Hide the right panel if it's visible
+          if (sideRight.style.display === 'block') {
+              sideRight.style.display = 'none';
+          }
+      }
+
+      // Function to show the right panel
+      function showRightPanel() {
+          sideRightClose.style.display = 'block';
+          sideRight.style.position = 'fixed';
+          sideRight.style.top = '0px';
+          sideRight.style.right = '0px';
+          sideRight.style.display = 'block'; // Show the right side panel
+
+          // Hide the left panel if it's visible
+          if (sideLeft.style.display === 'block') {
+              sideLeft.style.display = 'none';
+          }
+      }
+
+      // Event listeners for showing panels
+      sideLeftToggle.addEventListener('click', showLeftPanel);
+      sideRightToggle.addEventListener('click', showRightPanel);
+
+      // Close left panel
+      sideLeftClose.addEventListener('click', function () {
+          sideLeft.style.display = 'none'; // Hide the left side panel
+      });
+
+      // Close right panel
+      sideRightClose.addEventListener('click', function () {
+          sideRight.style.display = 'none'; // Hide the right side panel
+      });
+    </script>
+  </body>
+</html>
