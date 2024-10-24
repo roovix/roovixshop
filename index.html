@@ -267,6 +267,11 @@
               const product = products[productId];
               const product_link = product.link;
 
+              let price_div = ``;
+              if(product.price && product.currency && product.discount){
+                price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`
+              }
+
               if(category === "all" || product.category === category) {
                 // Generate product HTML with a unique class or ID for the button
                 product_html += `
@@ -279,6 +284,7 @@
                         <p class="description">${product.description}</p>
                       </div>
                       <div class="price_container">
+                      ${price_div}
                       </div>
                       <div class="action_container">
                         <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
@@ -440,7 +446,7 @@
       search_form.addEventListener("submit", (event) => {
         event.preventDefault();
         const search_input = document.getElementById("search").value;
-        window.location.href = `https://roovix.com/search_result?query=${search_input}`;
+        window.location.href = `https://roovix.com/search_result?search=${search_input}`;
       });
     </script>
 
