@@ -89,7 +89,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="/profile"
+                  <a class="dropdown-item" id="my_dashboard
                     ><i class="fa-solid fa-chart-line"></i> Dashboard</a
                   >
                 </li>
@@ -425,7 +425,11 @@
       //  Open dashboard page
       const my_dashboard = document.getElementById("my_dashboard");
       my_dashboard.addEventListener("click", () => {
-        window.location.href = "/dashboard";
+        if(isUser){
+          window.location.href = "/dashboard.html";
+        }else{
+          window.location.href = "https://roovix.com/login"
+        }
       });
     </script>
 
