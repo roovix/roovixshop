@@ -88,8 +88,8 @@
                 Account
               </a>
               <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" id="my_dashboard
+               <li>
+                  <a class="dropdown-item" id="my_dashboard"
                     ><i class="fa-solid fa-chart-line"></i> Dashboard</a
                   >
                 </li>
@@ -222,7 +222,8 @@
       let category = "all";
       let user_id = "";
 
-      auth.onAuthStateChanged((user)=>{
+      function checkForUser(){
+        auth.onAuthStateChanged((user)=>{
         if(user){
           isUser = true;
           user_id = user.uid;
@@ -231,6 +232,8 @@
           isUser = false;
         }
       });
+      }
+      checkForUser();
 
 
       // Handle category click
