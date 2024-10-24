@@ -220,21 +220,20 @@
       let user_id = "";
       let isUser = false;
 
-      auth.onAuthStateChanged((user)=>{
+      function checkForUser(){
+        auth.onAuthStateChanged((user)=>{
         if(user){
-          user_id = user.uid;
           isUser = true;
-          console.log(user);
+          user_id = user.uid;
+          console.log("User is logged in:", user.uid);
+          alert("User is already logged in");
+          window.location.href = "https://roovix.com";
         }else{
-          console.log("User not found")
+          isUser = false;
         }
       });
-
-      if(isUser){
-        alert("User already logged in");
-        window.location.href = "https://roovix.com";
-        return;
       }
+      checkForUser();
 
       const loginForm = document.getElementById("login");
       loginForm.addEventListener("submit", async (e) => {
