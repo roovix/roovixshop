@@ -434,6 +434,14 @@
           window.location.href = "https://roovix.com/login"
         }
       });
+
+      // Search result open
+      const search_form = document.getElementById("search_form");
+      search_form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const search_input = document.getElementById("search").value;
+        window.location.href = `/search_resultl?query=${search_input}`;
+      });
     </script>
 
     </script>
