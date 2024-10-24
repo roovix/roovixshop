@@ -90,7 +90,7 @@
               <ul class="dropdown-menu">
                 <li>
                   <a class="dropdown-item" href="/profile"
-                    ><i class="fa-solid fa-user-secret"></i> Profile</a
+                    ><i class="fa-solid fa-chart-line"></i> Dashboard</a
                   >
                 </li>
               </ul>
@@ -421,6 +421,13 @@
         .addEventListener("click", () => {
           openLoginPage();
         });
+
+      //  Open dashboard page
+      const my_dashboard = document.getElementById("my_dashboard");
+      my_dashboard.addEventListener("click", () => {
+        window.location.href = "/dashboard";
+      });
+    </script>
 
     </script>
 
