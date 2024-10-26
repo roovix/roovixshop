@@ -360,11 +360,36 @@
               const shareButton = document.getElementById(`share_btn_${productId}`);
               if (shareButton) {
                 shareButton.addEventListener('click', function() {
+                  let userId = null;
+                  if (user_id) {
+                    userId = user_id;
+                  }
                   const dp_id_full = product.link;
                   const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
-                  const product_url = `http://127.0.0.1:5500/product.html?product_id=${productId}&user_id=${user_id}&dp_id=${dp_id}`;
+                  const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
+                  async function shareLink() {
+                    const shareData = {
+                      title: 'Check out this product!',
+                      text: 'Here’s a product I found interesting:',
+                      url: product_url
+                    };
 
-                  alert(product_url);
+                    try {
+                      // Attempt to use the Web Share API
+                      await navigator.share(shareData);
+                      console.log("Link shared successfully!");
+                    } catch (error) {
+                      // If sharing fails, copy the URL to the clipboard and alert the user
+                      try {
+                        await navigator.clipboard.writeText(product_url);
+                        alert(`Sharing failed. URL copied to clipboard: ${product_url}`);
+                      } catch (clipboardError) {
+                        alert(`Unable to copy to clipboard. Here is the URL: ${product_url}`);
+                      }
+                    }
+                  }
+                  // Call the shareLink function to execute the sharing or fallback
+                  shareLink();
                 });
               }
             }
