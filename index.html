@@ -251,7 +251,7 @@
 
 
       // Fetch product
-function fetchProduct(){
+      function fetchProduct(){
         const products_list_container = document.getElementById("products_list_container");
         products_list_container.innerHTML = "";
         const productsRef = ref(db, `products`);
@@ -264,7 +264,6 @@ function fetchProduct(){
             let product_html = ''; // Accumulate HTML
 
             for(const productId in products) {
-            
               const product = products[productId];
               const product_link = product.link;
 
@@ -285,7 +284,7 @@ function fetchProduct(){
                         <p class="description">${product.description}</p>
                       </div>
                       <div class="price_container">
-                        ${price_div}
+                      ${price_div}
                       </div>
                       <div class="action_container">
                         <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
@@ -299,7 +298,7 @@ function fetchProduct(){
                 `;
               }
             }
-            
+
             // Set the accumulated HTML to the container at once
             products_list_container.innerHTML = product_html;
             document.getElementById("spinner").style.display = "none";
@@ -328,11 +327,28 @@ function fetchProduct(){
                 const shareButton = document.getElementById(`share_btn_${productId}`);
                 if (shareButton) { 
                   shareButton.addEventListener('click', function() {
-                    const dp_id_full = product.link;
-                    const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
-                    const product_url = `http://127.0.0.1:5500/product.html?product_id=${productId}&user_id=${user_id}&dp_id=${dp_id}`;
+                    const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${user_id}`;
 
-                    alert(product_url)
+                    if (navigator.clipboard) {
+                      // Attempt to use modern clipboard API
+                      navigator.clipboard.writeText(product_url).then(() => {
+                      }).catch(err => {
+                        console.error('Clipboard copy failed: ', err);
+                      });
+                    } else {
+                      // Fallback for older or unsupported browsers
+                      const tempInput = document.createElement('textarea');
+                      tempInput.value = product_url;
+                      document.body.appendChild(tempInput);
+                      tempInput.select();
+                      try {
+                        document.execCommand('copy');
+                      } catch (err) {
+                        alert("Failed to copy URL (Fallback).");
+                        console.error('Fallback: Unable to copy', err);
+                      }
+                      document.body.removeChild(tempInput);
+                    }
                   });
                 }
               }
