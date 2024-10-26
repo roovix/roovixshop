@@ -245,60 +245,91 @@
             return;
           }
           category = event.target.id;
-          alert("before fetch");
           fetchProduct();
-          alert("After fetch");
         }
       });
 
 
       // Fetch product
-      function fetchProduct(){
+      // Helper function to shuffle an array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+     // Fetch product
+      function fetchProduct() {
         const products_list_container = document.getElementById("products_list_container");
         products_list_container.innerHTML = "";
         const productsRef = ref(db, `products`);
-        onValue(productsRef, (snapshot)=>{
+        onValue(productsRef, (snapshot) => {
 
-          if(snapshot){
+          if (snapshot) {
 
             const products = snapshot.val();
+            const productArray = [];
+
+            // Collect products into an array
+            for (const productId in products) {
+              const product = products[productId];
+              productArray.push({ id: productId, ...product });
+            }
+
+            // Filter products by category first
+            const filteredProducts = category === "all" 
+              ? productArray 
+              : productArray.filter(product => product.category.toLowerCase() === category);
+
+            // Shuffle the filtered product array
+            const shuffledProducts = shuffleArray(filteredProducts);
 
             let product_html = ''; // Accumulate HTML
 
-            for(const productId in products) {
-              const product = products[productId];
+            // Iterate over the shuffled filtered product array
+            for (const productData of shuffledProducts) {
+              const productId = productData.id;
+              const product = productData;
               const product_link = product.link;
 
+              // Generate product HTML with formatted price and discount
               let price_div = ``;
-              if(product.price && product.currency && product.discount){
-                price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`
+              if (product.price && product.currency && product.discount) {
+                const formattedPrice = parseInt(product.price).toLocaleString();
+                const formattedDiscount = parseInt(product.discount).toLocaleString();
+                
+                price_div = `
+                  <p class="price">
+                    <span class="currency">${product.currency}</span> 
+                    <span class="price_inside">${formattedPrice}</span> 
+                    <span class="discount">${formattedDiscount}</span>
+                  </p>`;
               }
-
-              if(category === "all" || product.category === category) {
-                // Generate product HTML with a unique class or ID for the button
-                product_html += `
-                  <div class="container">
-                    <div class="image_container">
-                      <img id="image_click_${productId}" class="image" src="${product.image}">
+              // Generate product HTML with a unique class or ID for the button
+              product_html += `
+                <div class="container">
+                  <div class="image_container">
+                    <img id="image_click_${productId}" class="image" src="${product.image}">
+                  </div>
+                  <div class="details_container">
+                    <div class="product_description_container">
+                      <p class="description">${product.description}</p>
                     </div>
-                    <div class="details_container">
-                      <div class="product_description_container">
-                        <p class="description">${product.description}</p>
-                      </div>
-                      <div class="price_container">
+                    <div class="price_container">
                       ${price_div}
-                      </div>
-                      <div class="action_container">
-                        <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
-                        <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-copy"></i></button>
-                      </div>
-                      <div class="verify_container">
-                        <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
-                      </div>
+                    </div>
+                    <div class="action_container">
+                      <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
+                      <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                    <div class="verify_container">
+                      <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
                     </div>
                   </div>
-                `;
-              }
+                </div>
+              `;
             }
 
             // Set the accumulated HTML to the container at once
@@ -306,58 +337,40 @@
             document.getElementById("spinner").style.display = "none";
 
             // Add event listeners after the HTML is rendered
-            for(const productId in products) {
-              const product = products[productId];
+            for (const productData of shuffledProducts) {
+              const productId = productData.id;
+              const product = productData;
               const product_link = product.link;
 
-              if(category === "all" || product.category === category) {
-                // Handle open product url
-                const button = document.getElementById(`action_btn_${productId}`);
-                if (button) {
-                  button.addEventListener('click', function() {
-                    window.open(product_link, '_blank'); // Open the product link in a new tab
-                  });
-                }
-                const image = document.getElementById(`image_click_${productId}`);
-                if (image) {
-                  image.addEventListener('click', function() {
-                    window.open(product_link, '_blank'); // Open the product link in a new tab
-                  });
-                }
+              // Handle open product URL
+              const button = document.getElementById(`action_btn_${productId}`);
+              if (button) {
+                button.addEventListener('click', function() {
+                  window.open(product_link, '_blank'); // Open the product link in a new tab
+                });
+              }
+              const image = document.getElementById(`image_click_${productId}`);
+              if (image) {
+                image.addEventListener('click', function() {
+                  window.open(product_link, '_blank'); // Open the product link in a new tab
+                });
+              }
 
-                // Handle share click
-                const shareButton = document.getElementById(`share_btn_${productId}`);
-                if (shareButton) { 
-                  shareButton.addEventListener('click', function() {
-                    const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${user_id}`;
+              // Handle share click
+              const shareButton = document.getElementById(`share_btn_${productId}`);
+              if (shareButton) {
+                shareButton.addEventListener('click', function() {
+                  const dp_id_full = product.link;
+                  const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
+                  const product_url = `http://127.0.0.1:5500/product.html?product_id=${productId}&user_id=${user_id}&dp_id=${dp_id}`;
 
-                    if (navigator.clipboard) {
-                      // Attempt to use modern clipboard API
-                      navigator.clipboard.writeText(product_url).then(() => {
-                      }).catch(err => {
-                        console.error('Clipboard copy failed: ', err);
-                      });
-                    } else {
-                      // Fallback for older or unsupported browsers
-                      const tempInput = document.createElement('textarea');
-                      tempInput.value = product_url;
-                      document.body.appendChild(tempInput);
-                      tempInput.select();
-                      try {
-                        document.execCommand('copy');
-                      } catch (err) {
-                        alert("Failed to copy URL (Fallback).");
-                        console.error('Fallback: Unable to copy', err);
-                      }
-                      document.body.removeChild(tempInput);
-                    }
-                  });
-                }
+                  alert(product_url);
+                });
               }
             }
 
-          }else{
-            products_list_container.innerHTML = `<p>No products fond</p>`;
+          } else {
+            products_list_container.innerHTML = `<p>No products found</p>`;
             document.getElementById("spinner").style.display = "none";
           }
 
@@ -415,7 +428,6 @@
           console.error("Error saving visitor information:", error);
         }
       }
-      saveVisitorInfo();
 
       // Open user login page
       function openLoginPage() {
@@ -448,7 +460,7 @@
       search_form.addEventListener("submit", (event) => {
         event.preventDefault();
         const search_input = document.getElementById("search").value;
-        window.location.href = `https://roovix.com/search_result?search=${search_input}`;
+        window.location.href = `/search_result.html?search=${search_input}`;
       });
     </script>
 
