@@ -251,50 +251,29 @@
 
 
       // Fetch product
-      // Helper function to shuffle an array
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-      }
-      
-      // Fetch product
-      function fetchProduct() {
+function fetchProduct(){
         const products_list_container = document.getElementById("products_list_container");
         products_list_container.innerHTML = "";
         const productsRef = ref(db, `products`);
-        onValue(productsRef, (snapshot) => {
-      
-          if (snapshot) {
-      
+        onValue(productsRef, (snapshot)=>{
+
+          if(snapshot){
+
             const products = snapshot.val();
-            const productArray = [];
-      
-            // Collect products into an array
-            for (const productId in products) {
-              const product = products[productId];
-              productArray.push({ id: productId, ...product });
-            }
-      
-            // Shuffle the product array
-            const shuffledProducts = shuffleArray(productArray);
-      
+
             let product_html = ''; // Accumulate HTML
-      
-            // Iterate over the shuffled product array
-            for (const productData of shuffledProducts) {
-              const productId = productData.id;
-              const product = productData;
+
+            for(const productId in products) {
+            
+              const product = products[productId];
               const product_link = product.link;
-      
+
               let price_div = ``;
-              if (product.price && product.currency && product.discount) {
-                price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price.toLocaleString()}</span> <span class="discount">${product.discount.toLocaleString()}</span></p>`;
+              if(product.price && product.currency && product.discount){
+                price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`
               }
-      
-              if (category === "all" || product.category === category) {
+
+              if(category === "all" || product.category === category) {
                 // Generate product HTML with a unique class or ID for the button
                 product_html += `
                   <div class="container">
@@ -320,19 +299,18 @@
                 `;
               }
             }
-      
+            
             // Set the accumulated HTML to the container at once
             products_list_container.innerHTML = product_html;
             document.getElementById("spinner").style.display = "none";
-      
+
             // Add event listeners after the HTML is rendered
-            for (const productData of shuffledProducts) {
-              const productId = productData.id;
-              const product = productData;
+            for(const productId in products) {
+              const product = products[productId];
               const product_link = product.link;
-      
-              if (category === "all" || product.category === category) {
-                // Handle open product URL
+
+              if(category === "all" || product.category === category) {
+                // Handle open product url
                 const button = document.getElementById(`action_btn_${productId}`);
                 if (button) {
                   button.addEventListener('click', function() {
@@ -345,26 +323,26 @@
                     window.open(product_link, '_blank'); // Open the product link in a new tab
                   });
                 }
-      
+
                 // Handle share click
                 const shareButton = document.getElementById(`share_btn_${productId}`);
-                if (shareButton) {
+                if (shareButton) { 
                   shareButton.addEventListener('click', function() {
                     const dp_id_full = product.link;
                     const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
                     const product_url = `http://127.0.0.1:5500/product.html?product_id=${productId}&user_id=${user_id}&dp_id=${dp_id}`;
-      
-                    alert(product_url);
+
+                    alert(product_url)
                   });
                 }
               }
             }
-      
-          } else {
-            products_list_container.innerHTML = `<p>No products found</p>`;
+
+          }else{
+            products_list_container.innerHTML = `<p>No products fond</p>`;
             document.getElementById("spinner").style.display = "none";
           }
-      
+
         });
       }
       fetchProduct();
