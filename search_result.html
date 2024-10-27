@@ -230,7 +230,7 @@
 
             let price_div = ``;
             if(product.price && product.currency && product.discount){
-              price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`
+              price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price.toLocaleString()}</span> <span class="discount">${product.discount.toLocaleString()}</span></p>`
             }
 
             // Check if the product matches the search query and category
