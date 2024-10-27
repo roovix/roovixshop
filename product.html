@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="https://roovix.com/images/logo.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="https://roovix.com/images/logo.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://roovix.com/images/logo.png"
+    />
+    <!-- FOnt awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Js -->
+     <script src="config.js"></script>
+    <!-- Css -->
+     <link rel="stylesheet" href="styles/product_details.css">
+    <title>Product - Roovix Shop</title>
+  </head>
+  <body>
+    <!-- Nav ber start here -->
+    <nav id="nav_ber">
+      <div class="title" id="open_home">
+        <img src="images/logo_png.png" alt="roovix_shop">
+        <p>Roovix Shop</p>
+      </div>
+      <button id="nav_toggle"><i class="fa-solid fa-bars-staggered"></i></button>
+      <button id="nav_close"><i class="fa-solid fa-xmark"></i></button>
+      <ul id="nav_list">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li id="dashbiard_item"><a><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        <li><a href="search_result.html"><i class="fa-solid fa-magnifying-glass"></i> Search</a></li>
+      </ul>
+    </nav>
+    <!-- Nav ber end here -->
+
+    <!-- Product design start here -->
+     <div class="container">
+      <div class="product_left">
+        <div class="product_image">
+          <img id="product_image_src" alt="product_image">
+        </div>
+      </div>
+      <div class="product_right">
+        <p id="product_name"></p>
+        <div class="price_box">
+          <p class="price"><span id="price_count"></span> <span id="discount_count"></span></p>
+          <a class="buy_btn" id="buy_btn"></a>
+        </div>
+      </div>
+     </div>
+     <!-- Product design end here -->
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        get,
+        set,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      let isUser = false;
+      let category = "all";
+      let current_user_id = null;
+      let product_id = "";
+      let dp_id = "";
+      let shared_user_id = "";
+
+      function checkForUser(){
+        auth.onAuthStateChanged((user)=>{
+        if(user){
+          isUser = true;
+          current_user_id = user.uid;
+          console.log(current_user_id);
+          getIdsFromLink();
+        }else{
+          isUser = false;
+          getIdsFromLink();
+        }
+      });
+      }
+      checkForUser();
+
+      function getIdsFromLink(){
+        const current_url = new URL(window.location.href);
+        const params = new URLSearchParams(current_url.search);
+        product_id = params.get("product_id");
+        shared_user_id = params.get("user_id");
+        dp_id = params.get("dp_id");
+        saveLinkClicked();
+      }
+
+      function saveLinkClicked(){
+        // update shared user's product status
+        if(shared_user_id && dp_id && product_id){
+            const sanitize_dp_id = sanitizeKey(dp_id);
+            const shared_user_ref = ref(db, `users_public/${shared_user_id}/${sanitize_dp_id}`);
+            // Check for user
+            set(shared_user_ref, {
+                link_clicked: true,
+                product_id: product_id,
+                dp_id: dp_id,
+                clicker_id: current_user_id,
+                shared_user_id: shared_user_id
+            }).then(()=>{
+                console.log("User public saved!");
+                getProductDetails();
+            }).catch((err)=>{
+                console.log("Error saving user public!");
+                getProductDetails();
+            });
+        }else{
+            console.log("Missing product, dp_id or user_id!");
+        }
+      }
+
+      function getProductDetails(){
+        const product_ref = ref(db, `products/${product_id}`);
+        onValue(product_ref, (snapshot) => {
+          if (snapshot.exists()) {
+            const product = snapshot.val();
+            console.log(product);
+            document.getElementById("product_name").innerText = product.description;
+            document.getElementById("price_count").innerText = `${product.currency}${product.price}`;
+            document.getElementById("discount_count").innerText = product.discount;
+            document.getElementById("product_image_src").src = product.image;
+            document.getElementById("buy_btn").href = product.link;
+            document.getElementById("buy_btn").textContent = product.action_btn_value;
+          }
+        });
+      }
+
+      function sanitizeKey(key) {
+            // Replace forbidden characters with allowed alternatives
+            return key.replace(/\./g, '(dot)')
+                    .replace(/\$/g, '(dollar)')
+                    .replace(/\[/g, '(open_bracket)')
+                    .replace(/\]/g, '(close_bracket)')
+                    .replace(/#/g, '(hash)')
+                    .replace(/\//g, '(divide)')
+                    .replace(/\?/g, '(question_mark)');
+        }
+
+        function desanitizeKey(key) {
+            // Reverse replacements to get the original key back
+            return key.replace(/\(dot\)/g, '.')
+                    .replace(/\(dollar\)/g, '$')
+                    .replace(/\(open_bracket\)/g, '[')
+                    .replace(/\(close_bracket\)/g, ']')
+                    .replace(/\(hash\)/g, '#')
+                    .replace(/\(divide\)/g, '/')
+                    .replace(/\(question_mark\)/g, '?');
+        }
+
+        document.getElementById("open_home").addEventListener("click", function(){
+          window.location.href = "https://roovix.com";
+        });
+        document.getElementById("dashbiard_item").addEventListener("click", function(){
+          if(isUser){
+            window.location.href = "dashboard.html";
+          }else{
+            alert("You need to login first!");
+            window.location.href = "login.html";
+          }
+        });
+
+        // toggle navigation
+        document.getElementById("nav_toggle").addEventListener("click", function(){
+          document.getElementById("nav_close").style.display = "block";
+          document.getElementById("nav_toggle").style.display = "none";
+          document.getElementById("nav_list").style.display = "flex";
+        });
+        document.getElementById("nav_close").addEventListener("click", function(){
+          document.getElementById("nav_close").style.display = "none";
+          document.getElementById("nav_toggle").style.display = "block";
+          document.getElementById("nav_list").style.display = "none";
+        });
+    </script>
+  </body>
+</html>
