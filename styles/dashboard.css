@@ -50,13 +50,15 @@ body {
     align-items: center;
 }
 .side_left .side_left_title .user_name {
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 501;
 }
 .side_left .side_left_title img {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
+    padding: 2px;
+    border: 1px solid rgba(128, 128, 128, 0.521);
 }
 .side_left_ul {
     width: 100%;
@@ -241,6 +243,7 @@ body {
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     padding: 20px;
   }
@@ -259,7 +262,7 @@ body {
     color: #fc749d;
   }
   #color_i2 {
-    color: #8d74fc;
+    color: #fcb174;
   }
   #color_i3 {
     color: #74cafc;
@@ -267,11 +270,58 @@ body {
   #color_i4 {
     color: #fc74f1;
   }
+  #color_i5 {
+    color: #8d74fc;
+  }
   .card_value {
     margin-top: 8px;
     font-size: 1.4rem;
     font-weight: 600;
     text-align: start;
+  }
+
+  #balance_count {
+    color: #74C0FC;
+  }
+  #investment_count {
+    color: rgb(255, 0, 0);
+  }
+
+  .card .analysis {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+  }
+  .card .analysis i {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .card .analysis p {
+    font-size: 0.8rem;
+    color: gray;
+    margin-top: 5px;
+  }
+  .up_rich {
+    color: rgb(0, 167, 0);
+    display: none;
+  }
+  .down_rich {
+    color: rgb(255, 0, 0);
+    display: none;
+  }
+  .no_rich {
+    color: gray;
+  }
+
+  /* Analysis text content span */
+  .balance_analysis_text_increase {
+    color: rgb(0, 167, 0);
+  }
+  .balance_analysis_text_decrease {
+    color: rgb(255, 0, 0);
   }
 
 /* When the right sidebar is hidden */
