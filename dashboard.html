@@ -67,6 +67,10 @@
 
     <!-- LInk too css -->
      <link rel="stylesheet" href="styles/dashboard.css">
+     <link rel="stylesheet" href="styles/logout_opup.css">
+
+    <!-- Link to js -->
+     <script src="config.js"></script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,8 +82,8 @@
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
        <div id="side_left" class="side_left">
         <div class="side_left_title">
-          <img src="images/difault_user_logo.png" alt="profile_picture">
-          <p class="user_name">Your name</p>
+          <img id="profile_picture" src="images/difault_user_logo.png" alt="profile_picture">
+          <p id="user_name" class="user_name">Anonymous</p>
           <button id="side_left_close"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>
         <ul class="side_left_ul">
@@ -97,7 +101,7 @@
             <ul class="sub_list">
               <li class="sub_list_item" id="add_account"><i class="fa-regular fa-user"></i> Add account</li>
               <li class="sub_list_item"><i class="fa-solid fa-repeat"></i> Switch account</li>
-              <li class="sub_list_item"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</li>
+              <li id="list_logout_btn" class="sub_list_item"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</li>
             </ul>
           </li>
         </ul>
@@ -118,11 +122,15 @@
                   <h3 class="card_title">Balance</h3>
                 </div>
                 <div class="card_content">
-                  <p class="card_value" id="balance_count">$1,250,000</p>
+                  <p class="card_value" id="balance_count">৳.0</p>
                 </div>
               </div>
               <div class="analysis">
-                <img src="..." alt="">
+                <i id="balance_analysis_bar-line" class="fa-solid no_rich fa-grip-lines"></i>
+                <i id="balance_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
+                <i id="balance_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
+                
+                <p id="balance_analysis_text">No rich</p>
               </div>
             </div>
 
@@ -132,12 +140,16 @@
                   <i id="color_i2" class="fa-solid fa-link"></i>
                 </div>
                 <div class="card_content">
-                  <p class="card_value" id="link_clicks_count">43</p>
+                  <p class="card_value" id="link_clicks_count">0</p>
                   <h3 class="card_title">Link Clicks</h3>
                 </div>
               </div>
               <div class="analysis">
-                <img src="..." alt="">
+                <i id="linkClick_analysis_bar-line" class="fa-solid no_rich fa-grip-lines"></i>
+                <i id="linkClick_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
+                <i id="linkClick_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
+                
+                <p id="linkClick_analysis_text">No rich</p>
               </div>
             </div>
 
@@ -147,12 +159,16 @@
                   <i id="color_i3" class="fa-solid fa-cart-shopping"></i>
                 </div>
                 <div class="card_content">
-                  <p class="card_value" id="total_orders_count">43</p>
-                  <h3 class="card_title">Total Orders</h3>
+                  <p class="card_value" id="total_orders_count">0</p>
+                  <h3 class="card_title">Orders</h3>
                 </div>
               </div>
               <div class="analysis">
-                <img src="..." alt="">
+                <i id="orders_analysis_bar-line" class="fa-solid no_rich fa-grip-lines"></i>
+                <i id="orders_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
+                <i id="orders_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
+                
+                <p id="orders_analysis_text">No rich</p>
               </div>
             </div>
 
@@ -162,32 +178,34 @@
                   <i id="color_i4" class="fa-solid fa-share-nodes"></i>
                 </div>
                 <div class="card_content">
-                  <p class="card_value" id="total_shares_count">165</p>
-                  <h3 class="card_title">Total Shares</h3>
+                  <p class="card_value" id="total_shares_count">0</p>
+                  <h3 class="card_title">Shares</h3>
                 </div>
               </div>
               <div class="analysis">
-                <img src="..." alt="">
+                <i id="shares_analysis_bar-line" class="fa-solid no_rich fa-grip-lines"></i>
+                <i id="shares_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
+                <i id="shares_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
+                
+                <p id="shares_analysis_text">No rich</p>
               </div>
             </div>
 
             <div class="card">
-              <div class="content">
+              <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                 <div class="card_icon">
-                  <i class="fa-solid fa-hand-holding-dollar"></i>
+                  <i id="color_i5" class="fa-solid fa-hand-holding-dollar"></i>
                 </div>
-                <div class="card_content">
-                  <p class="card_value" id="total_shares_count">$1,287</p>
-                  <h3 class="card_title">Your investments</h3>
+                <div class="card_content" style="display: flex; flex-direction: column; align-items: center;">
+                  <p class="card_value" id="investment_count">৳.0</p>
+                  <h3 class="card_title">Your Investment</h3>
                 </div>
-              </div>
-              <div class="analysis">
-                <img src="..." alt="">
               </div>
             </div>
 
           </section>
           <!-- Card section end -->
+
         </div>
         <!-- Main end -->
 
@@ -209,7 +227,23 @@
         <!-- Side right end -->
     </div>
 
-    <!-- Js login to functional the page -->
+    <!-- LogOUt popup start-->
+     <div class="logout_container">
+      <div class="logout_title">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="logout_account_info">
+        <img id="logout_profile_picture" src="images/difault_user_logo.png" alt="logout_profile_picture">
+        <p id="logout_user_name" class="logout_user_name">Anonymous</p>
+        <p id="logout_user_email" class="logout_user_name">Email</p>
+      </div>
+      <div class="logout_button_container">
+        <button id="logout_button" class="logout_button">Logout</button>
+        <button id="logout_cancel_button" class="logout_cancel_button">Cancel</button>
+     </div>
+    <!-- LogOUt popup end-->
+
+    <!-- Js logic to functional the page -->
      <script>
         document.addEventListener('DOMContentLoaded', function () {
             const items = document.querySelectorAll('.side_left_ul > li');
@@ -340,6 +374,194 @@
       // Close right panel
       sideRightClose.addEventListener('click', function () {
           sideRight.style.display = 'none'; // Hide the right side panel
+      });
+
+      // Show hide logout popup
+      const logoutCancelButton = document.getElementById('logout_cancel_button');
+      const logoutContainer = document.querySelector('.logout_container');
+      const list_logout_btn = document.getElementById("list_logout_btn");
+      logoutCancelButton.addEventListener('click', function () {
+          logoutContainer.style.display = 'none'; // Show the logout popup
+      });
+      list_logout_btn.addEventListener('click', function () {
+          logoutContainer.style.display = 'flex'; // Show the logout popup
+      });
+    </script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        GoogleAuthProvider,
+        signOut
+      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+
+      function checkForUser() {
+        onAuthStateChanged(auth, (current_user) => {
+          if (current_user) {
+            const user_id = current_user.uid;
+            console.log("User is logged in:", user_id);
+
+            // Fetch user info once user_id is set
+            const currentUserRef = ref(db, `users/${user_id}`);
+            onValue(currentUserRef, (snapshot) => {
+              const user = snapshot.val();
+              
+              // Reference
+              const user_name = document.getElementById("user_name");
+              const profile_picture = document.getElementById("profile_picture");
+              const balance_count = document.getElementById("balance_count");
+              const link_clicks_count = document.getElementById("link_clicks_count");
+              const total_orders_count = document.getElementById("total_orders_count");
+              const total_shares_count = document.getElementById("total_shares_count");
+              const investment_count = document.getElementById("investment_count");
+
+              // Assuming `user` is the object retrieved from Firebase
+              if (user) {
+                // Set default currency to "৳" if undefined
+                const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
+
+                // Set user info with default values if any field is undefined or missing
+                user_name.textContent = user.name ?? "Anonymous";
+                profile_picture.src = user.profile_picture ?? "images/difault_user_logo.png";
+                balance_count.textContent = `${currencySymbol} ${user.balance.toLocaleString() ?? "0"}`;
+                link_clicks_count.textContent = user.total_link_click.toLocaleString() ?? "0";
+                total_orders_count.textContent = user.total_orders.toLocaleString() ?? "0";
+                total_shares_count.textContent = user.total_shares.toLocaleString() ?? "0";
+                investment_count.textContent = `${currencySymbol} ${user.investment.toLocaleString() ?? "0"}`;
+                
+                // Show user info in logout popup 
+                document.getElementById("logout_profile_picture").src = user.profile_picture ?? "images/difault_user_logo.png";
+                document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
+                document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
+              } else {
+                console.error("User data not found or is undefined in Firebase.");
+                
+                // Set default placeholders if user data is missing
+                user_name.textContent = "Anonymous";
+                profile_picture.src = "images/difault_user_logo.png";
+                balance_count.textContent = "৳ 0";
+                link_clicks_count.textContent = "0";
+                total_orders_count.textContent = "0";
+                total_shares_count.textContent = "0";
+                investment_count.textContent = "৳ 0";
+              }
+            });
+          } else {
+            console.log("No user is logged in.");
+          }
+        });
+      }
+      checkForUser();
+
+      // Balance analysis start
+      auth.onAuthStateChanged((user_data_for_balance_analysis) => {
+        if (user_data_for_balance_analysis) {
+          const user_id_for_balance_analysis = user_data_for_balance_analysis.uid;
+          const balanceUserRef = ref(db, `users/${user_id_for_balance_analysis}/analysis/balance`);
+
+          onValue(balanceUserRef, (snapshot) => {
+            const balanceAnalysis = snapshot.val();
+            
+            const today = new Date();
+            const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in one day
+            const oneWeekAgo = new Date(today - 7 * oneDay);
+            const twoWeeksAgo = new Date(today - 14 * oneDay);
+
+            // Variables to store the total balance for each period
+            let lastWeekBalance = 0;
+            let previousWeekBalance = 0;
+            let lastWeekTransactions = 0;
+            let previousWeekTransactions = 0;
+
+            for(const key_for_balanceAnalysis in balanceAnalysis) {
+              let item = balanceAnalysis[key_for_balanceAnalysis];
+              let itemDate = new Date(item.time);
+
+                // Check if the date is within the last week
+                if (itemDate >= oneWeekAgo && itemDate < today) {
+                    lastWeekBalance += item.value;
+                    lastWeekTransactions += 1; // Increment transaction count for last week
+                }
+                // Check if the date is within the previous week (between one and two weeks ago)
+                else if (itemDate >= twoWeeksAgo && itemDate < oneWeekAgo) {
+                    previousWeekBalance += item.value;
+                    previousWeekTransactions += 1; // Increment transaction count for previous week
+                }
+            }
+
+            // Output the results
+            console.log("Balance in the last week:", lastWeekBalance);
+            console.log("Balance in the previous week:", previousWeekBalance);
+
+            // Compare the two balances
+            if (lastWeekBalance > previousWeekBalance) {
+                console.log("Balance increased by", lastWeekBalance - previousWeekBalance);
+            } else if (lastWeekBalance < previousWeekBalance) {
+                console.log("Balance decreased by", previousWeekBalance - lastWeekBalance);
+            } else {
+                console.log("Balance stayed the same");
+            }
+
+
+
+            // Output the transaction results
+            console.log("Transactions in the last week:", lastWeekTransactions);
+            console.log("Transactions in the previous week:", previousWeekTransactions);
+
+            // Transaction count comparison
+            if (lastWeekTransactions > previousWeekTransactions) {
+                console.log("Transactions increased by", lastWeekTransactions - previousWeekTransactions);
+
+                // Handle ui in transactions
+                document.getElementById("balance_analysis_bar-line").style.display = "none";
+                document.getElementById("balance_analysis_bar-down").style.display = "none";
+                document.getElementById("balance_analysis_bar-up").style.display = "block";
+
+                // Update transaction text content
+                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span>`;
+
+              } else if (lastWeekTransactions < previousWeekTransactions) {
+                console.log("Transactions decreased by", previousWeekTransactions - lastWeekTransactions);
+            
+                // Handle ui in transactions
+                document.getElementById("balance_analysis_bar-line").style.display = "none";
+                document.getElementById("balance_analysis_bar-down").style.display = "block";
+                document.getElementById("balance_analysis_bar-up").style.display = "none";
+
+                // Update transaction text content
+                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
+
+              } else {
+                console.log("Number of transactions stayed the same");
+            }
+          });
+        }
+      });
+      // Balance analysis end
+
+      // logout user
+      document.getElementById("logout_button").addEventListener("click", ()=>{
+        auth.signOut().then(()=>{
+          window.location.href = "https://roovix.com";
+        }).catch((err)=>{
+          alert("Error logging out: "+err.message)
+        });
+      });
+
+      // Open add account or login page
+      document.getElementById("add_account").addEventListener("click", ()=>{
+        window.location.href = "/login";
       });
     </script>
   </body>
