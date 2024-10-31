@@ -214,30 +214,34 @@
     function renderProducts(query) {
       const productRef = ref(db, `products/`);
       const productListContainer = document.getElementById("products_list_container");
-
+    
+      // Split the search query into individual words
+      const queryWords = query.split(" ").filter(word => word); // Remove empty strings
+    
       onValue(productRef, (snapshot) => {
         if (snapshot.exists()) {
           const products = snapshot.val();
           productListContainer.innerHTML = "";
-
+    
           // Accumulate HTML for matching products
           let productHtml = '';
-
+    
           for (const productId in products) {
             const product = products[productId];
             const descriptionLower = product.description.toLowerCase();
             const categoryLower = product.category.toLowerCase();
-
+    
             let price_div = ``;
-            if(product.price && product.currency && product.discount){
-              price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price.toLocaleString()}</span> <span class="discount">${product.discount.toLocaleString()}</span></p>`
+            if (product.price && product.currency && product.discount) {
+              price_div = `<p class="price"><span class="currency">${product.currency}</span> <span class="price_inside">${product.price}</span> <span class="discount">${product.discount}</span></p>`;
             }
-
-            // Check if the product matches the search query and category
-            if (
-              (selectedCategory === "all" || categoryLower === selectedCategory) &&
-              (descriptionLower.includes(query) || categoryLower.includes(query))
-            ) {
+    
+            // Check if the product matches any word in the search query and the selected category
+            const matchesQuery = queryWords.some(word => 
+              descriptionLower.includes(word) || categoryLower.includes(word)
+            );
+    
+            if ((selectedCategory === "all" || categoryLower === selectedCategory) && matchesQuery) {
               // If there's a match, generate product HTML
               productHtml += `
                 <div class="container">
@@ -263,74 +267,63 @@
               `;
             }
           }
-
+    
           // Display matching products or show 'No products found' message
           if (productHtml) {
             productListContainer.innerHTML = productHtml;
-            //  Hide spinner
             document.getElementById("spinner").style.display = "none";
           } else {
             productListContainer.innerHTML = `<p>No products found matching your query or category.</p>`;
           }
-
+    
           // Add event listeners after the HTML is rendered
           for (const productId in products) {
             const product = products[productId];
             const productLink = product.link;
-
+    
             if (
               (selectedCategory === "all" || product.category.toLowerCase() === selectedCategory) &&
-              (product.description.toLowerCase().includes(query) || product.category.toLowerCase().includes(query))
+              queryWords.some(word => product.description.toLowerCase().includes(word) || product.category.toLowerCase().includes(word))
             ) {
-              // Handle open product URL
               const button = document.getElementById(`action_btn_${productId}`);
               if (button) {
                 button.addEventListener('click', function () {
                   window.open(productLink, '_blank');
                 });
               }
-
+    
               const image = document.getElementById(`image_click_${productId}`);
               if (image) {
                 image.addEventListener('click', function () {
                   window.open(productLink, '_blank');
                 });
               }
-
-              // Handle share click
+    
               const shareButton = document.getElementById(`share_btn_${productId}`);
               if (shareButton) {
-                shareButton.addEventListener('click', function() {
-                  let userId = null;
-                  if (user_id) {
-                    userId = user_id;
-                  }
+                shareButton.addEventListener('click', async function() {
+                  let userId = user_id ? user_id : null;
                   const dp_id_full = product.link;
-                  const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
+                  const dp_id = dp_id_full.split("/").pop();
                   const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
-                  async function shareLink() {
-                    const shareData = {
-                      title: 'Check out this product!',
-                      text: 'Here’s a product I found interesting:',
-                      url: product_url
-                    };
-
+    
+                  const shareData = {
+                    title: 'Check out this product!',
+                    text: 'Here’s a product I found interesting:',
+                    url: product_url
+                  };
+    
+                  try {
+                    await navigator.share(shareData);
+                    console.log("Link shared successfully!");
+                  } catch (error) {
                     try {
-                      // Attempt to use the Web Share API
-                      await navigator.share(shareData);
-                      console.log("Link shared successfully!");
-                    } catch (error) {
-                      // If sharing fails, copy the URL to the clipboard and alert the user
-                      try {
-                        await navigator.clipboard.writeText(product_url);
-                        alert(`Sharing failed. URL copied to clipboard: ${product_url}`);
-                      } catch (clipboardError) {
-                        alert(`Unable to copy to clipboard. Here is the URL: ${product_url}`);
-                      }
+                      await navigator.clipboard.writeText(product_url);
+                      alert(`Sharing failed. URL copied to clipboard: ${product_url}`);
+                    } catch (clipboardError) {
+                      alert(`Unable to copy to clipboard. Here is the URL: ${product_url}`);
                     }
                   }
-                  // Call the shareLink function to execute the sharing or fallback
-                  shareLink();
                 });
               }
             }
