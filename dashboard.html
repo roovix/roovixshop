@@ -550,6 +550,30 @@
       });
       // Balance analysis end
 
+      // Check user claims start
+      auth.onAuthStateChanged((user)=>{
+
+        if(user){
+
+          user.getIdTokenResult().then((idTokenResult)=>{
+            const claims = idTokenResult.claims;
+
+            if(claims.admin){
+
+              // User id admin hide all the cards except Balance and Investment Card
+              document.getElementById("link_click_container").style.display = "none";
+              document.getElementById("order_container").style.display = "none";
+              document.getElementById("share_container").style.display = "none";
+            }
+
+          });
+
+        }else{ 
+          alert("User is not logged in")
+        }
+      });
+      // Check user claims end
+
       // logout user
       document.getElementById("logout_button").addEventListener("click", ()=>{
         auth.signOut().then(()=>{
