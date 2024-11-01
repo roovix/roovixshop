@@ -118,6 +118,35 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Our Courses
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-brands fa-python"></i> Python coding</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-code"></i> Web development</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa-solid fa-sack-dollar"></i> Make money online</a
+                  >
+                </li>
+              </ul>
+            </li>
             <li class="nav-item" id="open-user-login">
               <a
                 class="nav-link active"
@@ -127,7 +156,7 @@
               >
             </li>
           </ul>
-          <i id="info" class="fa-solid fa-circle-info"></i>
+          <button id="refer_earn"><i class="fa-solid fa-bangladeshi-taka-sign"></i> Refer & Earn</button>
         </div>
       </div>
     </nav>
@@ -158,6 +187,12 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </form>
+      </div>
+    </section>
+
+    <section id="dynamic_banners">
+      <div id="dynamic_banners_list" class="dynamic_banners_list">
+        <!-- Banners will be shown here dynamically -->
       </div>
     </section>
 
@@ -239,6 +274,53 @@
       });
       }
       checkForUser();
+
+
+      // Show banners in the page
+      function fetchBanners() {
+        const dynamic_banners_list = document.getElementById("dynamic_banners_list");
+        const bannersRef = ref(db, "admin/banners");
+        onValue(bannersRef, (snapshot)=>{
+          const banners = snapshot.val();
+          if(banners){
+            
+            // Empty thr banner list container
+            dynamic_banners_list.innerHTML = "";
+            let bannersHtml = "";
+
+            // Banner in banners
+            for(const bannerId in banners){
+              const banner = banners[bannerId];
+
+              bannersHtml += `
+                <div id="banner_card_${bannerId}" class="banner_card">
+                    <div class="banner_image_container">
+                        <img src="${banner.image}" alt="${banner.title}">
+                        <div class="banner_title_overlay">${banner.title}</div>
+                    </div>
+                </div>
+              `
+
+            }
+
+            // Update innerHTML once
+            dynamic_banners_list.innerHTML = bannersHtml;
+
+            // Add click event listeners for each banner card
+            for (const bannerId in banners) {
+              document.getElementById(`banner_card_${bannerId}`).addEventListener("click", () => {
+                window.location.href = banners[bannerId].link;
+              });
+            }
+
+
+          }else{
+            console.log("No banners added");
+            document.getElementById("dynamic_banners").style.display = "none";
+          }
+        });
+      }
+      fetchBanners();
 
 
       // Handle category click
