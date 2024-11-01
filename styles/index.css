@@ -196,6 +196,9 @@ body {
     #product-list {
         padding: 0%;
     }
+    #dynamic_banners {
+        padding: 0%;
+    }
 }
 @media screen and (max-width:310px) {
     .search-product .container form {
