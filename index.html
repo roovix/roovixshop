@@ -541,7 +541,7 @@
       function openLoginPage() {
         auth.onAuthStateChanged((user) => {
           if (!user) {
-            window.location.href = "login";
+            window.location.href = "/login";
           }else{
             alert("User already logged in!")
           }
