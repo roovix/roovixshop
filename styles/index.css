@@ -121,6 +121,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
 }
 .no-products-to-show {
     width: 100%;
@@ -150,13 +151,12 @@ body {
 #spinner {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 49%;
     transform: translate(-50%, -50%);
     font-size: 3rem;
     color: #74C0FC;
     animation: spinner_rotate 4s linear infinite;
 }
-
 #refer_earn {
     background-color: #74c1fc27;
     border: 1px solid #74C0FC;
