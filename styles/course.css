@@ -1,0 +1,210 @@
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --logo-size: 50px;
+    --name-size: 20px;
+    --navber-height: 60px;
+    --mneu-item-font-size: 15px;
+    --left-right-padding-size: 15vw;
+    --primary-border-radius: 10px;
+    --background-base-color: #74c1fc15;
+}
+
+#course {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-left: var(--left-right-padding-size);
+    padding-right: var(--left-right-padding-size);
+    scroll-behavior: smooth;
+}
+/* Form Container */
+.form_container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: var(--primary-border-radius);
+    border: 1px solid rgba(128, 128, 128, 0.247);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.form_container::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: -55px;
+    width: 400px;
+    height: 600px;
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, #63E6BE, #e663d0);
+    z-index: -1;
+    filter: blur(100px);
+    opacity: 0.5;
+}
+
+.form_title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.form_title img {
+    width: var(--logo-size);
+}
+
+.form_title h2 {
+    color: var(--text-black-color);
+    font-size: var(--name-size);
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+form label {
+    font-weight: bold;
+    color: var(--text-gray-color);
+}
+
+form input,
+form select {
+    padding: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.363);
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #ffffff34;
+}
+
+form input:focus,
+form select:focus {
+    outline-color: var(--color-sky);
+    border-color: var(--color-sky);
+}
+
+form #button {
+    cursor: pointer;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: var(--color-primary);
+    color: var(--text-white-color);
+    border: none;
+    border-radius: var(--primary-border-radius);
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+form #button:hover {
+    background-color: var(--color-base);
+}
+
+/* Drop down intro start */
+.dropdown {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.dropdown-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.dropdown-header {
+    padding: 15px;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.dropdown-header i {
+    color: gray;
+}
+
+.dropdown-description {
+    display: none;
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+.dropdown-description p{
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.active .dropdown-description {
+    display: block;
+}
+.unroll_course {
+    cursor: pointer;
+    width: 100%;
+    padding: 10px 0px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #F36944;
+}
+/* Drop down intro end */
+
+/* Responsive Design */
+@media screen and (max-width: 1620px){
+    .form_container {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px){
+    #course {
+        padding: 10px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .form_container {
+        padding: 15px;
+    }
+
+    .form_title h2 {
+        font-size: 1.2rem;
+    }
+
+    form input,
+    form select {
+        font-size: 0.9rem;
+    }
+
+    form #button {
+        font-size: 0.9rem;
+    }
+}
