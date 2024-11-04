@@ -472,7 +472,8 @@
                     }
                   }
                   // Call the shareLink function to execute the sharing or fallback
-                  shareLink();
+                  // shareLink();
+                  navigator.clipboard.writeText(productId);
                 });
               }
             }
