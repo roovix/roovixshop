@@ -140,17 +140,17 @@
           <h2>Unroll Your Course</h2>
         </div>
         <form id="unroll_form">
-            <label for="name">Your Name</label>
+            <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="address">Your Address</label>
+            <label for="address">Address</label>
             <input type="text" id="address" name="address" required>
 
             <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" placeholder="Without (+88)" required>
 
             <select name="select_course" id="select_course" required>
-                <option value="" selected disabled>Select course</option>
+                <option value="" selected disabled>Select course type</option>
                 <option value="python">Python</option>
                 <option value="web_dev">Web Development</option>
                 <option value="roovix_shop">Make money online</option>
@@ -167,14 +167,25 @@
                 <option value="bkash">Bkash</option>
             </select>
 
-            <label for="payed_amount">Payed amount</label>
-            <input type="number" id="payed_amount" name="payed_amount" required>
+            <div class="bkash_payment_reference">
+              <h3>Reference</h3>
+              <ul>
+                <li>Bkash number: <span id="owner_bkash_number">+880-1713661952</span></li>
+                <li>Course fee: <span id="course_fee">৳0</span></li>
+              </ul>
+              <p>To enroll in the course, please pay the course fee to the above Bkash number. Use this reference number during your payment for verification.</p>
+            </div>            
 
-            <label for="payed_number">Payed phone number</label>
-            <input type="tel" id="payed_number" name="payed_number" placeholder="Without (+88)" required>
-
-            <label for="transaction">Transaction Id</label>
-            <input type="text" id="transaction" name="transaction" required>
+            <div id="place_payment_container">
+              <label for="payed_amount">Payed amount</label>
+              <input type="number" id="payed_amount" name="payed_amount" required>
+  
+              <label for="payed_number">Payed phone number</label>
+              <input type="tel" id="payed_number" name="payed_number" placeholder="Without (+88)" required>
+  
+              <label for="transaction">Transaction Id</label>
+              <input type="text" id="transaction" name="transaction" required>
+            </div>
 
             <input id="button" type="submit" value="Unroll"/>
         </form>
@@ -209,6 +220,36 @@
             });
         });
 
+        // Show hide bkash payment reference when bkash option selected
+        // Get the select element and the reference div
+        const paymentSelect = document.getElementById("payment");
+        const bkashReference = document.querySelector(".bkash_payment_reference");
+
+        // Listen for changes on the select element
+        paymentSelect.addEventListener("change", function() {
+          // Show the reference if "bkash" is selected, otherwise hide it
+          if (paymentSelect.value === "bkash") {
+            bkashReference.style.display = "block";
+          } else {
+            bkashReference.style.display = "none";
+          }
+
+          // Show the place_payment_container 
+          document.getElementById("place_payment_container").style.display = "flex";
+
+          const select_course_for_show = document.getElementById("select_course");
+          const course_fee = document.getElementById("course_fee");
+          if(select_course_for_show.value === "python") {
+            course_fee.textContent = `৳ ${Number(3000).toLocaleString()}`;
+          }else if(select_course_for_show.value === "web_dev") {
+            course_fee.textContent = `৳ ${Number(5000).toLocaleString()}`;
+          }else if(select_course_for_show.value === "roovix_shop"){
+            course_fee.textContent = `৳ ${Number(500).toLocaleString()}`;
+          }else{
+            course_fee.textContent = "At first select course type?"
+          }
+        });
+
         // unroll_course1 click
         const unroll_course1 = document.getElementById("unroll_course1");
         const unroll_course2 = document.getElementById("unroll_course2");
@@ -229,5 +270,83 @@
           view_form_obj.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     </script>
+
+<!-- Form control -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+  import {
+    getDatabase,
+    ref,
+    onValue,
+    set,
+    push
+  } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    GoogleAuthProvider,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const auth = getAuth(app);
+
+  // Firebase Auth listener (moved outside form submit event)
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      console.log("User is signed in:", user.email);
+
+      document.getElementById("unroll_form").addEventListener("submit", (event) => {
+        event.preventDefault(); // Prevent form reload
+
+        // Reference to user’s course in the database
+        const userCourseRef = push(ref(db, `users/${user.uid}/courses`));
+        const newUserCourseRef = ref(db, `users/${user.uid}/courses/${userCourseRef.key}`);
+
+        // Form values
+        const name = document.getElementById("name")?.value ?? "";
+        const address = document.getElementById("address")?.value ?? "";
+        const phone = document.getElementById("phone")?.value ?? "";
+        const select_course = document.getElementById("select_course")?.value ?? "";
+        const email = document.getElementById("email")?.value ?? "";
+        const promo = document.getElementById("promo")?.value ?? "";
+        const payment = document.getElementById("payment")?.value ?? "";
+        const payed_amount = parseFloat(document.getElementById("payed_amount")?.value) || 0;
+        const payed_number = parseFloat(document.getElementById("payed_number")?.value) || 0;
+        const transaction = document.getElementById("transaction")?.value ?? "";
+
+        // Data to add
+        const data_to_add = {
+          name: name,
+          address: address,
+          phone: phone,
+          select_course: select_course,
+          email: email,
+          promo: promo,
+          payment_method: payment,
+          payed_amount: payed_amount,
+          payed_number: payed_number,
+          transaction: transaction,
+          status: "pending"
+        };
+
+        // Save data to Firebase
+        set(newUserCourseRef, data_to_add)
+          .then(() => {
+            alert("Application submitted successfully.");
+            location.reload();
+          })
+          .catch((err) => {
+            console.error("Error saving application data:", err);
+            alert("Failed to apply. Please try again later.");
+          });
+      });
+    } else {
+      // Redirect to login if user is not logged in
+      window.location.href = "https://roovix.com/login";
+    }
+  });
+</script>
 </body>
 </html>
