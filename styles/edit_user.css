@@ -1,0 +1,110 @@
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --primary-border-radius: 10px;
+}
+
+body {
+    background-color: var(--color-background);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.profile-edit-container {
+    background: var(--color-background);
+    padding: 20px;
+    border-radius: var(--primary-border-radius);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .profile-edit-title {
+    color: var(--text-black-color);
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .profile-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .circular-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-primary);
+  }
+  
+  #current-name {
+    color: var(--text-gray-color);
+    font-size: var(--name-size);
+    margin-top: 10px;
+  }
+  
+  .profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .file-upload {
+    cursor: pointer;
+    background: var(--color-sky);
+    color: var(--text-white-color);
+    padding: 8px;
+    border-radius: var(--primary-border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .file-upload input {
+    display: none;
+  }
+  .file-upload {
+    margin: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid var(--text-gray-color);
+    border-radius: var(--primary-border-radius);
+    font-size: var(--name-size);
+  }
+  
+  button {
+    padding: 10px;
+    font-size: var(--mneu-item-font-size);
+    color: var(--text-white-color);
+    border: none;
+    border-radius: var(--primary-border-radius);
+    cursor: pointer;
+  }
+  
+  #upload-button {
+    background: var(--color-primary);
+  }
