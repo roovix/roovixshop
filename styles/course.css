@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 :root {
     --color-background: #fff;
     --color-primary: #F36944;
@@ -175,6 +177,31 @@ form #button:hover {
     background-color: #F36944;
 }
 /* Drop down intro end */
+
+/* bkash payemnt method reference */
+.bkash_payment_reference {
+    margin: 20px;
+    display: none;
+}
+.bkash_payment_reference ul {
+    margin-left: 30px;
+    margin-top: 7px;
+}
+.bkash_payment_reference ul span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+.bkash_payment_reference p {
+    margin-top: 10px;
+}
+#place_payment_container {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+}
+#place_payment_container label {
+    margin-top: 10px;
+}
 
 /* Responsive Design */
 @media screen and (max-width: 1620px){
