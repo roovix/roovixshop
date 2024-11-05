@@ -324,6 +324,17 @@ body {
     color: rgb(255, 0, 0);
   }
 
+#edit_profile_btn {
+    text-decoration: none;
+}
+#edit_profile_btn svg{
+    fill: #000;
+    width: 20px;
+    height: 30px;
+}
+
+
+
 /* When the right sidebar is hidden */
 @media screen and (max-width: 1250px) {
     .side_right {
