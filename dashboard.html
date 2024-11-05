@@ -428,6 +428,12 @@
 
               // Assuming `user` is the object retrieved from Firebase
               if (user) {
+
+                // Show user info in logout popup 
+                document.getElementById("logout_profile_picture").src = user.profile_picture ?? "images/difault_user_logo.png";
+                document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
+                document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
+                
                 // Set default currency to "৳" if undefined
                 const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
 
@@ -439,11 +445,7 @@
                 total_orders_count.textContent = user.total_orders.toLocaleString() ?? "0";
                 total_shares_count.textContent = user.total_shares.toLocaleString() ?? "0";
                 investment_count.textContent = `${currencySymbol} ${user.investment.toLocaleString() ?? "0"}`;
-                
-                // Show user info in logout popup 
-                document.getElementById("logout_profile_picture").src = user.profile_picture ?? "images/difault_user_logo.png";
-                document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
-                document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
+    
               } else {
                 console.error("User data not found or is undefined in Firebase.");
                 
