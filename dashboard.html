@@ -464,7 +464,6 @@
           }
         });
       }
-      checkForUser();
 
       // Balance analysis start
       auth.onAuthStateChanged((user_data_for_balance_analysis) => {
@@ -588,6 +587,11 @@
       // Open add account or login page
       document.getElementById("add_account").addEventListener("click", ()=>{
         window.location.href = "/login";
+      });
+
+            // User logout popup function call here
+      document.addEventListener("DOMContentLoaded", () => {
+        checkForUser();
       });
     </script>
   </body>
