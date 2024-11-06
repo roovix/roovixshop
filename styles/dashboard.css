@@ -323,6 +323,13 @@ body {
   .balance_analysis_text_decrease {
     color: rgb(255, 0, 0);
   }
+  .linkClick_analysis_text_increase {
+    color: rgb(0, 167, 0);
+  }
+  .linkClick_analysis_text_decrease {
+    color: rgb(255, 0, 0);
+  }
+
 
 #edit_profile_btn {
     text-decoration: none;
