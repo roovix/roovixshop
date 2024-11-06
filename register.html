@@ -263,8 +263,13 @@
                     uid: user_id,
                     name: name,
                     email: email,
-                    profile_picture: null,
-                    phone_number: phone_number
+                    profile_picture: "https://roovix.com/images/difault_user_logo.png",
+                    phone_number: phone_number,
+                    balance: 0,
+                    currency: "৳",
+                    investment: 0,
+                    total_link_click: 0,
+                    total_orders: 0
                 }
                 set(userRef, userData).then(()=>{
                     window.location.href = "https://roovix.com";
