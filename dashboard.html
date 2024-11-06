@@ -104,6 +104,12 @@
               <li id="list_logout_btn" class="sub_list_item"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</li>
             </ul>
           </li>
+          <li>
+            <span><i class="fa-solid fa-hand-holding-dollar"></i> Earnings <i class="fa-solid list_arrow fa-chevron-down"></i></span>
+            <ul class="sub_list">
+              <li class="sub_list_item" id="withdraw_btn_nav"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw</li>
+            </ul>
+          </li>
         </ul>
        </div>
        <!-- Side left end -->
@@ -223,6 +229,30 @@
         <button id="logout_cancel_button" class="logout_cancel_button">Cancel</button>
      </div>
     <!-- LogOUt popup end-->
+
+     <!-- Withdraw balance start -->
+     <div class="withdraw_balance_container">
+      <div class="withdraw_balance_title">
+        <p>Withdraw Balance</p>
+      </div>
+      <form id="withdraw_form">
+        <div class="withdraw_balance_amount">
+          <select name="payment_option" id="payment_option" required>
+            <option value="" selected disabled>Select payment method</option>
+            <option value="bkash">Bkash</option>
+          </select>
+          <div class="withdraw_field">
+            <input type="tel" id="withdraw_amount" placeholder="Enter withdraw amount" required>
+            <input type="tel" id="withdraw_phone" placeholder="Enter your Bkash number (without +88)" required>
+          </div>
+        </div>
+        <div class="withdraw_balance_button_container">
+          <button type="" id="withdraw_balance_button" class="withdraw_balance_button">Request Withdraw</button>
+          <button id="withdraw_balance_cancel_button" class="withdraw_balance_cancel_button">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- Withdraw balance end -->
 
     <!-- Js logic to functional the page -->
      <script>
@@ -367,6 +397,21 @@
       list_logout_btn.addEventListener('click', function () {
           logoutContainer.style.display = 'flex'; // Show the logout popup
       });
+
+       
+      // Handle withdraw from
+      document.getElementById("withdraw_btn_nav").addEventListener("click", ()=>{
+        document.querySelector(".withdraw_balance_container").style.display = "block";
+      });
+      document.getElementById("withdraw_balance_cancel_button").addEventListener("click", ()=>{
+        document.querySelector(".withdraw_balance_container").style.display = "none";
+      });
+      // show field after select payment method
+      document.getElementById("payment_option").addEventListener("change", ()=>{
+        if(document.getElementById("payment_option").value === "bkash"){
+          document.querySelector(".withdraw_field").style.display = "block";
+        }
+      });
     </script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
@@ -443,6 +488,15 @@
           }
         });
       }
+
+      // Withdraw request
+      document.getElementById("withdraw_balance_button").addEventListener("click", () => {
+        const withdraw_amount = document.getElementById("withdraw_amount").value;
+        const withdraw_phone = document.getElementById("withdraw_phone").value;
+        const withdraw_payment_method = document.getElementById("payment_option").value;
+
+        alert("Withdraw request sent successsfuly, Amount: "+withdraw_amount);
+      });
 
       // Balance analysis start
       auth.onAuthStateChanged((user_data_for_balance_analysis) => {
