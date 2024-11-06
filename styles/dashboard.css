@@ -340,6 +340,74 @@ body {
     height: 30px;
 }
 
+/* Handle withdraw popup start */
+.withdraw_balance_container {
+    width: 400px;
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #00a2ff31;
+    padding: 20px;
+    border: 1px solid rgba(128, 128, 128, 0.384);
+    border-radius: 15px;
+    box-shadow: 5px 10px 15px rgba(128, 128, 128, 0.418);
+    backdrop-filter: blur(2px);
+}
+.withdraw_balance_title p {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.withdraw_balance_amount {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.withdraw_balance_amount select {
+    outline-color: transparent;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid rgba(128, 128, 128, 0.527);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-color: transparent;
+}
+.withdraw_field {
+    display: none;
+}
+.withdraw_field input {
+    outline-color: #74C0FC;
+    padding: 12px;
+    border: 1px solid rgba(128, 128, 128, 0.527);
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #ffffffa2;
+}
+.withdraw_balance_button_container {
+    display: flex;
+    gap: 10px;flex-wrap: wrap;
+}
+.withdraw_balance_button_container button {
+    padding: 10px 10px;
+    flex-grow: 1;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+#withdraw_balance_button {
+    background-color: #FC749D;
+    color: #fff;
+}
+#withdraw_balance_cancel_button {
+    border: 1px solid #64646425;
+}
+/* Handle withdraw popup end */
 
 
 /* When the right sidebar is hidden */
@@ -372,5 +440,16 @@ body {
     /* Adjust grid to have only one column when both sidebars are hidden */
     .container {
         grid-template-columns: 1fr; /* Full width for the main content */
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .withdraw_balance_container {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 350px) {
+    .withdraw_balance_container {
+        width: 100%;
     }
 }
