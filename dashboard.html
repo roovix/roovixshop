@@ -130,7 +130,7 @@
                 <i id="balance_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
                 <i id="balance_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
                 
-                <p id="balance_analysis_text">No rich</p>
+                <p id="balance_analysis_text">No reach</p>
               </div>
             </div>
 
@@ -149,7 +149,7 @@
                 <i id="linkClick_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
                 <i id="linkClick_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
                 
-                <p id="linkClick_analysis_text">No rich</p>
+                <p id="linkClick_analysis_text">No reach</p>
               </div>
             </div>
 
@@ -168,7 +168,7 @@
                 <i id="orders_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
                 <i id="orders_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
                 
-                <p id="orders_analysis_text">No rich</p>
+                <p id="orders_analysis_text">No reach</p>
               </div>
             </div>
 
@@ -509,7 +509,7 @@
                 document.getElementById("balance_analysis_bar-up").style.display = "block";
 
                 // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span>`;
+                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span> transactions`;
 
               } else if (lastWeekTransactions < previousWeekTransactions) {
                 console.log("Transactions decreased by", previousWeekTransactions - lastWeekTransactions);
@@ -520,7 +520,7 @@
                 document.getElementById("balance_analysis_bar-up").style.display = "none";
 
                 // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
+                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span> transactions`;
 
               } else {
                 console.log("Number of transactions stayed the same");
