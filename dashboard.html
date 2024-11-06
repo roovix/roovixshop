@@ -172,25 +172,6 @@
               </div>
             </div>
 
-            <div id="share_container" class="card">
-              <div class="content">
-                <div class="card_icon">
-                  <i id="color_i4" class="fa-solid fa-share-nodes"></i>
-                </div>
-                <div class="card_content">
-                  <p class="card_value" id="total_shares_count">0</p>
-                  <h3 class="card_title">Shares</h3>
-                </div>
-              </div>
-              <div class="analysis">
-                <i id="shares_analysis_bar-line" class="fa-solid no_rich fa-grip-lines"></i>
-                <i id="shares_analysis_bar-down" class="fa-solid down_rich fa-arrow-trend-down"></i>
-                <i id="shares_analysis_bar-up" class="fa-solid up_rich fa-arrow-trend-up"></i>
-                
-                <p id="shares_analysis_text">No rich</p>
-              </div>
-            </div>
-
             <div class="card">
               <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                 <div class="card_icon">
@@ -423,7 +404,6 @@
               const balance_count = document.getElementById("balance_count");
               const link_clicks_count = document.getElementById("link_clicks_count");
               const total_orders_count = document.getElementById("total_orders_count");
-              const total_shares_count = document.getElementById("total_shares_count");
               const investment_count = document.getElementById("investment_count");
 
               // Assuming `user` is the object retrieved from Firebase
@@ -443,7 +423,6 @@
                 balance_count.textContent = `${currencySymbol} ${user.balance.toLocaleString() ?? "0"}`;
                 link_clicks_count.textContent = user.total_link_click.toLocaleString() ?? "0";
                 total_orders_count.textContent = user.total_orders.toLocaleString() ?? "0";
-                total_shares_count.textContent = user.total_shares.toLocaleString() ?? "0";
                 investment_count.textContent = `${currencySymbol} ${user.investment.toLocaleString() ?? "0"}`;
     
               } else {
@@ -455,7 +434,6 @@
                 balance_count.textContent = "৳ 0";
                 link_clicks_count.textContent = "0";
                 total_orders_count.textContent = "0";
-                total_shares_count.textContent = "0";
                 investment_count.textContent = "৳ 0";
               }
             });
@@ -551,6 +529,90 @@
       });
       // Balance analysis end
 
+      // Link click analysis start
+      auth.onAuthStateChanged((user_data_for_link_click_analysis) => {
+        if (user_data_for_link_click_analysis) {
+          const user_id_for_link_click_analysis = user_data_for_link_click_analysis.uid;
+          const linkClickUserRef = ref(db, `users_public/${user_id_for_link_click_analysis}`);
+      
+          const today = new Date();
+          const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in one day
+          const oneWeekAgo = new Date(today - 7 * oneDay);
+          const twoWeeksAgo = new Date(today - 14 * oneDay);
+      
+          let lastWeekClicks = 0;
+          let previousWeekClicks = 0;
+          let totalClicks = 0;
+      
+          onValue(linkClickUserRef, (snapshot) => {
+            const linkClickData = snapshot.val();
+      
+            // Iterate over each click event
+            for (const clickKey in linkClickData) {
+              let clickEvent = linkClickData[clickKey];
+              
+              // Only process if the link was clicked
+              if (clickEvent.link_clicked) {
+                totalClicks += 1; // Accumulate total clicks for all time
+      
+                // Parse the event timestamp, assuming each click event has a `time` field in milliseconds
+                let clickDate = new Date(clickEvent.time);
+      
+                // Count clicks within the last week
+                if (clickDate >= oneWeekAgo && clickDate < today) {
+                  lastWeekClicks += 1;
+                }
+                // Count clicks within the previous week
+                else if (clickDate >= twoWeeksAgo && clickDate < oneWeekAgo) {
+                  previousWeekClicks += 1;
+                }
+              }
+            }
+      
+            // Update the UI with last week click data
+            document.getElementById("link_clicks_count").textContent = lastWeekClicks;
+      
+            // Compare click counts and update UI
+            if (lastWeekClicks > previousWeekClicks) {
+              console.log("Clicks increased by", lastWeekClicks - previousWeekClicks);
+      
+              document.getElementById("linkClick_analysis_bar-line").style.display = "none";
+              document.getElementById("linkClick_analysis_bar-down").style.display = "none";
+              document.getElementById("linkClick_analysis_bar-up").style.display = "block";
+      
+              document.getElementById("linkClick_analysis_text").innerHTML = 
+                `Last week <span class="linkClick_analysis_text_increase">+${lastWeekClicks - previousWeekClicks}</span> clicks`;
+      
+            } else if (lastWeekClicks < previousWeekClicks) {
+              console.log("Clicks decreased by", previousWeekClicks - lastWeekClicks);
+      
+              document.getElementById("linkClick_analysis_bar-line").style.display = "none";
+              document.getElementById("linkClick_analysis_bar-down").style.display = "block";
+              document.getElementById("linkClick_analysis_bar-up").style.display = "none";
+      
+              document.getElementById("linkClick_analysis_text").innerHTML = 
+                `Last week <span class="linkClick_analysis_text_decrease">-${previousWeekClicks - lastWeekClicks}</span> clicks`;
+      
+            } else {
+              console.log("Number of clicks stayed the same");
+      
+              document.getElementById("linkClick_analysis_bar-line").style.display = "block";
+              document.getElementById("linkClick_analysis_bar-down").style.display = "none";
+              document.getElementById("linkClick_analysis_bar-up").style.display = "none";
+      
+              document.getElementById("linkClick_analysis_text").textContent = "No change in clicks last week";
+            }
+      
+            // Update the total click count in the `users` node
+            const updateClickData = { total_link_click: totalClicks };
+            const updateClickRef = ref(db, `users/${user_id_for_link_click_analysis}`);
+            update(updateClickRef, updateClickData);
+          });
+        }
+      });
+      // Link click analysis end
+      
+
       // Check user claims start
       auth.onAuthStateChanged((user)=>{
 
@@ -562,9 +624,9 @@
             if(claims.admin){
 
               // User id admin hide all the cards except Balance and Investment Card
-              document.getElementById("link_click_container").style.display = "none";
-              document.getElementById("order_container").style.display = "none";
-              document.getElementById("share_container").style.display = "none";
+              // document.getElementById("link_click_container").style.display = "none";
+              // document.getElementById("order_container").style.display = "none";
+              // document.getElementById("share_container").style.display = "none";
             }
 
           });
