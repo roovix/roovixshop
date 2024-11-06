@@ -128,7 +128,8 @@
                 product_id: product_id,
                 dp_id: dp_id,
                 clicker_id: current_user_id,
-                shared_user_id: shared_user_id
+                shared_user_id: shared_user_id,
+                time: new Date().toISOString()
             }).then(()=>{
                 console.log("User public saved!");
                 getProductDetails();
