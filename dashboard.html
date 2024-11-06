@@ -448,7 +448,9 @@
       auth.onAuthStateChanged((user_data_for_balance_analysis) => {
         if (user_data_for_balance_analysis) {
           const user_id_for_balance_analysis = user_data_for_balance_analysis.uid;
-          const balanceUserRef = ref(db, `users/${user_id_for_balance_analysis}/analysis/balance`);
+          const balanceUserRef = ref(db, `wallet/${user_id_for_balance_analysis}/analysis_balance`);
+          let total_balance_count_from_wallet = 0;
+          let currencyIcon = "৳";
 
           onValue(balanceUserRef, (snapshot) => {
             const balanceAnalysis = snapshot.val();
@@ -468,6 +470,12 @@
               let item = balanceAnalysis[key_for_balanceAnalysis];
               let itemDate = new Date(item.time);
 
+              // Update the default currency icon
+              currencyIcon = item.currency === "BDT"? "৳" : item.currency;
+
+              // Calculate total balance
+              total_balance_count_from_wallet += item.value;
+
                 // Check if the date is within the last week
                 if (itemDate >= oneWeekAgo && itemDate < today) {
                     lastWeekBalance += item.value;
@@ -479,6 +487,12 @@
                     previousWeekTransactions += 1; // Increment transaction count for previous week
                 }
             }
+
+            // update balance in users
+            const updateBalanceInUserRef = ref(db, `users/${user_data_for_balance_analysis.uid}`);
+            update(updateBalanceInUserRef, {
+                balance: total_balance_count_from_wallet
+            });
 
             // Output the results
             console.log("Balance in the last week:", lastWeekBalance);
@@ -492,8 +506,6 @@
             } else {
                 console.log("Balance stayed the same");
             }
-
-
 
             // Output the transaction results
             console.log("Transactions in the last week:", lastWeekTransactions);
@@ -520,11 +532,11 @@
                 document.getElementById("balance_analysis_bar-up").style.display = "none";
 
                 // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span> transactions`;
+                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
 
               } else {
                 console.log("Number of transactions stayed the same");
-            }
+              }
           });
         }
       });
