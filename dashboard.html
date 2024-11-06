@@ -84,7 +84,7 @@
         <div class="side_left_title">
           <img id="profile_picture" src="images/difault_user_logo.png" alt="profile_picture">
           <p id="user_name" class="user_name">Anonymous</p>
-          <a id="edit_profile_btn" target="_blank" href="/edit_profile"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></a>
+          <a id="edit_profile_btn" target="_blank" href="/edit_profile.html"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></a>
           <button id="side_left_close"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>
         <ul class="side_left_ul">
@@ -121,7 +121,7 @@
           <!-- Card section start -->
           <section id="cards_section">
             
-            <div class="card">
+            <div id="balance" class="card">
               <div class="content">
                 <div class="card_icon">
                   <i class="fa-solid fa-sack-dollar"></i>
@@ -178,7 +178,7 @@
               </div>
             </div>
 
-            <div class="card">
+            <div id="invest" class="card">
               <div class="content" style="display: flex; flex-direction: column; align-items: center;">
                 <div class="card_icon">
                   <i id="color_i5" class="fa-solid fa-hand-holding-dollar"></i>
@@ -220,7 +220,7 @@
         <p>Are you sure you want to log out?</p>
       </div>
       <div class="logout_account_info">
-        <img id="logout_profile_picture" src="images/difault_user_logo.png" alt="logout_profile_picture">
+        <img id="logout_profile_picture" alt="logout_profile_picture">
         <p id="logout_user_name" class="logout_user_name">Anonymous</p>
         <p id="logout_user_email" class="logout_user_name">Email</p>
       </div>
@@ -228,16 +228,17 @@
         <button id="logout_button" class="logout_button">Logout</button>
         <button id="logout_cancel_button" class="logout_cancel_button">Cancel</button>
      </div>
+     </div>
     <!-- LogOUt popup end-->
 
-     <!-- Withdraw balance start -->
+    <!-- Withdraw balance start -->
      <div class="withdraw_balance_container">
       <div class="withdraw_balance_title">
         <p>Withdraw Balance</p>
       </div>
       <form id="withdraw_form">
         <div class="withdraw_balance_amount">
-          <select name="payment_option" id="payment_option" required>
+          <select id="payment_option" required>
             <option value="" selected disabled>Select payment method</option>
             <option value="bkash">Bkash</option>
           </select>
@@ -395,10 +396,10 @@
           logoutContainer.style.display = 'none'; // Show the logout popup
       });
       list_logout_btn.addEventListener('click', function () {
+          // show the logout popup
           logoutContainer.style.display = 'flex'; // Show the logout popup
       });
 
-       
       // Handle withdraw from
       document.getElementById("withdraw_btn_nav").addEventListener("click", ()=>{
         document.querySelector(".withdraw_balance_container").style.display = "block";
@@ -413,13 +414,17 @@
         }
       });
     </script>
+
+    <!-- Module script for firebase client side -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
       import {
         getDatabase,
         ref,
         onValue,
-        update
+        update,
+        push,
+        set
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
       import {
         getAuth,
@@ -454,15 +459,13 @@
 
               // Assuming `user` is the object retrieved from Firebase
               if (user) {
-
                 // Show user info in logout popup 
                 document.getElementById("logout_profile_picture").src = user.profile_picture ?? "images/difault_user_logo.png";
                 document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
                 document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
-                
+
                 // Set default currency to "৳" if undefined
                 const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
-
                 // Set user info with default values if any field is undefined or missing
                 user_name.textContent = user.name ?? "Anonymous";
                 profile_picture.src = user.profile_picture ?? "images/difault_user_logo.png";
@@ -470,7 +473,6 @@
                 link_clicks_count.textContent = user.total_link_click.toLocaleString() ?? "0";
                 total_orders_count.textContent = user.total_orders.toLocaleString() ?? "0";
                 investment_count.textContent = `${currencySymbol} ${user.investment.toLocaleString() ?? "0"}`;
-    
               } else {
                 console.error("User data not found or is undefined in Firebase.");
                 
@@ -489,14 +491,15 @@
         });
       }
 
-      // Withdraw request
+      // Withdraw request start
       document.getElementById("withdraw_balance_button").addEventListener("click", () => {
         const withdraw_amount = document.getElementById("withdraw_amount").value;
         const withdraw_phone = document.getElementById("withdraw_phone").value;
         const withdraw_payment_method = document.getElementById("payment_option").value;
 
-        alert("Withdraw request sent successsfuly, Amount: "+withdraw_amount);
+        alert("Withdraw request sent successfully, Amount: "+withdraw_amount);
       });
+      // Withdraw request end
 
       // Balance analysis start
       auth.onAuthStateChanged((user_data_for_balance_analysis) => {
@@ -596,24 +599,25 @@
       });
       // Balance analysis end
 
+
       // Link click analysis start
       auth.onAuthStateChanged((user_data_for_link_click_analysis) => {
         if (user_data_for_link_click_analysis) {
           const user_id_for_link_click_analysis = user_data_for_link_click_analysis.uid;
           const linkClickUserRef = ref(db, `users_public/${user_id_for_link_click_analysis}`);
-      
+
           const today = new Date();
           const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in one day
           const oneWeekAgo = new Date(today - 7 * oneDay);
           const twoWeeksAgo = new Date(today - 14 * oneDay);
-      
+
           let lastWeekClicks = 0;
           let previousWeekClicks = 0;
           let totalClicks = 0;
-      
+
           onValue(linkClickUserRef, (snapshot) => {
             const linkClickData = snapshot.val();
-      
+
             // Iterate over each click event
             for (const clickKey in linkClickData) {
               let clickEvent = linkClickData[clickKey];
@@ -621,10 +625,10 @@
               // Only process if the link was clicked
               if (clickEvent.link_clicked) {
                 totalClicks += 1; // Accumulate total clicks for all time
-      
+
                 // Parse the event timestamp, assuming each click event has a `time` field in milliseconds
                 let clickDate = new Date(clickEvent.time);
-      
+
                 // Count clicks within the last week
                 if (clickDate >= oneWeekAgo && clickDate < today) {
                   lastWeekClicks += 1;
@@ -635,41 +639,41 @@
                 }
               }
             }
-      
+
             // Update the UI with last week click data
             document.getElementById("link_clicks_count").textContent = lastWeekClicks;
-      
+
             // Compare click counts and update UI
             if (lastWeekClicks > previousWeekClicks) {
               console.log("Clicks increased by", lastWeekClicks - previousWeekClicks);
-      
+
               document.getElementById("linkClick_analysis_bar-line").style.display = "none";
               document.getElementById("linkClick_analysis_bar-down").style.display = "none";
               document.getElementById("linkClick_analysis_bar-up").style.display = "block";
-      
+
               document.getElementById("linkClick_analysis_text").innerHTML = 
                 `Last week <span class="linkClick_analysis_text_increase">+${lastWeekClicks - previousWeekClicks}</span> clicks`;
-      
+
             } else if (lastWeekClicks < previousWeekClicks) {
               console.log("Clicks decreased by", previousWeekClicks - lastWeekClicks);
-      
+
               document.getElementById("linkClick_analysis_bar-line").style.display = "none";
               document.getElementById("linkClick_analysis_bar-down").style.display = "block";
               document.getElementById("linkClick_analysis_bar-up").style.display = "none";
-      
+
               document.getElementById("linkClick_analysis_text").innerHTML = 
                 `Last week <span class="linkClick_analysis_text_decrease">-${previousWeekClicks - lastWeekClicks}</span> clicks`;
-      
+
             } else {
               console.log("Number of clicks stayed the same");
-      
+
               document.getElementById("linkClick_analysis_bar-line").style.display = "block";
               document.getElementById("linkClick_analysis_bar-down").style.display = "none";
               document.getElementById("linkClick_analysis_bar-up").style.display = "none";
-      
+
               document.getElementById("linkClick_analysis_text").textContent = "No change in clicks last week";
             }
-      
+
             // Update the total click count in the `users` node
             const updateClickData = { total_link_click: totalClicks };
             const updateClickRef = ref(db, `users/${user_id_for_link_click_analysis}`);
@@ -678,7 +682,7 @@
         }
       });
       // Link click analysis end
-      
+    
 
       // Check user claims start
       auth.onAuthStateChanged((user)=>{
@@ -715,10 +719,10 @@
 
       // Open add account or login page
       document.getElementById("add_account").addEventListener("click", ()=>{
-        window.location.href = "/login";
+        window.location.href = "login";
       });
 
-            // User logout popup function call here
+      // User logout popup function call here
       document.addEventListener("DOMContentLoaded", () => {
         checkForUser();
       });
