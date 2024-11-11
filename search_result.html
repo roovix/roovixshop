@@ -75,12 +75,15 @@
         display: flex;
         gap: 10px;
         align-items: center;
+        flex-wrap: wrap;
+        padding-right: 20px;
       }
       #search_form input {
         padding: 10px;
         background-color: #fff;
         border: 1px solid rgba(128, 128, 128, 0.644);
         border-radius: 5px;
+        flex-grow: 1;
       }
       #search_form input:focus {
         outline-color: #74C0FC;
@@ -104,12 +107,24 @@
         margin: 0;
       }
       .logo {
-        width: 3rem;
+        fill: #55555580;
+        transition: .3s ease;
       }.title {
         cursor: pointer;
         display: flex;
-        gap: 5px;
+        gap: 2px;
         align-items: center;
+        background-color: #8a8a8a27;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #555555cc;
+        transition: .3s ease;
+      }
+      .title:hover > .logo{
+        fill: #464646a2;
+      }
+      .title:hover {
+        color: #464646;
       }
     </style>
   </head>
@@ -120,8 +135,8 @@
     <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
     
     <div class="title" id="logo_container">
-      <img class="logo" src="images/logo_png.png" alt="roovix_shop">
-      <p>Roovix Shop</p>
+      <svg class="logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+      <p>Home</p>
     </div>
   </form>
   <h1 id="show_query" style="font-size: 1rem; font-weight: 500; margin-left: 20px; color: gray;"></h1>
