@@ -601,6 +601,46 @@
       scrollToTopBtn.onclick = function () {
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
+
+      // Refer and earn
+      const referBtn = document.getElementById("refer_earn");
+      referBtn.addEventListener("click", () => {
+        auth.onAuthStateChanged(async (user_for_refer) => {
+          if(user_for_refer){
+            const user_for_refer_uid = user_for_refer.uid;
+
+            // Check for user is eligible to refer
+            const referRef = ref(db, `users_refer/${user_for_refer_uid}`);
+            const referData = await get(referRef);
+            const refer_and_earn = referData.val();
+            const refer_available = refer_and_earn.available;
+            
+            if(refer_available > 0) {
+              const shareData = {
+                title: document.title,   // Page title
+                text: 'Create a Roovix account with the link to get free balance!',  // Optional description
+                url: `https://roovix.com/register?refer=${true}&referer_id=${user_for_refer_uid}`     // Page URL
+              };
+              try {
+                  if (navigator.share) {
+                      await navigator.share(shareData);
+                      console.log('Page shared successfully');
+                  } else {
+                      alert('Web Share API not supported in this browser.');
+                  }
+              } catch (error) {
+                  console.error('Error sharing:', error);
+              }
+            }else{
+              alert("Sorry, you can't refer and earn right now.");
+            }
+
+          }else{
+            alert("You need to be logged in to refer and earn!");
+            window.location.href = "https://roovix.com/login";
+          }
+        });
+      });
     </script>
 
     <!-- Bootstrap js -->
