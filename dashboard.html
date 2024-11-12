@@ -552,8 +552,8 @@
             });
 
             // Output the results
-            console.log("Balance in the last week:", lastWeekBalance);
-            console.log("Balance in the previous week:", previousWeekBalance);
+            console.log("Balance in this week:", lastWeekBalance);
+            console.log("Balance in last week:", previousWeekBalance);
 
             // Compare the two balances
             if (lastWeekBalance > previousWeekBalance) {
@@ -565,8 +565,8 @@
             }
 
             // Output the transaction results
-            console.log("Transactions in the last week:", lastWeekTransactions);
-            console.log("Transactions in the previous week:", previousWeekTransactions);
+            console.log("Transactions in this week:", lastWeekTransactions);
+            console.log("Transactions in last week:", previousWeekTransactions);
 
             // Transaction count comparison
             if (lastWeekTransactions > previousWeekTransactions) {
@@ -578,7 +578,7 @@
                 document.getElementById("balance_analysis_bar-up").style.display = "block";
 
                 // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span> transactions`;
+                document.getElementById("balance_analysis_text").innerHTML = `This week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span> transactions`;
 
               } else if (lastWeekTransactions < previousWeekTransactions) {
                 console.log("Transactions decreased by", previousWeekTransactions - lastWeekTransactions);
@@ -589,7 +589,7 @@
                 document.getElementById("balance_analysis_bar-up").style.display = "none";
 
                 // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `Last week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
+                document.getElementById("balance_analysis_text").innerHTML = `This week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
 
               } else {
                 console.log("Number of transactions stayed the same");
