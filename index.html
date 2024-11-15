@@ -22,11 +22,11 @@
      <meta name="author" content="Roovix">
  
      <!-- Open Graph Meta Tags for better sharing on social media -->
-     <meta property="og:title" content="Login - Roovix Shop">
-     <meta property="og:description" content="Access your Roovix Shop account to manage your orders and enjoy exclusive offers. Log in now for the best e-commerce experience in Bangladesh.">
-     <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/ec-affiliate.appspot.com/o/e%20-%20commerce%20logo%20circle.png?alt=media&token=f4fc5b89-acb2-48a2-924e-e4ae6c6886ee">
-     <meta property="og:url" content="https://roovix.com/login">
-     <meta property="og:type" content="website">
+     <meta property="og:title" content="Check out this amazing product!" />
+     <meta property="og:description" content="Here’s a product you might find interesting." />
+     <meta property="og:image" content="https://roovix.com/images/logo.png" />
+     <meta property="og:url" content="https://roovix.com/product" />
+     <meta property="og:type" content="website" />   
      <meta name="google-site-verification" content="kcvJtB49mIavOu-GxZRCTRqS9p8UbMVva1Tq0JLZs8A" />
      <meta name="robots" content="index, follow">
 
@@ -464,9 +464,9 @@
                   const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
                   async function shareLink() {
                     const shareData = {
-                      title: 'Check out this product!',
-                      text: 'Here’s a product I found interesting:',
-                      url: product_url
+                        title: 'Check out this product!',
+                        text: `Here’s a product I found interesting:\n${product.image}`, // Include image URL in the text
+                        url: product_url
                     };
 
                     try {
