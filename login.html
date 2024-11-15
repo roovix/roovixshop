@@ -250,7 +250,7 @@
             await signInWithEmailAndPassword(auth, email, password);
             window.location.href = "https://roovix.com";
           } catch (error) {
-            console.error("Error signing in:", error.message);
+            alert("Error signing in:", error.message);
           }
         }
       });
