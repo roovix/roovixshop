@@ -250,7 +250,7 @@
             await signInWithEmailAndPassword(auth, email, password);
             window.location.href = "https://roovix.com";
           } catch (error) {
-            alert("Error signing in:", error.message);
+            alert("Invalid username or password!");
           }
         }
       });
