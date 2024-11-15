@@ -20,7 +20,7 @@
     <meta property="og:title" content="Roovix Shop - Your Online Store for Unique Products">
     <meta property="og:description" content="Shop unique products at Roovix Shop. Discover great deals today!">
     <meta property="og:image" content="https://www.roovixshop.com/image.jpg"> <!-- Replace with actual image URL -->
-    <meta property="og:url" content="https://www.roovixshop.com/">
+    <meta property="og:url" content="https://www.roovixshop.com/product">
     <meta property="og:type" content="website">
 
     <!-- Link css -->
@@ -322,11 +322,11 @@
                   const dp_id = dp_id_full.split("/").pop();
                   const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
     
-                  const shareData = {
-                    title: 'Check out this product!',
-                    text: 'Here’s a product I found interesting:',
-                    url: product_url
-                  };
+                    const shareData = {
+                        title: 'Check out this product-🛍️',
+                        text: `Here’s a product I found interesting🔎\n\n`, // Include image URL in the text
+                        url: product_url
+                    };
     
                   try {
                     await navigator.share(shareData);
