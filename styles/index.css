@@ -145,6 +145,7 @@ body {
     color: #fff;
     padding: 8px;
     opacity: 0.8;
+    display: none;
 }
 #spinner {
     position: absolute;
