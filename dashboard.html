@@ -467,7 +467,14 @@
                 document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
                 document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
 
-                document.getElementById("user_id_copy").textContent = `Uid: ${user.uid}` ?? "Uid: Anonymous";
+                document.getElementById("user_id_copy").innerHTML = `Uid: ${user.uid} <span id="copy_uid"><i class="fa-regular fa-copy"></i></span>` ?? "Uid: Anonymous";
+                document.getElementById("copy_uid").addEventListener("click", ()=>{
+                  navigator.clipboard.writeText(user.uid).then(()=>{
+                    alert("UID copied successfully!");
+                  }).catch(()=>{
+                    alert("Failed to copy UID!");
+                  })
+                });
 
                 // Set default currency to "৳" if undefined
                 const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
