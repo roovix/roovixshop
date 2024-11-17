@@ -117,6 +117,7 @@
        <!-- Main start -->
         <div class="main">
           <p class="dashboard_title">Activity Snapshot</p>
+          <p class="dashboard_title" id="user_id_copy"></p>
 
           <!-- Card section start -->
           <section id="cards_section">
@@ -457,6 +458,7 @@
               const link_clicks_count = document.getElementById("link_clicks_count");
               const total_orders_count = document.getElementById("total_orders_count");
               const investment_count = document.getElementById("investment_count");
+              const user_id_copy = document.getElementById("user_id_copy");
 
               // Assuming `user` is the object retrieved from Firebase
               if (user) {
@@ -465,10 +467,12 @@
                 document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
                 document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
 
+                document.getElementById("user_id_copy").textContent = user.uid ?? "Anonymous";
+
                 // Set default currency to "৳" if undefined
                 const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
                 // Set user info with default values if any field is undefined or missing
-                user_name.textContent = user.name ?? "Anonymous";
+                user_name.textContent = `Uid: ${user.name}` ?? "Uid: Anonymous";
                 profile_picture.src = user.profile_picture ?? "images/difault_user_logo.png";
                 balance_count.textContent = `${currencySymbol} ${user.balance.toLocaleString() ?? "0"}`;
                 link_clicks_count.textContent = user.total_link_click.toLocaleString() ?? "0";
