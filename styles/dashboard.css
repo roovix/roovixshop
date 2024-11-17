@@ -320,6 +320,10 @@ body {
     text-align: center;
     margin-top: 10px;
 }
+.uid_copy span {
+    margin-left: 5px;
+    cursor: pointer;
+}
 
   /* Analysis text content span */
   .balance_analysis_text_increase {
