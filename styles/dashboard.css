@@ -317,6 +317,8 @@ body {
   }
 .uid_copy {
     font-size: 1rem;
+    text-align: center;
+    margin-top: 10px;
 }
 
   /* Analysis text content span */
