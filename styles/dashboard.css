@@ -315,6 +315,9 @@ body {
   .no_rich {
     color: gray;
   }
+.uid_copy {
+    font-size: 1rem;
+}
 
   /* Analysis text content span */
   .balance_analysis_text_increase {
