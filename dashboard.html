@@ -467,12 +467,12 @@
                 document.getElementById("logout_user_name").textContent = user.name?? "Anonymous";
                 document.getElementById("logout_user_email").textContent = user.email ?? "Anonymous";
 
-                document.getElementById("user_id_copy").textContent = user.uid ?? "Anonymous";
+                document.getElementById("user_id_copy").textContent = `Uid: ${user.uid}` ?? "Uid: Anonymous";
 
                 // Set default currency to "৳" if undefined
                 const currencySymbol = user.currency === "BDT" ? "৳" : user.currency ?? "৳";
                 // Set user info with default values if any field is undefined or missing
-                user_name.textContent = `Uid: ${user.name}` ?? "Uid: Anonymous";
+                user_name.textContent = `${user.name}` ?? "Anonymous";
                 profile_picture.src = user.profile_picture ?? "images/difault_user_logo.png";
                 balance_count.textContent = `${currencySymbol} ${user.balance.toLocaleString() ?? "0"}`;
                 link_clicks_count.textContent = user.total_link_click.toLocaleString() ?? "0";
