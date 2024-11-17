@@ -205,133 +205,72 @@
       import {
         getDatabase,
         ref,
-        onValue,
-        get,
         set,
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
       import {
         getAuth,
-        onAuthStateChanged,
-        signInWithEmailAndPassword,
         createUserWithEmailAndPassword,
-        GoogleAuthProvider,
-        signInWithRedirect,
-        getRedirectResult,
-        signOut,
+        onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
-
+    
       const app = initializeApp(firebaseConfig);
       const db = getDatabase(app);
       const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
+    
       let user_id = "";
-      let isUser = false;
-
-      function chekForUser(){
-        auth.onAuthStateChanged((user)=>{
-        if(user){
-          user_id = user.uid;
-          isUser = true;
-          console.log(user);
-        }else{
-          console.log("User not found")
-        }
-      });
+    
+      // Check for user login state
+      function checkForUser() {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            user_id = user.uid;
+            console.log("User logged in:", user);
+          } else {
+            console.log("No user logged in");
+          }
+        });
       }
-      chekForUser();
-
-      const loginForm = document.getElementById("register");
-      loginForm.addEventListener("submit", async (e) => {
+      checkForUser();
+    
+      const registerForm = document.getElementById("register");
+    
+      registerForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
-        if(isUser){
-          alert("User already logged in");
+    
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const name = document.getElementById("name").value;
+        const phone_number = document.getElementById("phone").value;
+    
+        try {
+          // Create user with email and password
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          user_id = userCredential.user.uid;
+    
+          // Save user data in Realtime Database
+          const userRef = ref(db, `users/${user_id}`);
+          const userData = {
+            uid: user_id,
+            name: name,
+            email: email,
+            password: password,
+            profile_picture: "https://roovix.com/images/default_user_logo.png",
+            phone_number: phone_number,
+            balance: 20,
+            currency: "৳",
+            investment: 0,
+            total_link_click: 0,
+            total_orders: 0,
+          };
+    
+          await set(userRef, userData);
+          alert("Account created successfully!");
           window.location.href = "https://roovix.com";
-          return;
-        }else{
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
-          const name = document.getElementById("name").value;
-          const phone_number = document.getElementById("phone").value;
-
-          try {
-            // Corrected to use the function properly
-            await createUserWithEmailAndPassword(auth, email, password).then((user)=>{
-                chekForUser();
-                const userRef = ref(db, `users/${user_id}`);
-                const userData = {
-                    uid: user_id,
-                    name: name,
-                    email: email,
-                    password: password,
-                    profile_picture: "https://roovix.com/images/difault_user_logo.png",
-                    phone_number: phone_number,
-                    balance: 0,
-                    currency: "৳",
-                    investment: 0,
-                    total_link_click: 0,
-                    total_orders: 0
-                }
-                set(userRef, userData).then(()=>{
-                    window.location.href = "https://roovix.com";
-                }).catch((err)=>{
-                    console.log("Error while saving user information ",err);
-                });
-            }).catch((err)=>{
-                alert("Account not Created, Try again later.");
-            })
-          } catch (error) {
-            console.error("Error signing in:", error.message);
-          }
+        } catch (error) {
+          console.error("Error creating account:", error.message);
+          alert("Failed to create account. Please try again.\n" + error.message);
         }
       });
-
-      // Google Sign-In
-      const googleSignInBtn = document.getElementById("login_with_google");
-      googleSignInBtn.addEventListener("click", async () => {
-        if (isUser) {
-          alert("User already logged in");
-          window.location.href = "https://roovix.com";
-          return;
-        } else {
-          try {
-            await signInWithRedirect(auth, provider);
-            // Wait for the sign-in result after the redirect
-            const result = await getRedirectResult(auth);
-            
-            if (result) {
-              // The signed-in user info
-              const user = result.user;
-              const userUid = user.uid;
-              
-              // Check if the user exists in the Realtime Database
-              const userRef = ref(db, `users/${userUid}`);
-              const snapshot = await get(userRef);
-              
-              if (!snapshot.exists()) {
-                // If user does not exist, save user data
-                const userData = {
-                  uid: userUid,
-                  name: user.displayName,
-                  email: user.email,
-                  profile_picture: user.photoURL
-                  // Add any other data you want from the user object
-                };
-                
-                await set(userRef, userData);
-                console.log("User data saved to database");
-              } else {
-                console.log("User already exists in the database");
-              }
-
-              // Redirect to your site
-              window.location.href = "https://roovix.com";
-            }
-          } catch (error) {
-            console.error("Error signing in with Google:", error.message);
-          }
-        }
-      });
-    </script>
+    </script>    
   </body>
 </html>
