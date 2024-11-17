@@ -121,7 +121,7 @@
         // update shared user's product status
         if(shared_user_id && dp_id && product_id){
             const sanitize_dp_id = sanitizeKey(dp_id);
-            const shared_user_ref = ref(db, `users_public/${shared_user_id}/${sanitize_dp_id}`);
+            const shared_user_ref = push(ref(db, `users_public/${shared_user_id}`));
             // Check for user
             set(shared_user_ref, {
                 link_clicked: true,
