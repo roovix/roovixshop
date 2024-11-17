@@ -363,6 +363,10 @@ body {
     font-weight: 600;
     margin-bottom: 20px;
 }
+.withdraw_balance_title h5 {
+    text-align: center;
+    margin-bottom: 30px;
+}
 .withdraw_balance_amount {
     display: flex;
     flex-direction: column;
