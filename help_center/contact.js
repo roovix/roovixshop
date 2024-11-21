@@ -26,47 +26,54 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 
-// Get the form element
+// Reference the form
 const form = document.getElementById("contact_form");
 
-// Form submission event listener
+// Add submit event listener
 form.addEventListener("submit", (event) => {
     // Prevent the form from reloading the page
     event.preventDefault();
 
     // Get form input values
-    const name = document.getElementById("name_input").value;
-    const email = document.getElementById("email_input").value;
-    const sub = document.getElementById("sub_input").value;
-    const msg = document.getElementById("msg_input").value;
+    const name = document.getElementById("name_input").value.trim();
+    const email = document.getElementById("email_input").value.trim();
+    const sub = document.getElementById("sub_input").value.trim();
+    const msg = document.getElementById("msg_input").value.trim();
+    let user_id = "";
+
+    // Basic validation for empty fields
+    if (!name || !email || !sub || !msg) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
     // Check if the user is authenticated
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // Add a new help request to the database
-            const helpRef = push(ref(db, `help_request/`)); // Push creates a unique ID for each entry
-            set(helpRef, {
-                name: name,
-                email: email,
-                subject: sub,
-                message: msg,
-                timestamp: Date.now(),
-                uid: user.uid
-            })
-                .then(() => {
-                    alert("Help request sent successfully!");
-                    form.reset(); // Clear the form
-                })
-                .catch((error) => {
-                    console.error("Error sending help request:", error);
-                    alert("Failed to send help request. Please try again.");
-                });
-        } else {
-            window.location.href = "https://roovix.com/login";
-        }
-    });
-});
+    const user = auth.currentUser;
+    if(user){
+        user_id = user.uid; // Get the user ID for tracking
+    }
 
+    if (true) {
+        // Add a new help request to the database
+        const helpRef = push(ref(db, `help_request/`)); // Push creates a unique ID for each entry
+        set(helpRef, {
+            name: name,
+            email: email,
+            subject: sub,
+            message: msg,
+            timestamp: Date.now(),
+            uid: user_id// Include user ID for tracking
+        })
+            .then(() => {
+                alert("Help request sent successfully!");
+                form.reset(); // Clear the form
+            })
+            .catch((error) => {
+                console.error("Error sending help request:", error);
+                alert("Failed to send help request. Please try again.");
+            });
+    }
+});
 
 // Get references to the search input and form
 const searchForm = document.getElementById("search_form");
