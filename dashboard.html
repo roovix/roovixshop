@@ -509,6 +509,10 @@
         const withdraw_phone = document.getElementById("withdraw_phone").value;
         const withdraw_payment_method = document.getElementById("payment_option").value;
 
+        if(withdraw_amount <= 300){
+          alert("Withdrawal amount should be more than 300.");
+          return;
+        }
         alert("Withdraw request sent successfully, Amount: "+withdraw_amount);
       });
       // Withdraw request end
