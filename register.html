@@ -184,6 +184,9 @@
           <label for="email">Email</label>
           <input type="email" name="email" id="email" required />
 
+          <label for="referral">Referral uid (Optional)</label>
+          <input type="text" name="referral" id="referral"/>
+
           <label for="password">Password</label>
           <input type="password" name="password" id="password" required />
 
@@ -241,6 +244,7 @@
         const password = document.getElementById("password").value;
         const name = document.getElementById("name").value;
         const phone_number = document.getElementById("phone").value;
+        const referral = document.getElementById("referral").value;
     
         try {
           // Create user with email and password
@@ -261,6 +265,7 @@
             investment: 0,
             total_link_click: 0,
             total_orders: 0,
+            referral: referral
           };
     
           await set(userRef, userData);
