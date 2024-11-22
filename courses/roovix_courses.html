@@ -155,6 +155,7 @@
                 <option value="python">Python</option>
                 <option value="web_dev">Web Development</option>
                 <option value="roovix_shop">Make money online</option>
+                <option value="fee">Roovix seller entry fee</option>
             </select>
 
             <label for="email">Email (Optional)</label>
@@ -171,7 +172,7 @@
             <div class="bkash_payment_reference">
               <h3>Reference</h3>
               <ul>
-                <li>Bkash number: <span id="owner_bkash_number">+880-1713661952</span></li>
+                <li>Bkash number: <span id="owner_bkash_number">+880-1733914782</span></li>
                 <li>Course fee: <span id="course_fee">৳0</span></li>
               </ul>
               <p>To enroll in the course, please pay the course fee to the above Bkash number. Use this reference number during your payment for verification.</p>
@@ -246,6 +247,8 @@
             course_fee.textContent = `৳ ${Number(5000).toLocaleString()}`;
           }else if(select_course_for_show.value === "roovix_shop"){
             course_fee.textContent = `৳ ${Number(500).toLocaleString()}`;
+          }else if(select_course_for_show.value === "fee"){
+            course_fee.textContent = `৳ ${Number(300).toLocaleString()}`;
           }else{
             course_fee.textContent = "At first select course type?"
           }
