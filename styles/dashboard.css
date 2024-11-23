@@ -324,6 +324,12 @@ body {
     margin-left: 5px;
     cursor: pointer;
 }
+.account_type {
+    font-size: 1.2rem;
+    color: #929292c5;
+    margin-bottom: 10px;
+    text-align: center;
+}
 
   /* Analysis text content span */
   .balance_analysis_text_increase {
