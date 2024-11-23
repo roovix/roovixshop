@@ -117,6 +117,7 @@
        <!-- Main start -->
         <div class="main">
           <p class="dashboard_title">Activity Snapshot</p>
+          <p class="account_type">Account type: <span id="account_type">Normal User</span></p>
           <p id="user_id_copy" class="uid_copy"></p>
 
           <!-- Card section start -->
@@ -708,12 +709,14 @@
           user.getIdTokenResult().then((idTokenResult)=>{
             const claims = idTokenResult.claims;
 
-            if(claims.admin){
+            if(claims.seller){
+              console.log("User claims seller")
+              // Set the account type to seller
+              document.getElementById("account_type").textContent = "Seller";
 
-              // User id admin hide all the cards except Balance and Investment Card
-              // document.getElementById("link_click_container").style.display = "none";
-              // document.getElementById("order_container").style.display = "none";
-              // document.getElementById("share_container").style.display = "none";
+            }else{
+              console.log("User claims normal")
+              document.getElementById("cards_section").style.display = "none";
             }
 
           });
