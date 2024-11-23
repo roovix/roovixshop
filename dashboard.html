@@ -520,101 +520,89 @@
       // Withdraw request end
 
       // Balance analysis start
-      auth.onAuthStateChanged((user_data_for_balance_analysis) => {
-        if (user_data_for_balance_analysis) {
-          const user_id_for_balance_analysis = user_data_for_balance_analysis.uid;
-          const balanceUserRef = ref(db, `wallet/${user_id_for_balance_analysis}/analysis_balance`);
-          let total_balance_count_from_wallet = 0;
-          let currencyIcon = "৳";
-
-          onValue(balanceUserRef, (snapshot) => {
-            const balanceAnalysis = snapshot.val();
+      function BalanceAnalysis(){
+        auth.onAuthStateChanged((user) => {
+          console.log("Balance analysis state changed");
+          if (user) {
+            const userId = user.uid;
+            const balanceUserRef = ref(db, `wallet/${userId}/analysis_balance`);
             
-            const today = new Date();
-            const oneDay = 24 * 60 * 60 * 1000; // Milliseconds in one day
-            const oneWeekAgo = new Date(today - 7 * oneDay);
-            const twoWeeksAgo = new Date(today - 14 * oneDay);
+            onValue(balanceUserRef, (snapshot) => {
+              const balanceAnalysis = snapshot.val();
 
-            // Variables to store the total balance for each period
-            let lastWeekBalance = 0;
-            let previousWeekBalance = 0;
-            let lastWeekTransactions = 0;
-            let previousWeekTransactions = 0;
-
-            for(const key_for_balanceAnalysis in balanceAnalysis) {
-              let item = balanceAnalysis[key_for_balanceAnalysis];
-              let itemDate = new Date(item.time);
-
-              // Update the default currency icon
-              currencyIcon = item.currency === "BDT"? "৳" : item.currency;
-
-              // Calculate total balance
-              total_balance_count_from_wallet += item.value;
-
-                // Check if the date is within the last week
-                if (itemDate >= oneWeekAgo && itemDate < today) {
-                    lastWeekBalance += item.value;
-                    lastWeekTransactions += 1; // Increment transaction count for last week
-                }
-                // Check if the date is within the previous week (between one and two weeks ago)
-                else if (itemDate >= twoWeeksAgo && itemDate < oneWeekAgo) {
-                    previousWeekBalance += item.value;
-                    previousWeekTransactions += 1; // Increment transaction count for previous week
-                }
-            }
-
-            // update balance in users
-            const updateBalanceInUserRef = ref(db, `users/${user_data_for_balance_analysis.uid}`);
-            update(updateBalanceInUserRef, {
-                balance: total_balance_count_from_wallet
-            });
-
-            // Output the results
-            console.log("Balance in this week:", lastWeekBalance);
-            console.log("Balance in last week:", previousWeekBalance);
-
-            // Compare the two balances
-            if (lastWeekBalance > previousWeekBalance) {
-                console.log("Balance increased by", lastWeekBalance - previousWeekBalance);
-            } else if (lastWeekBalance < previousWeekBalance) {
-                console.log("Balance decreased by", previousWeekBalance - lastWeekBalance);
-            } else {
-                console.log("Balance stayed the same");
-            }
-
-            // Output the transaction results
-            console.log("Transactions in this week:", lastWeekTransactions);
-            console.log("Transactions in last week:", previousWeekTransactions);
-
-            // Transaction count comparison
-            if (lastWeekTransactions > previousWeekTransactions) {
-                console.log("Transactions increased by", lastWeekTransactions - previousWeekTransactions);
-
-                // Handle ui in transactions
-                document.getElementById("balance_analysis_bar-line").style.display = "none";
-                document.getElementById("balance_analysis_bar-down").style.display = "none";
-                document.getElementById("balance_analysis_bar-up").style.display = "block";
-
-                // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `This week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span> transactions`;
-
-              } else if (lastWeekTransactions < previousWeekTransactions) {
-                console.log("Transactions decreased by", previousWeekTransactions - lastWeekTransactions);
-            
-                // Handle ui in transactions
-                document.getElementById("balance_analysis_bar-line").style.display = "none";
-                document.getElementById("balance_analysis_bar-down").style.display = "block";
-                document.getElementById("balance_analysis_bar-up").style.display = "none";
-
-                // Update transaction text content
-                document.getElementById("balance_analysis_text").innerHTML = `This week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span>`;
-
-              } else {
-                console.log("Number of transactions stayed the same");
+              if (!balanceAnalysis) {
+                console.log("No balance data available.");
+                return;
               }
-          });
+
+              let totalBalance = 0;
+              let currencyIcon = "৳";
+              const today = new Date();
+              const oneDay = 24 * 60 * 60 * 1000;
+              const oneWeekAgo = new Date(today - 7 * oneDay);
+              const twoWeeksAgo = new Date(today - 14 * oneDay);
+
+              let lastWeekBalance = 0;
+              let previousWeekBalance = 0;
+              let lastWeekTransactions = 0;
+              let previousWeekTransactions = 0;
+
+              // Process balance data
+              for (const key in balanceAnalysis) {
+                const item = balanceAnalysis[key];
+                const itemDate = new Date(item.time);
+
+                currencyIcon = item.currency === "BDT" ? "৳" : item.currency;
+                totalBalance += item.value;
+
+                if (itemDate >= oneWeekAgo && itemDate < today) {
+                  lastWeekBalance += item.value;
+                  lastWeekTransactions++;
+                } else if (itemDate >= twoWeeksAgo && itemDate < oneWeekAgo) {
+                  previousWeekBalance += item.value;
+                  previousWeekTransactions++;
+                }
+              }
+
+              // Update user balance in the database
+              update(ref(db, `users/${userId}`), { balance: totalBalance })
+                .catch(error => console.error("Error updating balance:", error));
+
+              // Log and compare balances
+              console.log(`This week's balance: ${lastWeekBalance}`);
+              console.log(`Previous week's balance: ${previousWeekBalance}`);
+              compareAndUpdateUI(lastWeekBalance, previousWeekBalance, lastWeekTransactions, previousWeekTransactions);
+            });
+          } else {
+            console.log("No user is logged in for balance analysis.");
+          }
+        });
+      }
+
+      // Separate function to handle UI updates
+      function compareAndUpdateUI(lastWeekBalance, previousWeekBalance, lastWeekTransactions, previousWeekTransactions) {
+        const barLine = document.getElementById("balance_analysis_bar-line");
+        const barDown = document.getElementById("balance_analysis_bar-down");
+        const barUp = document.getElementById("balance_analysis_bar-up");
+        const balanceText = document.getElementById("balance_analysis_text");
+
+        if (lastWeekTransactions > previousWeekTransactions) {
+          barLine.style.display = "none";
+          barDown.style.display = "none";
+          barUp.style.display = "block";
+          balanceText.innerHTML = `This week <span class="balance_analysis_text_increase">+${lastWeekTransactions - previousWeekTransactions}</span> transactions`;
+        } else if (lastWeekTransactions < previousWeekTransactions) {
+          barLine.style.display = "none";
+          barDown.style.display = "block";
+          barUp.style.display = "none";
+          balanceText.innerHTML = `This week <span class="balance_analysis_text_decrease">-${previousWeekTransactions - lastWeekTransactions}</span> transactions`;
+        } else {
+          barLine.style.display = "block";
+          barDown.style.display = "none";
+          barUp.style.display = "none";
+          balanceText.innerHTML = "No change in transactions this week.";
         }
-      });
+      }
       // Balance analysis end
 
 
