@@ -271,6 +271,7 @@
       fetchBanners();
 
 
+
       let productsToShow = 6;  // Number of products to show initially and on each "Load More"
       let allProducts = [];  // Store all fetched products
       let displayedProducts = 0;  // Track how many products have been displayed
@@ -364,7 +365,7 @@
           }
 
           product_html += `
-            <div class="container">
+            <div class="product-card">
               <div class="image_container">
                 <img id="image_click_${productId}" class="image" src="${product.image}">
               </div>
@@ -412,32 +413,6 @@
               window.open(product.link, '_blank');
             });
           }
-
-          const shareButton = document.getElementById(`share_btn_${productId}`);
-          if (shareButton) {
-            shareButton.addEventListener('click', function() {
-              let userId = user_id || null;
-              const dp_id_full = product.link;
-              const dp_id = dp_id_full.split("/").pop(); 
-              const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
-              shareLink(product_url);
-            });
-          }
-        function shareLink(product_url) {
-            if (navigator.share) {
-              // If the browser supports the Web Share API (works on mobile)
-              navigator.share({
-                title: "Here's the product i found interesting",
-                url: product_url
-              }).then(() => {
-                console.log("Product shared successfully!");
-              }).catch((error) => {
-                console.error("Error sharing the product: ", error);
-              });
-            }else{
-              alert("You can't share right now..!");
-            }
-          }
         });
 
         // Add "Load More" button if there are more products to load
@@ -455,7 +430,7 @@
             loadMoreBtn.addEventListener("click", () => {
               displayProducts();  // Show the next set of products
             });
-
+            
             const loadMoreContainer = document.createElement("div");
             loadMoreContainer.className = "load-more-container";
             loadMoreContainer.appendChild(loadMoreBtn);
@@ -463,6 +438,35 @@
             // Append the button outside the products list container
             document.body.appendChild(loadMoreContainer);  // You may need to append it at the right position in your layout
           }
+        }
+      }
+
+      // Delegated event listener for share buttons (this handles clicks for newly added products)
+      document.getElementById("products_list_container").addEventListener("click", function(event) {
+        if (event.target && event.target.classList.contains('share_btn')) {
+          const productId = event.target.id.split("_")[2]; // Extract productId from the button ID
+          const product = allProducts.find(p => p.id === productId);
+          let userId = user_id || null;
+          const dp_id_full = product.link;
+          const dp_id = dp_id_full.split("/").pop(); 
+          const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
+          shareLink(product_url);
+        }
+      });
+
+      // Share function
+      function shareLink(product_url) {
+        if (navigator.share) {
+          navigator.share({
+            title: "Here's the product I found interesting",
+            url: product_url
+          }).then(() => {
+            console.log("Product shared successfully!");
+          }).catch((error) => {
+            console.error("Error sharing the product: ", error);
+          });
+        } else {
+          alert("You can't share right now..!");
         }
       }
 
