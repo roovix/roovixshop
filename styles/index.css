@@ -200,6 +200,11 @@ body {
     margin-bottom: 20px;
   }
 
+  /* Bootstrap navber customize */
+  .navbar {
+    height: 70px;
+  }
+
 @keyframes spinner_rotate {
     0%{
         transform: rotate(0deg);
