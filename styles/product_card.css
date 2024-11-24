@@ -65,7 +65,7 @@
 .price {
   font-size: 1rem; /* Adjust the price font size if needed */
   font-weight: bold;
-  color: #F36944;
+  color: red;
   margin: 0; /* Remove any margins */
   padding: 0; /* Remove padding if any */
 }
@@ -77,8 +77,10 @@
 
 .discount {
   font-size: 0.8rem; /* Smaller discount font */
-  color: red;
+  color: gray;
   margin-left: 10px;
+  text-decoration: line-through;
+  opacity: 0.7;
 }
 
 .action_container {
