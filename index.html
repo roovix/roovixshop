@@ -310,25 +310,41 @@
       });
 
 
-      // Fetch product
-      // Helper function to shuffle an array
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
+      let productsToShow = 6;  // Number of products to show initially and on each "Load More"
+      let allProducts = [];  // Store all fetched products
+      let displayedProducts = 0;  // Track how many products have been displayed
+
+      // Handle category click
+      const categoryList = document.getElementById("categoryList");
+      categoryList.addEventListener("click", (event) => {
+        if (event.target.id) {
+          if (event.target.id === "categoryList") {
+            category = "all";
+            return;
+          }
+          category = event.target.id;
+          resetProductDisplay();
+          fetchProduct();
         }
-        return array;
+      });
+
+      // Reset for a fresh load of products
+      function resetProductDisplay() {
+        displayedProducts = 0;
+        allProducts = [];
+        document.getElementById("products_list_container").innerHTML = "";  // Clear previous products
+        document.getElementById("loadMoreBtn")?.remove();  // Remove the "Load More" button if it exists
       }
 
-     // Fetch product
+      // Fetch product
       function fetchProduct() {
         const products_list_container = document.getElementById("products_list_container");
-        products_list_container.innerHTML = "";
+        document.getElementById("spinner").style.display = "block"; // Show the spinner while fetching
+
         const productsRef = ref(db, `products`);
         onValue(productsRef, (snapshot) => {
 
           if (snapshot) {
-
             const products = snapshot.val();
             const productArray = [];
 
@@ -346,115 +362,139 @@
             // Shuffle the filtered product array
             const shuffledProducts = shuffleArray(filteredProducts);
 
-            let product_html = ''; // Accumulate HTML
+            // Store all products
+            allProducts = shuffledProducts;
 
-            // Iterate over the shuffled filtered product array
-            for (const productData of shuffledProducts) {
-              const productId = productData.id;
-              const product = productData;
-              const product_link = product.link;
-
-              // Generate product HTML with formatted price and discount
-              let price_div = ``;
-              if (product.price && product.currency && product.discount) {
-                const formattedPrice = parseInt(product.price).toLocaleString();
-                const formattedDiscount = parseInt(product.discount).toLocaleString();
-                
-                price_div = `
-                  <p class="price">
-                    <span class="currency">${product.currency}</span> 
-                    <span class="price_inside">${formattedPrice}</span> 
-                    <span class="discount">${formattedDiscount}</span>
-                  </p>`;
-              }
-              // Generate product HTML with a unique class or ID for the button
-              product_html += `
-                <div class="container">
-                  <div class="image_container">
-                    <img id="image_click_${productId}" class="image" src="${product.image}">
-                  </div>
-                  <div class="details_container">
-                    <div class="product_description_container">
-                      <p class="description">${product.description}</p>
-                    </div>
-                    <div class="price_container">
-                      ${price_div}
-                    </div>
-                    <div class="action_container">
-                      <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
-                      <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-share-from-square"></i></button>
-                    </div>
-                    <div class="verify_container">
-                      <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
-                    </div>
-                  </div>
-                </div>
-              `;
-            }
-
-            // Set the accumulated HTML to the container at once
-            products_list_container.innerHTML = product_html;
-            document.getElementById("spinner").style.display = "none";
-
-            // Add event listeners after the HTML is rendered
-            for (const productData of shuffledProducts) {
-              const productId = productData.id;
-              const product = productData;
-              const product_link = product.link;
-
-              // Handle open product URL
-              const button = document.getElementById(`action_btn_${productId}`);
-              if (button) {
-                button.addEventListener('click', function() {
-                  window.open(product_link, '_blank'); // Open the product link in a new tab
-                });
-              }
-              const image = document.getElementById(`image_click_${productId}`);
-              if (image) {
-                image.addEventListener('click', function() {
-                  window.open(product_link, '_blank'); // Open the product link in a new tab
-                });
-              }
-
-              // Handle share click
-              const shareButton = document.getElementById(`share_btn_${productId}`);
-              if (shareButton) {
-                shareButton.addEventListener('click', function() {
-                  let userId = null;
-                  if (user_id) {
-                    userId = user_id;
-                  }
-                  const dp_id_full = product.link;
-                  const dp_id = dp_id_full.split("/").pop(); // Extract dp_id from the URL
-                  const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
-                  async function shareLink() {
-                    const shareData = {
-                        title: 'Check out this product-🛍️',
-                        text: `Here’s a product I found interesting🔎\n\n`, // Include image URL in the text
-                        url: product_url
-                    };
-
-                    try {
-                      // Attempt to use the Web Share API
-                      await navigator.share(shareData);
-                    } catch (error) {
-                    // If sharing fails, copy the URL to the clipboard and alert the user
-                    await navigator.clipboard.writeText(product_url);
-                    }
-                  }
-                  // Call the shareLink function to execute the sharing or fallback
-                  shareLink();
-                });
-              }
-            }
+            // Initially display the first few products
+            displayProducts();
 
           } else {
-            products_list_container.innerHTML = `<p>No products found</p>`;
+            document.getElementById("products_list_container").innerHTML = `<p>No products found</p>`;
             document.getElementById("spinner").style.display = "none";
           }
 
         });
       }
+
+      // Display products based on how many should be shown
+      function displayProducts() {
+        const products_list_container = document.getElementById("products_list_container");
+
+        // Get the slice of products to display
+        const productsToDisplay = allProducts.slice(displayedProducts, displayedProducts + productsToShow);
+
+        let product_html = '';  // Accumulate HTML for products
+        productsToDisplay.forEach((productData) => {
+          const productId = productData.id;
+          const product = productData;
+          const product_link = product.link;
+
+          let price_div = '';
+          if (product.price && product.currency && product.discount) {
+            const formattedPrice = parseInt(product.price).toLocaleString();
+            const formattedDiscount = parseInt(product.discount).toLocaleString();
+
+            price_div = `
+              <p class="price">
+                <span class="currency">${product.currency}</span>
+                <span class="price_inside">${formattedPrice}</span>
+                <span class="discount">${formattedDiscount}</span>
+              </p>`;
+          }
+
+          product_html += `
+            <div class="container">
+              <div class="image_container">
+                <img id="image_click_${productId}" class="image" src="${product.image}">
+              </div>
+              <div class="details_container">
+                <div class="product_description_container">
+                  <p class="description">${product.description}</p>
+                </div>
+                <div class="price_container">
+                  ${price_div}
+                </div>
+                <div class="action_container">
+                  <button class="action_btn" id="action_btn_${productId}">${product.action_btn_value}</button>
+                  <button class="share_btn" id="share_btn_${productId}"><i class="fa-solid fa-share-from-square"></i></button>
+                </div>
+                <div class="verify_container">
+                  <p class="product_verify"><i class="fa-solid fa-certificate"></i> Product Verified by Roovix</p>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        // Insert the products into the container
+        products_list_container.innerHTML += product_html;  // Append the new products instead of replacing old ones
+        displayedProducts += productsToDisplay.length;
+
+        // Hide spinner after the products are loaded
+        document.getElementById("spinner").style.display = "none";
+
+        // Add event listeners for the products
+        productsToDisplay.forEach((productData) => {
+          const productId = productData.id;
+          const product = productData;
+
+          const button = document.getElementById(`action_btn_${productId}`);
+          if (button) {
+            button.addEventListener('click', function() {
+              window.open(product.link, '_blank');
+            });
+          }
+
+          const image = document.getElementById(`image_click_${productId}`);
+          if (image) {
+            image.addEventListener('click', function() {
+              window.open(product.link, '_blank');
+            });
+          }
+
+          const shareButton = document.getElementById(`share_btn_${productId}`);
+          if (shareButton) {
+            shareButton.addEventListener('click', function() {
+              let userId = user_id || null;
+              const dp_id_full = product.link;
+              const dp_id = dp_id_full.split("/").pop(); 
+              const product_url = `https://roovix.com/product?product_id=${productId}&user_id=${userId}&dp_id=${dp_id}`;
+              shareLink(product_url);
+            });
+          }
+        });
+
+        // Add "Load More" button if there are more products to load
+        if (displayedProducts < allProducts.length) {
+          let loadMoreBtn = document.getElementById("loadMoreBtn");
+
+          if (!loadMoreBtn) {
+            // Only create the button if it doesn't already exist
+            loadMoreBtn = document.createElement("button");
+            loadMoreBtn.id = "loadMoreBtn";
+            loadMoreBtn.className = "load-more-btn";
+            loadMoreBtn.innerText = "Load More";
+
+            // Attach event listener to the "Load More" button
+            loadMoreBtn.addEventListener("click", () => {
+              displayProducts();  // Show the next set of products
+            });
+
+            // Append the button outside the products list container
+            document.body.appendChild(loadMoreBtn);  // You may need to append it at the right position in your layout
+          }
+        }
+      }
+
+      // Helper function to shuffle an array
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
       fetchProduct();
 
 
