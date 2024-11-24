@@ -222,6 +222,7 @@
         onValue,
         get,
         set,
+        update
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
       import {
         getAuth,
@@ -294,20 +295,6 @@
         });
       }
       fetchBanners();
-
-
-      // Handle category click
-      const categoryList = document.getElementById("categoryList");
-      categoryList.addEventListener("click", (event)=>{
-        if(event.target.id){
-          if(event.target.id === "categoryList"){
-            category = "all";
-            return;
-          }
-          category = event.target.id;
-          fetchProduct();
-        }
-      });
 
 
       let productsToShow = 6;  // Number of products to show initially and on each "Load More"
@@ -552,7 +539,7 @@
       function openLoginPage() {
         auth.onAuthStateChanged((user) => {
           if (!user) {
-            window.location.href = "/login";
+            window.location.href = "login.html";
           }else{
             alert("User already logged in!")
           }
@@ -568,7 +555,7 @@
       const my_dashboard = document.getElementById("my_dashboard");
       my_dashboard.addEventListener("click", () => {
         if(isUser){
-          window.location.href = "/dashboard";
+          window.location.href = "/dashboard.html";
         }else{
           window.location.href = "https://roovix.com/login"
         }
@@ -579,78 +566,15 @@
       search_form.addEventListener("submit", (event) => {
         event.preventDefault();
         const search_input = document.getElementById("search").value;
-        window.location.href = `/search_result?search=${search_input}`;
-      });
-    </script>
-
-
-    <!-- Aos animation on scroll -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      AOS.init({
-        offset: 100,
-        duration: 500,
+        window.location.href = `/search_result.html?search=${search_input}`;
       });
 
-      // scroll to top logic
-      // Get the button element
-      const scrollToTopBtn = document.getElementById("scroll-up-btn");
-
-      // Show the button when the user scrolls down 100px from the top
-      window.onscroll = function () {
-        if (
-          document.body.scrollTop > 100 ||
-          document.documentElement.scrollTop > 300
-        ) {
-          scrollToTopBtn.style.display = "block";
-        } else {
-          scrollToTopBtn.style.display = "none";
-        }
-      };
-
-      // Scroll the page back to the top when the button is clicked
-      scrollToTopBtn.onclick = function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      };
+      
 
       // Refer and earn
       const referBtn = document.getElementById("refer_earn");
       referBtn.addEventListener("click", () => {
-        auth.onAuthStateChanged(async (user_for_refer) => {
-          if(user_for_refer){
-            const user_for_refer_uid = user_for_refer.uid;
-
-            // Check for user is eligible to refer
-            const referRef = ref(db, `users_refer/${user_for_refer_uid}`);
-            const referData = await get(referRef);
-            const refer_and_earn = referData.val();
-            const refer_available = refer_and_earn.available;
-            
-            if(refer_available > 0) {
-              const shareData = {
-                title: document.title,   // Page title
-                text: 'Create a Roovix account with the link to get free balance!',  // Optional description
-                url: `https://roovix.com/register?refer=${true}&referer_id=${user_for_refer_uid}`     // Page URL
-              };
-              try {
-                  if (navigator.share) {
-                      await navigator.share(shareData);
-                      console.log('Page shared successfully');
-                  } else {
-                      alert('Web Share API not supported in this browser.');
-                  }
-              } catch (error) {
-                  console.error('Error sharing:', error);
-              }
-            }else{
-              alert("Sorry, you can't refer and earn right now.");
-            }
-
-          }else{
-            alert("You need to be logged in to refer and earn!");
-            window.location.href = "https://roovix.com/login";
-          }
-        });
+        alert("You can't refer right now")
       });
     </script>
 
