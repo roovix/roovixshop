@@ -121,7 +121,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
 }
 .no-products-to-show {
     width: 100%;
@@ -136,7 +135,6 @@ body {
     margin: 0;
 }
 #scroll-up-btn{
-    display: none;
     position: fixed;
     z-index: 1000;
     bottom: 20px;
@@ -157,17 +155,19 @@ body {
     animation: spinner_rotate 4s linear infinite;
 }
 #refer_earn {
-    background-color: #74c1fc27;
-    border: 1px solid #74C0FC;
-    color: #74C0FC;
+    background-color: #0d95fd;
+    color: #ecf7ff;
+    border: none;
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 #refer_earn:hover {
     background-color: #74C0FC;
     color: #fff;
-    border: 1px solid #74C0FC;
     transition: 0.3s ease-in;
 }
 #dynamic_banners {
@@ -180,6 +180,22 @@ body {
     height: 100%;
     border-radius: var(--primary-border-radius);
 }
+.navbar {
+    background-color: #74C0FC;
+    height: 80px; /* Set the height of the navbar */
+    padding: 0; /* Ensure no extra padding */
+    z-index: 100;
+  }
+
+  .navbar-collapse {
+    background-color: #74C0FC; /* Ensure collapsible menu retains background */
+    padding-top: 10px; /* Optional: Add padding inside the collapsible menu */
+    border-radius: 20px;
+}
+
+  .navbar-nav .nav-item {
+    margin: 0 10px; /* Add some horizontal spacing between items */
+  }
 
 @keyframes spinner_rotate {
     0%{
@@ -189,7 +205,7 @@ body {
         transform: rotate(360deg);
     }
 }
-
+  
 /* Responsive small screen*/
 @media screen and (max-width: 1000px) {
     #product-list {
@@ -199,6 +215,24 @@ body {
         padding: 0%;
     }
 }
+/* Ensure items align well on small screens */
+@media (max-width: 992px) {
+    .navbar-collapse {
+      height: auto; /* Allow height to adjust */
+      padding-bottom: 10px; /* Add padding at the bottom */
+    }
+
+    #search_form {
+      margin-bottom: 10px; /* Prevent overlap with items */
+    }
+  }
+@media (max-width: 768px) {
+    #search_form {
+      width: 100%; /* Adjust the width of the search form */
+      margin-bottom: 10px; /* Add some spacing */
+    }
+  }
+  
 @media screen and (max-width: 580px) {
     #spinner  {
         left: 45%;
