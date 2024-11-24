@@ -155,15 +155,18 @@ body {
     animation: spinner_rotate 4s linear infinite;
 }
 #refer_earn {
-    background-color: #0d95fd;
-    color: #ecf7ff;
-    border: none;
+    opacity: 0.7;
+    width: 150px;
+    background-color: #0d95fd49;
+    color: #0095ff;
+    border: 1px solid transparent;
     padding: 5px 15px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 4px;
     margin-left: 10px;
     margin-right: 10px;
+    outline: none;
 }
 #refer_earn:hover {
     background-color: #74C0FC;
@@ -180,23 +183,6 @@ body {
     height: 100%;
     border-radius: var(--primary-border-radius);
 }
-.navbar {
-    width: 100%;
-    background-color: #74C0FC;
-    height: 80px; /* Set the height of the navbar */
-    padding: 0; /* Ensure no extra padding */
-    z-index: 100;
-  }
-
-  .navbar-collapse {
-    background-color: #74C0FC; /* Ensure collapsible menu retains background */
-    padding-top: 10px; /* Optional: Add padding inside the collapsible menu */
-    border-radius: 20px;
-}
-
-  .navbar-nav .nav-item {
-    margin: 0 10px; /* Add some horizontal spacing between items */
-  }
 
   .load-more-container {
     width: 100%;
