@@ -71,8 +71,8 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="dashboard">Dashboard</a>
+          <li class="nav-item" id="my_dashboard">
+            <a class="nav-link" style="cursor: pointer;">Dashboard</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,8 +85,8 @@
               <a class="dropdown-item" href="courses/roovix_courses">Website dev Course</a>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login">Login</a>
+          <li class="nav-item" id="open-user-login" onclick="openLoginPage()">
+            <a class="nav-link" style="cursor: pointer;">Login</a>
           </li>
           <li class="nav-item">
             <button id="refer_earn">Refer & Earn</button>
@@ -518,11 +518,6 @@
           }
         });
       }
-      document
-        .getElementById("open-user-login")
-        .addEventListener("click", () => {
-          openLoginPage();
-        });
 
       //  Open dashboard page
       const my_dashboard = document.getElementById("my_dashboard");
