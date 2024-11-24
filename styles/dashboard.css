@@ -59,6 +59,7 @@ body {
     border-radius: 50%;
     padding: 2px;
     border: 1px solid rgba(128, 128, 128, 0.521);
+    object-fit: cover;
 }
 .side_left_ul {
     width: 100%;
