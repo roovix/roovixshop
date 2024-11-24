@@ -89,10 +89,13 @@
         </div>
         <ul class="side_left_ul">
           <li>
+            <span><i class="fa-solid fa-hand-holding-dollar"></i> Earnings</span>
+          </li>
+          <li>
             <span><i class="fa-solid fa-chart-line"></i> Charts <i class="fa-solid list_arrow fa-chevron-down"></i></span>
             <ul class="sub_list">
-              <li class="sub_list_item"><i class="fa-regular fa-credit-card"></i> Card</li>
               <li class="sub_list_item"><i class="fa-solid fa-chart-simple"></i> Analytics</li>
+              <li class="sub_list_item"><i class="fa-regular fa-credit-card"></i> Card</li>
               <li class="sub_list_item"><i class="fa-solid fa-clock-rotate-left"></i> Income history</li>
             </ul>
           </li>
@@ -102,12 +105,6 @@
               <li class="sub_list_item" id="add_account"><i class="fa-regular fa-user"></i> Add account</li>
               <li class="sub_list_item"><i class="fa-solid fa-repeat"></i> Switch account</li>
               <li id="list_logout_btn" class="sub_list_item"><i class="fa-solid fa-arrow-right-from-bracket"></i> LogOut</li>
-            </ul>
-          </li>
-          <li>
-            <span><i class="fa-solid fa-hand-holding-dollar"></i> Earnings <i class="fa-solid list_arrow fa-chevron-down"></i></span>
-            <ul class="sub_list">
-              <li class="sub_list_item" id="withdraw_btn_nav"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw</li>
             </ul>
           </li>
         </ul>
@@ -298,7 +295,7 @@
 
                             // Hide sub-list and reset styles
                             otherSubList?.classList.remove('show');
-                            otherArrow.style.transform = 'rotate(0deg)';
+                            // otherArrow.style.transform = 'rotate(0deg)';
                             el.classList.remove('list_hover_design');
 
                             // Remove selected style from all sub-items of other lists
@@ -310,11 +307,11 @@
                     const isVisible = subList && subList.classList.contains('show');
                     if (isVisible) {
                         subList.classList.remove('show');
-                        arrow.style.transform = 'rotate(0deg)';
+                        // arrow.style.transform = 'rotate(0deg)';
                         item.classList.remove('list_hover_design');
                     } else {
                         subList?.classList.add('show');
-                        arrow.style.transform = 'rotate(180deg)';
+                        // arrow.style.transform = 'rotate(180deg)';
                         item.classList.add('list_hover_design');
                     }
                 });
