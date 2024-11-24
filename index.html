@@ -423,6 +423,21 @@
               shareLink(product_url);
             });
           }
+        function shareLink(product_url) {
+            if (navigator.share) {
+              // If the browser supports the Web Share API (works on mobile)
+              navigator.share({
+                title: "Here's the product i found interesting",
+                url: product_url
+              }).then(() => {
+                console.log("Product shared successfully!");
+              }).catch((error) => {
+                console.error("Error sharing the product: ", error);
+              });
+            }else{
+              alert("You can't share right now..!");
+            }
+          }
         });
 
         // Add "Load More" button if there are more products to load
