@@ -508,6 +508,22 @@
         }
       }
 
+      // Search result open
+      const search_form = document.getElementById("search_form");
+      search_form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const search_input = document.getElementById("search").value;
+        window.location.href = `/search_result?search=${search_input}`;
+      });
+
+      
+
+      // Refer and earn
+      const referBtn = document.getElementById("refer_earn");
+      referBtn.addEventListener("click", () => {
+        alert("You can't refer right now")
+      });
+
       // Open user login page
       function openLoginPage() {
         auth.onAuthStateChanged((user) => {
@@ -527,22 +543,6 @@
         }else{
           window.location.href = "https://roovix.com/login"
         }
-      });
-
-      // Search result open
-      const search_form = document.getElementById("search_form");
-      search_form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const search_input = document.getElementById("search").value;
-        window.location.href = `/search_result?search=${search_input}`;
-      });
-
-      
-
-      // Refer and earn
-      const referBtn = document.getElementById("refer_earn");
-      referBtn.addEventListener("click", () => {
-        alert("You can't refer right now")
       });
     </script>
 
