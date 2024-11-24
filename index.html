@@ -16,7 +16,7 @@
      <meta name="description" content="Roovix Shop - Your trusted e-commerce platform in Bangladesh for top-quality products. Discover a wide range of electronics, fashion, home goods, and more. A marketplace for everyone, where buying and selling is simple and reliable.">
 
      <!-- Meta Keywords: Relevant to the login and user account -->
-      <meta name="keywords" content="Roovix Shop, e-commerce Bangladesh, online shopping BD, product selling BD, electronics, fashion, home goods, online marketplace, trusted shop Bangladesh, buy and sell online, best e-commerce BD">
+     <meta name="keywords" content="Roovix Shop, e-commerce Bangladesh, online shopping BD, product selling BD, electronics, fashion, home goods, online marketplace, trusted shop Bangladesh, buy and sell online, best e-commerce BD">
  
      <!-- Author: Your brand or company name -->
      <meta name="author" content="Roovix">
@@ -24,14 +24,14 @@
      <!-- Open Graph Meta Tags for better sharing on social media -->
      <meta name="msapplication-TileImage" content="https://roovix.com/images/logo.png">
      <meta property="og:site_name" content="Roovix Shop">
-     <meta property="og:title" content="Roovix Shop Explore Amazing Products!" />
+     <meta property="og:title" content="Check out this amazing product!" />
      <meta property="og:description" content="Here’s a product you might find interesting." />
      <meta property="og:image" itemprop="image" content="https://roovix.com/images/logo.png" />
-     <meta property="og:url" content="https://roovix.com/" />
+     <meta property="og:url" content="https://roovix.com/ptoduct" />
      <meta property="og:type" content="website" />
      <meta property="og:image:type" content="image/png">
      <meta property="og:image:width" content="300">
-     <meta property="og:image:height" content="300"> 
+     <meta property="og:image:height" content="300">     
      <meta name="google-site-verification" content="kcvJtB49mIavOu-GxZRCTRqS9p8UbMVva1Tq0JLZs8A" />
      <meta name="robots" content="index, follow">
 
@@ -113,7 +113,7 @@
                 <li><a class="dropdown-item" href="#"><i class="fa-brands fa-python"></i> Python coding</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-code"></i> Web development</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="/courses/roovix_courses.html"><i class="fa-solid fa-sack-dollar"></i> Make money online</a></li>
+                <li><a class="dropdown-item" href="/courses/roovix_courses"><i class="fa-solid fa-sack-dollar"></i> Make money online</a></li>
               </ul>
             </li>
             <!-- Login -->
@@ -126,36 +126,10 @@
           </ul>
         </div>
       </div>
-    </nav>  
+    </nav>     
 
     <!-- button for scroll to top -->
-    <i id="scroll-up-btn" class="fa-solid fa-angles-up" style="1display: none;"></i>
-
-    <section class="search-product">
-      <div class="container">
-        <div class="slow_gun">
-          <i class="fa-solid fa-crown"></i>
-          <h3 id="welcome-title">Find your favorite things to order!</h3>
-        </div>
-        <form id="search_form" accept="submit" onsubmit="return false;">
-          <!-- Prevent form submission -->
-          <label for="search" class="visually-hidden"
-            >Search for products</label
-          >
-          <!-- Accessible label -->
-          <input
-            id="search"
-            name="search"
-            type="search"
-            placeholder="Search for products"
-            aria-label="Search for products"
-          />
-          <button type="submit" id="searchBtn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </form>
-      </div>
-    </section>
+    <i id="scroll-up-btn" class="fa-solid fa-angles-up"></i>
     
     <section id="dynamic_banners">
       <div id="dynamic_banners_list" class="dynamic_banners_list">
@@ -169,7 +143,6 @@
           <li id="all" class="selected" onclick="selectCategory(this)">All</li>
           <li id="fashions" onclick="selectCategory(this)">Fashions</li>
           <li id="watches" onclick="selectCategory(this)">Watches</li>
-          <li id="jewelleries" onclick="selectCategory(this)">Jewelleries</li>
           <li id="electronics" onclick="selectCategory(this)">Electronics</li>
           <li id="kitchen appliances" onclick="selectCategory(this)">Kitchen</li>
           <li id="sports" onclick="selectCategory(this)">Sports</li>
@@ -177,6 +150,7 @@
           <li id="skin care products" onclick="selectCategory(this)">Skin_Care</li>
           <li id="hair care products" onclick="selectCategory(this)">Hair_Care</li>
           <li id="home appliances" onclick="selectCategory(this)">Home_Appliances</li>
+          <li id="fishing" onclick="selectCategory(this)">Fishing</li>
           <li id="books" onclick="selectCategory(this)">Books</li>
           <li id="health supplements" onclick="selectCategory(this)">Health</li>
           <li id="furnitures" onclick="selectCategory(this)">Furnitures</li>
@@ -566,7 +540,7 @@
       search_form.addEventListener("submit", (event) => {
         event.preventDefault();
         const search_input = document.getElementById("search").value;
-        window.location.href = `/search_result.html?search=${search_input}`;
+        window.location.href = `/search_result?search=${search_input}`;
       });
 
       
@@ -576,6 +550,37 @@
       referBtn.addEventListener("click", () => {
         alert("You can't refer right now")
       });
+    </script>
+
+
+    <!-- Aos animation on scroll -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        offset: 100,
+        duration: 500,
+      });
+
+      // scroll to top logic
+      // Get the button element
+      const scrollToTopBtn = document.getElementById("scroll-up-btn");
+
+      // Show the button when the user scrolls down 100px from the top
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 100 ||
+          document.documentElement.scrollTop > 300
+        ) {
+          scrollToTopBtn.style.display = "block";
+        } else {
+          scrollToTopBtn.style.display = "none";
+        }
+      };
+
+      // Scroll the page back to the top when the button is clicked
+      scrollToTopBtn.onclick = function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
     </script>
 
     <!-- Bootstrap js -->
