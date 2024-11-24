@@ -88,7 +88,7 @@
           <button id="side_left_close"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>
         <ul class="side_left_ul">
-          <li>
+          <li id="earnings_item">
             <span><i class="fa-solid fa-hand-holding-dollar"></i> Earnings</span>
           </li>
           <li><i class="fa-regular fa-credit-card"></i> Card</li>
@@ -400,19 +400,14 @@
           logoutContainer.style.display = 'flex'; // Show the logout popup
       });
 
-      // Handle withdraw from
-      document.getElementById("withdraw_btn_nav").addEventListener("click", ()=>{
-        document.querySelector(".withdraw_balance_container").style.display = "block";
+      // Hide show dashboard item with menu item
+      // Hide show cards section with earnings menu item start
+      const cards_section = document.getElementById("cards_section");
+      const earnings_menu_item = document.getElementById("earnings_item");
+      earnings_menu_item.addEventListener("click", ()=>{
+        earnings_menu_item.style.display = 'block';
       });
-      document.getElementById("withdraw_balance_cancel_button").addEventListener("click", ()=>{
-        document.querySelector(".withdraw_balance_container").style.display = "none";
-      });
-      // show field after select payment method
-      document.getElementById("payment_option").addEventListener("change", ()=>{
-        if(document.getElementById("payment_option").value === "bkash"){
-          document.querySelector(".withdraw_field").style.display = "block";
-        }
-      });
+      // Hide show cards section with earnings menu item end
     </script>
 
     <!-- Module script for firebase client side -->
