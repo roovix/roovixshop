@@ -198,6 +198,12 @@ body {
     margin: 0 10px; /* Add some horizontal spacing between items */
   }
 
+  .load-more-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   #loadMoreBtn {
     width: 250px;
     padding: 5px 10px;
@@ -206,7 +212,6 @@ body {
     border: 1px solid #acacac;
     border-radius: 5px;
     margin-bottom: 20px;
-    argin-left: 100px;
   }
 
 @keyframes spinner_rotate {
