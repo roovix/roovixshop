@@ -441,8 +441,12 @@
               displayProducts();  // Show the next set of products
             });
 
+            const loadMoreContainer = document.createElement("div");
+            loadMoreContainer.className = "load-more-container";
+            loadMoreContainer.appendChild(loadMoreBtn);
+
             // Append the button outside the products list container
-            document.body.appendChild(loadMoreBtn);  // You may need to append it at the right position in your layout
+            document.body.appendChild(loadMoreContainer);  // You may need to append it at the right position in your layout
           }
         }
       }
