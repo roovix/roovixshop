@@ -445,16 +445,6 @@
       fetchProduct();
 
 
-      // Show welcome title
-      function showWelcomeTitle() {
-        const welRef = ref(db, "admin/welcome_title");
-        onValue(welRef, (snapshot) => {
-          const welcomeTitle = snapshot.val();
-          document.getElementById("welcome-title").innerText = welcomeTitle;
-        });
-      }
-      showWelcomeTitle();
-
       // Function to get visitor IP and save to Firebase
       async function saveVisitorInfo() {
         try {
