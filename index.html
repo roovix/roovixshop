@@ -132,6 +132,18 @@
               selectCategory(defaultItem);
             }
         });
+
+        // toggle navigation
+        document.getElementById("nav_toggle").addEventListener("click", function(){
+          document.getElementById("nav_close").style.display = "block";
+          document.getElementById("nav_toggle").style.display = "none";
+          document.getElementById("nav_list").style.display = "flex";
+        });
+        document.getElementById("nav_close").addEventListener("click", function(){
+          document.getElementById("nav_close").style.display = "none";
+          document.getElementById("nav_toggle").style.display = "block";
+          document.getElementById("nav_list").style.display = "none";
+        });
     </script>
 
     <script type="module">
