@@ -206,6 +206,34 @@ body {
     height: 70px;
   }
 
+        /* Set the size and background color of the entire scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px; /* width of the scrollbar */
+            height: 6px; /* height of the scrollbar for horizontal scroll */
+        }
+
+        /* Style the scrollbar track (background area) */
+        ::-webkit-scrollbar-track {
+            background: #dbdbdb; /* light gray background */
+            border-radius: 10px; /* rounded corners */
+        }
+
+        /* Style the scrollbar thumb (the draggable part) */
+        ::-webkit-scrollbar-thumb {
+            background: #ff711f; /* dark gray color for the thumb */
+            border-radius: 10px; /* rounded corners */
+        }
+
+        /* Hover effect for the thumb */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; /* darker gray when hovered */
+        }
+
+        /* Style the scrollbar corner (where horizontal and vertical bars meet) */
+        ::-webkit-scrollbar-corner {
+            background: #f1f1f1;
+        }
+
 @keyframes spinner_rotate {
     0%{
         transform: rotate(0deg);
