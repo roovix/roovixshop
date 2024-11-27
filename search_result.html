@@ -83,7 +83,6 @@
         gap: 10px;
         align-items: center;
         flex-wrap: wrap;
-        padding-right: 20px;
       }
       #search_form input {
         padding: 10px;
@@ -137,14 +136,27 @@
   </head>
 
 <body>
-  <form id="search_form">
+      <!-- Nav ber start here -->
+      <nav id="nav_ber" class="shadow-gray-100">
+        <div class="title">
+          <a href="https://roovix.com">
+            <img src="images/logo_png.png" alt="roovix_shop">
+            <p class="mb-3">Roovix Shop</p>
+          </a>
+        </div>
+        <button id="nav_toggle"><i class="fa-solid fa-bars-staggered"></i></button>
+        <button id="nav_close"><i class="fa-solid fa-xmark"></i></button>
+        <ul id="nav_list">
+          <li><a href="https://roovix.com"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="profile"><i class="fa-regular fa-user"></i> Profile</a></li>
+          <li><a href="help_center/help_request"><i class="fa-solid fa-headset"></i> Help Center</a></li>
+        </ul>
+      </nav>
+      <!-- Nav ber end here -->
+
+  <form id="search_form" class="pr-12">
     <input type="search" name="search" id="search" placeholder="Search product or category...">
-    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-    
-    <div class="title" id="logo_container">
-      <svg class="logo" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-      <p>Home</p>
-    </div>
+    <button class="ml-5" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
   </form>
   <h1 id="show_query" style="font-size: 1rem; font-weight: 500; margin-left: 20px; color: gray;"></h1>
   <section id="product-list">
@@ -152,7 +164,7 @@
     <div id="products_list_container" class="list-container">
       <!-- Product cards will be dynamically generated here -->
     </div>
-  </section>  
+  </section>
 
       <script>
               // Function to handle category selection
