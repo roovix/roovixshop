@@ -484,44 +484,6 @@
         }
       }
 
-      // Search result open
-      const search_form = document.getElementById("search_form");
-      search_form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const search_input = document.getElementById("search").value;
-        window.location.href = `/search_result?search=${search_input}`;
-      });
-
-      
-
-      // Refer and earn
-      const referBtn = document.getElementById("refer_earn");
-      referBtn.addEventListener("click", () => {
-        alert("You can't refer right now")
-      });
-
-      // Open user login page
-      function openLoginPage() {
-        auth.onAuthStateChanged((user) => {
-          if (!user) {
-            window.location.href = "login.html";
-          }else{
-            alert("User already logged in!")
-          }
-        });
-      }
-
-      //  Open dashboard page
-      const my_dashboard = document.getElementById("my_dashboard");
-      my_dashboard.addEventListener("click", () => {
-        if(isUser){
-          window.location.href = "/dashboard.html";
-        }else{
-          window.location.href = "https://roovix.com/login"
-        }
-      });
-    </script>
-
 
     <!-- Aos animation on scroll -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
