@@ -257,7 +257,7 @@
             if ((selectedCategory === "all" || categoryLower === selectedCategory) && matchesQuery) {
               // If there's a match, generate product HTML
               productHtml += `
-                <div class="container">
+                <div class="product-card" style="padding-bottom: 10px;">
                   <div class="image_container">
                     <img id="image_click_${productId}" class="image" src="${product.image}">
                   </div>
