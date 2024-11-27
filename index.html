@@ -43,9 +43,9 @@
 
     <script src="config.js"></script>
     <link rel="stylesheet" href="styles/product_card.css">
-    <link rel="stylesheet" href="styles/product_category.css">
     <link rel="stylesheet" href="styles/index.css" />
     <link rel="stylesheet" href="styles/banners.css">
+    <link rel="stylesheet" href="styles/product_category.css">
     <link rel="stylesheet" href="styles/nav_ber.css">
 
     <!-- Aos animation css link= -->
@@ -131,6 +131,7 @@
               selectCategory(defaultItem);
             }
         });
+
 
         // toggle navigation
         document.getElementById("nav_toggle").addEventListener("click", function(){
@@ -228,11 +229,10 @@
       fetchBanners();
 
 
-
       let productsToShow = 16;  // Number of products to show initially and on each "Load More"
       let allProducts = [];  // Store all fetched products
       let displayedProducts = 0;  // Track how many products have been displayed
-      
+
       // Handle category click
       const categoryList = document.getElementById("categoryList");
       categoryList.addEventListener("click", (event) => {
@@ -246,7 +246,7 @@
           fetchProduct();
         }
       });
-      
+
       // Reset for a fresh load of products
       function resetProductDisplay() {
         displayedProducts = 0;
@@ -254,65 +254,65 @@
         document.getElementById("products_list_container").innerHTML = "";  // Clear previous products
         document.getElementById("loadMoreBtn")?.remove();  // Remove the "Load More" button if it exists
       }
-      
+
       // Fetch product
       function fetchProduct() {
         const products_list_container = document.getElementById("products_list_container");
         document.getElementById("spinner").style.display = "block"; // Show the spinner while fetching
-      
+
         const productsRef = ref(db, `products`);
         onValue(productsRef, (snapshot) => {
-      
+
           if (snapshot) {
             const products = snapshot.val();
             const productArray = [];
-      
+
             // Collect products into an array
             for (const productId in products) {
               const product = products[productId];
               productArray.push({ id: productId, ...product });
             }
-      
+
             // Filter products by category first
             const filteredProducts = category === "all" 
               ? productArray 
               : productArray.filter(product => product.category.toLowerCase() === category);
-      
+
             // Shuffle the filtered product array
             const shuffledProducts = shuffleArray(filteredProducts);
-      
+
             // Store all products
             allProducts = shuffledProducts;
-      
+
             // Initially display the first few products
             displayProducts();
-      
+
           } else {
             document.getElementById("products_list_container").innerHTML = `<p>No products found</p>`;
             document.getElementById("spinner").style.display = "none";
           }
-      
+
         });
       }
-      
+
       // Display products based on how many should be shown
       function displayProducts() {
         const products_list_container = document.getElementById("products_list_container");
-      
+
         // Get the slice of products to display
         const productsToDisplay = allProducts.slice(displayedProducts, displayedProducts + productsToShow);
-      
+
         let product_html = '';  // Accumulate HTML for products
         productsToDisplay.forEach((productData) => {
           const productId = productData.id;
           const product = productData;
           const product_link = product.link;
-      
+
           let price_div = '';
           if (product.price && product.currency && product.discount) {
             const formattedPrice = parseInt(product.price).toLocaleString();
             const formattedDiscount = parseInt(product.discount).toLocaleString();
-      
+
             price_div = `
               <p class="price">
                 <span class="currency">${product.currency}</span>
@@ -320,7 +320,7 @@
                 <span class="discount">${formattedDiscount}</span>
               </p>`;
           }
-      
+
           product_html += `
             <div class="product-card">
               <div class="image_container">
@@ -344,33 +344,33 @@
             </div>
           `;
         });
-      
+
         // Insert the products into the container
         products_list_container.innerHTML += product_html;  // Append the new products instead of replacing old ones
         displayedProducts += productsToDisplay.length;
-      
+
         // Hide spinner after the products are loaded
         document.getElementById("spinner").style.display = "none";
-      
+
         // Add event listeners for the products (for ALL products, not just the newly loaded ones)
         allProducts.forEach((productData) => {
           const productId = productData.id;
           const product = productData;
-      
+
           const button = document.getElementById(`action_btn_${productId}`);
           if (button) {
             button.addEventListener('click', function() {
               window.open(product.link, '_blank');
             });
           }
-      
+
           const image = document.getElementById(`image_click_${productId}`);
           if (image) {
             image.addEventListener('click', function() {
               window.open(product.link, '_blank');
             });
           }
-      
+
           const shareButton = document.getElementById(`share_btn_${productId}`);
           if (shareButton) {
             shareButton.addEventListener('click', function() {
@@ -382,18 +382,18 @@
             });
           }
         });
-      
+
         // Add "Load More" button if there are more products to load
         if (displayedProducts < allProducts.length) {
           let loadMoreBtn = document.getElementById("loadMoreBtn");
-      
+
           if (!loadMoreBtn) {
             // Only create the button if it doesn't already exist
             loadMoreBtn = document.createElement("button");
             loadMoreBtn.id = "loadMoreBtn";
             loadMoreBtn.className = "load-more-btn";
             loadMoreBtn.innerText = "Load More";
-      
+
             // Attach event listener to the "Load More" button
             loadMoreBtn.addEventListener("click", () => {
               displayProducts();  // Show the next set of products
@@ -402,13 +402,13 @@
             const loadMoreContainer = document.createElement("div");
             loadMoreContainer.className = "load-more-container";
             loadMoreContainer.appendChild(loadMoreBtn);
-      
+
             // Append the button outside the products list container
             document.body.appendChild(loadMoreContainer);  // You may need to append it at the right position in your layout
           }
         }
       }
-      
+
       // Share functionality with fallback for Android
       function shareLink(product_url) {
         if (navigator.share) {
@@ -426,12 +426,12 @@
           fallbackShare(product_url);
         }
       }
-      
+
       // Fallback share function (works for browsers that don't support Web Share API)
       function fallbackShare(product_url) {
         alert("This feature is not supported on your browser. You can copy the link manually: " + product_url);
       }
-      
+
       // Helper function to shuffle an array
       function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -440,9 +440,18 @@
         }
         return array;
       }
-      
+
       fetchProduct();
 
+      // Show welcome title
+      function showWelcomeTitle() {
+        const welRef = ref(db, "admin/welcome_title");
+        onValue(welRef, (snapshot) => {
+          const welcomeTitle = snapshot.val();
+          document.getElementById("welcome-title").innerText = welcomeTitle;
+        });
+      }
+      showWelcomeTitle();
 
       // Function to get visitor IP and save to Firebase
       async function saveVisitorInfo() {
@@ -484,6 +493,7 @@
         }
       }
 
+    </script>
 
     <!-- Aos animation on scroll -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
