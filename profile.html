@@ -123,7 +123,7 @@
                   <div class="text-center sm:text-left">
                     <div class="user_name_container flex items-center justify-center sm:justify-start gap-2">
                       <h2 id="user_name" class="text-2xl font-semibold">Anonymous</h2>
-                      <svg id="verified" style="fill: #085FEC; width: 1.3rem;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m346.92-70.77-72.77-124.61-141.07-31.39 14.46-145.08L51.85-480l95.69-108.15-14.46-145.08 141.07-31.39 72.77-124.61L480-832.92l133.08-56.31 72.77 124.61 141.07 31.39-14.46 145.08L908.15-480l-95.69 108.15 14.46 145.08-141.07 31.39-72.77 124.61L480-127.08 346.92-70.77ZM438-345.69 658.31-566 611-611.77l-173 173-87-88.54L303.69-480 438-345.69Z"/></svg>
+                      <svg id="verified" class="hidden" style="fill: #085FEC; width: 1.3rem;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m346.92-70.77-72.77-124.61-141.07-31.39 14.46-145.08L51.85-480l95.69-108.15-14.46-145.08 141.07-31.39 72.77-124.61L480-832.92l133.08-56.31 72.77 124.61 141.07 31.39-14.46 145.08L908.15-480l-95.69 108.15 14.46 145.08-141.07 31.39-72.77 124.61L480-127.08 346.92-70.77ZM438-345.69 658.31-566 611-611.77l-173 173-87-88.54L303.69-480 438-345.69Z"/></svg>
                     </div>
                     <p id="user_id_container" class="hidden items-center gap-1.5">Uid: <span id="user_uid">none</span> <i id="user_uid_copy" class="fa-regular fa-copy text-sm cursor-pointer"></i></p>
                     <button class="mt-2 px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
@@ -278,7 +278,6 @@
       sideLeftClose.addEventListener('click', function () {
           sideLeft.style.display = 'none'; // Hide the left side panel
       });
-       
     </script>
 
     <!-- Module script for firebase client side -->
@@ -302,15 +301,13 @@
         const auth = getAuth(app);
 
         // Fetch users details start
-        auth.onAuthStateChanged((user)=>{
+        auth.onAuthStateChanged(async (user)=>{
           if(user){
             const user_id = user.uid;
             const usersRef = ref(db, 'users/' + user_id);
             onValue(usersRef, (snapshot) => {
               const userData = snapshot.val();
               if(snapshot){
-                console.log("User data: ", userData); // Show user data in console
-              
                 // Users profile element find by id
                 const user_profile_picture = document.getElementById("user_profile_picture");
                 const user_name = document.getElementById("user_name");
@@ -328,7 +325,8 @@
                 profile_description.innerText = userData.description?? "You have no bio yet..!!";
               }
             });
-           // Check user custom claims
+
+            // Check user custom claims
             try {
               const idTokenResult = await user.getIdTokenResult();
               if (idTokenResult.claims.admin) {
@@ -339,10 +337,10 @@
                 document.getElementById("verified_badge").classList.add('hidden');
               }
             }catch (e) {
-                // Handle error's here
+
             }
           }else{
-            console.log("No user is signed in.");
+            window.location.href = "/login.html"
           }
         });
         // Copy user uid to clipboard
