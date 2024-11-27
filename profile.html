@@ -204,12 +204,12 @@
                 <!-- Sidebar Menu -->
                 <aside class="mt-6">
                   <div class="bg-gray-100 rounded-lg p-4">
-                    <ul>
-                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700">Dashboard</a></li>
-                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Orders</a></li>
-                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Address</a></li>
-                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Account Details</a></li>
-                      <li id="logout_btn" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
+                    <ul class="flex flex-col gap-2">
+                      <li id="dashboard_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200 bg-gray-200"><a href="#" class="text-gray-700">Dashboard</a></li>
+                      <li id="orders_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Orders</a></li>
+                      <li id="address_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Address</a></li>
+                      <li id="account_details_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Account Details</a></li>
+                      <li id="logout_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
                     </ul>
                   </div>
                 </aside>
@@ -217,6 +217,10 @@
             </main>
           </section>
           <!-- Profile end -->
+
+          <section id="dynamic_replace">
+              <iframe id="activity_snapshot" src="activity_snapshot.html" width="100%" height="auto" frameborder="0"></iframe>
+          </section>
 
         </div>
         <!-- Main end -->
@@ -396,7 +400,7 @@
               const alertBody = document.getElementById("alert");
               const alertDescription = document.getElementById("alert_description");
               alertTitle.innerText = "Error!";
-              alertDescription.innerText = "Failed to verify user claims! Do you want to apply for verified badge?";
+              alertDescription.innerText = "Failed to verify user claims! Do you want to apply for seller?";
 
               const alertConfirmBtn = document.getElementById("alert_confirm_btn");
 
@@ -423,7 +427,7 @@
         // Fetch users details end
 
         // Log out current user
-        const logout_btn = document.getElementById("logout_btn");
+        const logout_btn = document.getElementById("logout_item");
         logout_btn.addEventListener("click", ()=>{
           auth.signOut().then(() => {
             window.location.href = "/login";
@@ -432,6 +436,23 @@
           });
         });
      </script>
+
+     <!-- Handle the dynamic replace start -->
+      <script type="module">
+        // Main container
+        const dynamic_replace = document.getElementById("dynamic_replace");
+
+        // Items to click
+        const dashboard_item = document.getElementById("dashboard_item");
+        const orders_item = document.getElementById("orders_item");
+        const address_item = document.getElementById("address_item");
+        const account_details_item = document.getElementById("account_details_item");
+        const logout_item = document.getElementById("logout_item");
+
+        // Page to show
+        const activity_snapshot = document.getElementById("activity_snapshot");
+      </script>
+     <!-- Handle the dynamic replace end -->
      
      <!-- ALert functions start -->
      <script>
