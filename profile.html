@@ -166,7 +166,7 @@
         </div>
         <!-- Main end -->
 
-    <!-- Js logic to functional the page -->
+    <!-- Js logic for manu -->
      <script>
         document.addEventListener('DOMContentLoaded', function () {
             const items = document.querySelectorAll('.side_left_ul > li');
@@ -274,32 +274,11 @@
 
       // Event listeners for showing panels
       sideLeftToggle.addEventListener('click', showLeftPanel);
-
       // Close left panel
       sideLeftClose.addEventListener('click', function () {
           sideLeft.style.display = 'none'; // Hide the left side panel
       });
-      // Show hide logout popup
-      const logoutCancelButton = document.getElementById('logout_cancel_button');
-      const logoutContainer = document.querySelector('.logout_container');
-      const list_logout_btn = document.getElementById("list_logout_btn");
-      logoutCancelButton.addEventListener('click', function () {
-          logoutContainer.style.display = 'none'; // Show the logout popup
-      });
-      list_logout_btn.addEventListener('click', function () {
-          // show the logout popup
-          logoutContainer.style.display = 'flex'; // Show the logout popup
-      });
-
-
-      // Hide show dashboard item with menu item
-      // Hide show cards section with earnings menu item start
-      const cards_section = document.getElementById("cards_section");
-      const earnings_menu_item = document.getElementById("earnings_item");
-      earnings_menu_item.addEventListener("click", ()=>{
-        earnings_menu_item.style.display = 'block';
-      });
-      // Hide show cards section with earnings menu item end
+       
     </script>
 
     <!-- Module script for firebase client side -->
@@ -349,6 +328,19 @@
                 profile_description.innerText = userData.description?? "You have no bio yet..!!";
               }
             });
+           // Check user custom claims
+            try {
+              const idTokenResult = await user.getIdTokenResult();
+              if (idTokenResult.claims.admin) {
+                // Visible the verified badge
+                document.getElementById("verified_badge").classList.remove('hidden');
+              } else {
+                // Hidden the verified badge
+                document.getElementById("verified_badge").classList.add('hidden');
+              }
+            }catch (e) {
+                // Handle error's here
+            }
           }else{
             console.log("No user is signed in.");
           }
