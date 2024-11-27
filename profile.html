@@ -78,6 +78,61 @@
     <title>Roovix - My Profile</title>
   </head>
   <body>
+    
+    <!-- Alert Body start -->
+    <div id="alert" class="fixed hidden z-50 inset-0 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen px-4 sm:px-0 text-center">
+        
+        <!-- Overlay Background -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all w-full max-w-md sm:w-3/4 sm:max-w-lg sm:my-8">
+          <!-- Close Button -->
+          <div class="absolute top-0 right-0 pt-4 pr-4">
+            <button type="button" onclick="closeAlert()" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <span class="sr-only">Close</span>
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Icon and Message -->
+          <div class="p-6">
+            <div class="flex flex-col sm:flex-row items-center">
+              <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <h3 id="alert_title" class="text-lg font-medium text-gray-900">
+                  Your Confirmation Message
+                </h3>
+                <p id="alert_description" class="mt-2 text-sm text-gray-500">
+                  Your body text goes here.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <button id="alert_confirm_btn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto">
+                Commit
+              </button>
+              <button onclick="closeAlert()" id="alert_cancel_btn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Alert Body end -->
+    
       <!-- Side left start-->
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
        <div id="side_left" class="side_left shadow-lg rounded-lg">
@@ -337,7 +392,22 @@
                 document.getElementById("verified_badge").classList.add('hidden');
               }
             }catch (e) {
+              const alertTitle = document.getElementById("alert_title");
+              const alertBody = document.getElementById("alert");
+              const alertDescription = document.getElementById("alert_description");
+              alertTitle.innerText = "Error!";
+              alertDescription.innerText = "Failed to verify user claims! Do you want to apply for verified badge?";
 
+              const alertConfirmBtn = document.getElementById("alert_confirm_btn");
+
+              alertConfirmBtn.addEventListener("click", ()=>{
+                // Hide the alert
+                alertBody.classList.add('hidden');
+                // Confirm logic coming soon..
+              });
+
+              // Show the alert
+              alertBody.classList.remove('hidden');
             }
           }else{
             window.location.href = "/login"
