@@ -29,16 +29,14 @@ body {
     width: 100vw;
     min-height: 100vh;
     font-family: 'Roboto', sans-serif;
-}
-
-.container {
     width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 20rem auto 20rem;
+    grid-template-columns: 20rem auto;
     background-color: var(--background-base-color);
     overflow: hidden;
 }
+
 .side_left {
     overflow: hidden;
     padding: 20px;
@@ -58,7 +56,7 @@ body {
     height: 2.5rem;
     border-radius: 50%;
     padding: 2px;
-    border: 1px solid rgba(128, 128, 128, 0.521);
+    border: 1px solid rgba(128, 128, 128, 0.26);
     object-fit: cover;
 }
 .side_left_ul {
@@ -147,25 +145,6 @@ body {
     margin-left: 10px;
 }
 
-.side_right {
-    overflow: hidden;
-    padding: 20px;
-    background-color: #fff;
-}
-.side_right_title {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.199);
-    padding-bottom: 10px;
-}
-.side_right_title img {
-    width: 1.3rem;
-    height: 1.3rem;
-    border-radius: 50%;
-}
-
 #side_left_toggle {
     cursor: pointer;
     display: none;
@@ -184,22 +163,6 @@ body {
     font-size: 1.5rem;
     color: #74C0FC;
 }
-#side_right_toggle {
-    cursor: pointer;
-    display: none;
-    position: fixed;
-    padding: 5px;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    bottom: 20px;
-    right: 30px;
-}
-#side_right_toggle img {
-    border-radius: 50%;
-    width: 1.7rem;
-    height: 1.7rem;
-}
 #side_left_close {
     cursor: pointer;
     display: none;
@@ -211,141 +174,11 @@ body {
     font-size: 1.5rem;
     color: gray;
 }
-#side_right_close {
-    cursor: pointer;
-    display: none;
-    background-color: transparent;
-    border: none;
-    padding: 5px;
-}
-#side_right_close i {
-    font-size: 1.5rem;
-    color: gray;
-}
 
 .main {
     padding: 20px;
+    padding-top: 0%;
 }
-
-/* Base styles */
-#cards_section {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Auto-adjust columns */
-    grid-auto-rows: 200px; /* Fixed height for rows */
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 19px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px;
-  }
-  .card_icon {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
-  }
-  .card_icon h3, .card_title {
-    color: rgba(34, 34, 34, 0.815);
-    font-weight: 400;
-  }
-  .card_icon i  {
-    font-size: 2.5rem;
-    color: #fc749d;
-  }
-  #color_i2 {
-    color: #fcb174;
-  }
-  #color_i3 {
-    color: #74cafc;
-  }
-  #color_i4 {
-    color: #fc74f1;
-  }
-  #color_i5 {
-    color: #8d74fc;
-  }
-  .card_value {
-    margin-top: 8px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    text-align: start;
-  }
-
-  #balance_count {
-    color: #35b900;
-  }
-  #investment_count {
-    color: rgb(255, 0, 0);
-  }
-
-  .card .analysis {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-  }
-  .card .analysis i {
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  .card .analysis p {
-    font-size: 0.8rem;
-    color: gray;
-    margin-top: 5px;
-  }
-  .up_rich {
-    color: rgb(0, 167, 0);
-    display: none;
-  }
-  .down_rich {
-    color: rgb(255, 0, 0);
-    display: none;
-  }
-  .no_rich {
-    color: gray;
-  }
-.uid_copy {
-    font-size: 1rem;
-    text-align: center;
-    margin-top: 10px;
-}
-.uid_copy span {
-    margin-left: 5px;
-    cursor: pointer;
-}
-.account_type {
-    font-size: 1.2rem;
-    color: #929292c5;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-  /* Analysis text content span */
-  .balance_analysis_text_increase {
-    color: rgb(0, 167, 0);
-  }
-  .balance_analysis_text_decrease {
-    color: rgb(255, 0, 0);
-  }
-  .linkClick_analysis_text_increase {
-    color: rgb(0, 167, 0);
-  }
-  .linkClick_analysis_text_decrease {
-    color: rgb(255, 0, 0);
-  }
-
 
 #edit_profile_btn {
     text-decoration: none;
@@ -357,97 +190,19 @@ body {
 }
 
 
-/* Handle withdraw popup start */
-.withdraw_balance_container {
-    width: 400px;
-    display: none;
-    position: fixed;
-    z-index: 100;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #00a2ff31;
-    padding: 20px;
-    border: 1px solid rgba(128, 128, 128, 0.384);
-    border-radius: 15px;
-    box-shadow: 5px 10px 15px rgba(128, 128, 128, 0.418);
-    backdrop-filter: blur(2px);
-}
-.withdraw_balance_title p {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-.withdraw_balance_title h5 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-.withdraw_balance_amount {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.withdraw_balance_amount select {
-    outline-color: transparent;
+/* Edit profile start */
+#profile_section {
+    height: auto;
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid rgba(128, 128, 128, 0.527);
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    border-color: transparent;
 }
-.withdraw_field {
-    display: none;
-}
-.withdraw_field input {
-    outline-color: #74C0FC;
-    padding: 12px;
-    border: 1px solid rgba(128, 128, 128, 0.527);
-    margin-bottom: 10px;
-    border-radius: 5px;
-    width: 100%;
-    background-color: #ffffffa2;
-}
-.withdraw_balance_button_container {
-    display: flex;
-    gap: 10px;flex-wrap: wrap;
-}
-.withdraw_balance_button_container button {
-    padding: 10px 10px;
-    flex-grow: 1;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-#withdraw_balance_button {
-    background-color: #FC749D;
-    color: #fff;
-}
-#withdraw_balance_cancel_button {
-    border: 1px solid #64646425;
-}
-/* Handle withdraw popup end */
-
-
-/* When the right sidebar is hidden */
-@media screen and (max-width: 1250px) {
-    .side_right {
-        display: none;
-    }
-    #side_right_toggle {
-        display: block;
-    }
-    
-    /* Adjust grid to only have two columns when right sidebar is hidden */
-    .container {
-        grid-template-columns: 20rem auto; /* Only 2 columns: left and main */
-    }
-}
+/* Edit profile end */
 
 /* When both sidebars are hidden */
 @media screen and (max-width: 900px) {
+    /* Adjust grid to only have two columns when right sidebar is hidden */
+    body {
+        grid-template-columns: 1fr; /* Only 2 columns: left and main */
+    }
     .side_left {
         display: none;
     }
@@ -456,21 +211,5 @@ body {
     }
     .main {
         margin-top: 40px;
-    }
-    
-    /* Adjust grid to have only one column when both sidebars are hidden */
-    .container {
-        grid-template-columns: 1fr; /* Full width for the main content */
-    }
-}
-
-@media screen and (max-width: 570px) {
-    .withdraw_balance_container {
-        width: 300px;
-    }
-}
-@media screen and (max-width: 350px) {
-    .withdraw_balance_container {
-        width: 100%;
     }
 }
