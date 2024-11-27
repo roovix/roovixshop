@@ -45,6 +45,15 @@
       content="Check out Roovix Shop for quality products and unbeatable deals. Shop online with us today!"
     />
 
+        <!-- FOnt awesome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+
     <!-- Google Verification -->
     <meta
       name="google-site-verification"
@@ -56,10 +65,302 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://roovix.com/images/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="https://roovix.com/images/logo.png">
 
+    <!-- LInk too css -->
+     <link rel="stylesheet" href="styles/dashboard.css">
+     <link rel="stylesheet" href="styles/logout_opup.css">
+
+    <!-- Link to js -->
+     <script src="config.js"></script>
+     <script src="https://cdn.tailwindcss.com"></script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roovix Your Profile</title>
+    <title>Roovix - My Profile</title>
   </head>
-  <body></body>
+  <body>
+      <!-- Side left start-->
+      <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
+       <div id="side_left" class="side_left shadow-lg rounded-lg">
+          <div class="side_left_title">
+            <a href="https://roovix.com" class="flex gap-2 items-center">
+              <img src="images/logo.png" alt="profile_picture">
+              <p style="font-size: 1.2rem;">Roovix Shop</p>
+            </a>
+            <button id="side_left_close"><i class="fa-solid fa-circle-xmark"></i></button>
+          </div>
+        <ul class="side_left_ul">
+          <li>
+            <i class="fa-solid fa-user-circle"></i> My Account
+          </li>
+          <li id="earnings_item">
+            <i class="fa-solid fa-hand-holding-dollar"></i> Earnings
+          </li>
+          <li><i class="fa-regular fa-credit-card"></i> Card</li>
+          <li>
+            <i class="fa-solid fa-chart-line"></i> Charts <i class="fa-solid list_arrow fa-chevron-down"></i>
+            <ul class="sub_list">
+              <li class="sub_list_item">Analytics</li>
+              <li class="sub_list_item">Income history</li>
+            </ul>
+          </li>
+        </ul>
+       </div>
+       <!-- Side left end -->
+
+       <!-- Main start -->
+        <div class="main">
+
+          <!-- Profile start -->
+          <section id="profile_section">
+            <!-- Main Content -->
+            <main class="h-auto mx-auto mt-6">
+              <div class="bg-white shadow-md rounded-lg p-6">
+                <!-- Profile Section -->
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                  <div class="flex-shrink-0">
+                    <img id="user_profile_picture" class="w-24 h-24 bg-gray-300 rounded-full"></img>
+                  </div>
+                  <div class="text-center sm:text-left">
+                    <div class="user_name_container flex items-center justify-center sm:justify-start gap-2">
+                      <h2 id="user_name" class="text-2xl font-semibold">Anonymous</h2>
+                      <svg id="verified" style="fill: #085FEC; width: 1.3rem;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m346.92-70.77-72.77-124.61-141.07-31.39 14.46-145.08L51.85-480l95.69-108.15-14.46-145.08 141.07-31.39 72.77-124.61L480-832.92l133.08-56.31 72.77 124.61 141.07 31.39-14.46 145.08L908.15-480l-95.69 108.15 14.46 145.08-141.07 31.39-72.77 124.61L480-127.08 346.92-70.77ZM438-345.69 658.31-566 611-611.77l-173 173-87-88.54L303.69-480 438-345.69Z"/></svg>
+                    </div>
+                    <p id="user_id_container" class="hidden items-center gap-1.5">Uid: <span id="user_uid">none</span> <i id="user_uid_copy" class="fa-regular fa-copy text-sm cursor-pointer"></i></p>
+                    <button class="mt-2 px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
+                      Edit Profile
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="mt-6 border-t border-gray-200">
+                  <nav class="flex space-x-4 mt-4">
+                    <a id="about_option" href="#" class="text-blue-500 border-b-2 border-blue-500 pb-2">About</a>
+                    <!-- <a id="posts_option" href="#" class="text-gray-600 hover:text-blue-500">Posts</a>
+                    <a id="comments_option" href="#" class="text-gray-600 hover:text-blue-500">Comments</a> -->
+                  </nav>
+                </div>
+
+                <!-- About Section -->
+                <div class="mt-6 text-center">
+                  <p id="profile_description" class="text-gray-600 md:text-lg">You have no bio yet..!!</p>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <aside class="mt-6">
+                  <div class="bg-gray-100 rounded-lg p-4">
+                    <ul>
+                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700">Dashboard</a></li>
+                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Orders</a></li>
+                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Address</a></li>
+                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Account Details</a></li>
+                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
+                    </ul>
+                  </div>
+                </aside>
+              </div>
+            </main>
+          </section>
+          <!-- Profile end -->
+
+        </div>
+        <!-- Main end -->
+
+    <!-- Js logic to functional the page -->
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const items = document.querySelectorAll('.side_left_ul > li');
+
+            // Select the first item and its first sub-item by default
+            if (items.length > 0) {
+                const firstItem = items[0];
+                const firstSubList = firstItem.querySelector('.sub_list');
+                const firstArrow = firstItem.querySelector('.list_arrow');
+
+                // Make the first main item selected by default
+                firstItem.classList.add('list_hover_design');
+                if (firstSubList) {
+                    firstSubList.classList.add('show');
+                    firstArrow.style.transform = 'rotate(180deg)';
+
+                    // Set the first sub-item of the first item as selected by default
+                    const firstSubItem = firstSubList.querySelector('.sub_list_item');
+                    if (firstSubItem) {
+                        firstSubItem.classList.add('sub_item_selected');
+                    }
+                }
+            }
+
+            items.forEach((item) => {
+                const arrow = item.querySelector('.list_arrow');
+                const subList = item.querySelector('.sub_list');
+
+                // Handle main item click
+                item.addEventListener('click', function () {
+                    // Hide other opened sub-lists, remove hover design, and clear selected sub-items
+                    items.forEach((el) => {
+                        if (el !== item) {
+                            const otherSubList = el.querySelector('.sub_list');
+                            const otherArrow = el.querySelector('.list_arrow');
+                            const otherSubItems = el.querySelectorAll('.sub_list_item');
+
+                            // Hide sub-list and reset styles
+                            otherSubList?.classList.remove('show');
+                            // otherArrow.style.transform = 'rotate(0deg)';
+                            el.classList.remove('list_hover_design');
+
+                            // Remove selected style from all sub-items of other lists
+                            otherSubItems.forEach((si) => si.classList.remove('sub_item_selected'));
+                        }
+                    });
+
+                    // Toggle the current sub-list
+                    const isVisible = subList && subList.classList.contains('show');
+                    if (isVisible) {
+                        subList.classList.remove('show');
+                        // arrow.style.transform = 'rotate(0deg)';
+                        item.classList.remove('list_hover_design');
+                    } else {
+                        subList?.classList.add('show');
+                        // arrow.style.transform = 'rotate(180deg)';
+                        item.classList.add('list_hover_design');
+                    }
+                });
+
+                // Handle sub-item click
+                if (subList) {
+                    const subItems = subList.querySelectorAll('.sub_list_item');
+
+                    subItems.forEach((subItem) => {
+                        subItem.addEventListener('click', function (event) {
+                            // Prevent parent item from collapsing
+                            event.stopPropagation();
+
+                            // Remove selected style from all sub-items of the same parent
+                            subItems.forEach((si) => si.classList.remove('sub_item_selected'));
+
+                            // Apply selected style to clicked sub-item
+                            subItem.classList.add('sub_item_selected');
+                        });
+                    });
+                }
+            });
+        });
+
+      // Side hide show functionality
+      const sideLeftToggle = document.getElementById('side_left_toggle');
+      const sideLeft = document.getElementById('side_left');
+
+      // Close buttons for both side panels
+      const sideLeftClose = document.getElementById('side_left_close');
+
+      // Function to show the left panel
+      function showLeftPanel() {
+          sideLeftClose.style.display = 'block';
+          sideLeft.style.position = 'fixed';
+          sideLeft.style.top = '0px';
+          sideLeft.style.left = '0px';
+          sideLeft.style.display = 'block'; // Show the left side panel
+      }
+
+      // Function to show the right panel
+      function showRightPanel() {
+
+          // Hide the left panel if it's visible
+          if (sideLeft.style.display === 'block') {
+              sideLeft.style.display = 'none';
+          }
+      }
+
+      // Event listeners for showing panels
+      sideLeftToggle.addEventListener('click', showLeftPanel);
+
+      // Close left panel
+      sideLeftClose.addEventListener('click', function () {
+          sideLeft.style.display = 'none'; // Hide the left side panel
+      });
+      // Show hide logout popup
+      const logoutCancelButton = document.getElementById('logout_cancel_button');
+      const logoutContainer = document.querySelector('.logout_container');
+      const list_logout_btn = document.getElementById("list_logout_btn");
+      logoutCancelButton.addEventListener('click', function () {
+          logoutContainer.style.display = 'none'; // Show the logout popup
+      });
+      list_logout_btn.addEventListener('click', function () {
+          // show the logout popup
+          logoutContainer.style.display = 'flex'; // Show the logout popup
+      });
+
+
+      // Hide show dashboard item with menu item
+      // Hide show cards section with earnings menu item start
+      const cards_section = document.getElementById("cards_section");
+      const earnings_menu_item = document.getElementById("earnings_item");
+      earnings_menu_item.addEventListener("click", ()=>{
+        earnings_menu_item.style.display = 'block';
+      });
+      // Hide show cards section with earnings menu item end
+    </script>
+
+    <!-- Module script for firebase client side -->
+     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        import {
+          getDatabase,
+          ref,
+          onValue,
+          get,
+          set,
+          update
+        } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+        import {
+          getAuth,
+          onAuthStateChanged,
+        } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app);
+
+        // Fetch users details start
+        auth.onAuthStateChanged((user)=>{
+          if(user){
+            const user_id = user.uid;
+            const usersRef = ref(db, 'users/' + user_id);
+            onValue(usersRef, (snapshot) => {
+              const userData = snapshot.val();
+              if(snapshot){
+                console.log("User data: ", userData); // Show user data in console
+              
+                // Users profile element find by id
+                const user_profile_picture = document.getElementById("user_profile_picture");
+                const user_name = document.getElementById("user_name");
+                const user_uid = document.getElementById("user_uid");
+                const profile_description = document.getElementById("profile_description");
+
+                // visible the user uid view after fetch successfully
+                document.getElementById("user_id_container").classList.add('flex'); 
+                document.getElementById("user_id_container").classList.remove('hidden'); 
+
+                // Show user details in profile
+                user_profile_picture.src = userData.profile_picture?? "https://roovix.com/images/difault_user_logo.png";
+                user_name.innerText = userData.name?? "Anonymous";
+                user_uid.innerText = userData.uid?? "none";
+                profile_description.innerText = userData.description?? "You have no bio yet..!!";
+              }
+            });
+          }else{
+            console.log("No user is signed in.");
+          }
+        });
+        // Copy user uid to clipboard
+        const user_uid_copy = document.getElementById("user_uid_copy");
+        user_uid_copy.addEventListener("click", ()=>{
+          const user_uid = document.getElementById("user_uid").innerText;
+          navigator.clipboard.writeText(user_uid);
+          alert("User UID copied to clipboard.");
+        });
+        // Fetch users details end
+     </script>
+  </body>
 </html>
