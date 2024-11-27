@@ -144,18 +144,19 @@ body {
 }
 
 #side_left_toggle {
+    width: 45px;
+    height: 45px;
     cursor: pointer;
     display: none;
     position: fixed;
     border: none;
     pad: 5px;
     background-color: transparent;
-    top: 20px;
+    top: 10px;
     left: 20px;
     background-color: #74c1fc48;
     padding: 10px;
     border-radius: 50%;
-    width: 45px;
 }
 #side_left_toggle i {
     font-size: 1.5rem;
