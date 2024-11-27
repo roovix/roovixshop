@@ -28,7 +28,7 @@
   }
   
   .selected {
-    color: #F36944;
+    color: #0095ff;
     border-radius: 50px;
     transition: 0.5s ease;
   }
