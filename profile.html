@@ -209,7 +209,7 @@
                       <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Orders</a></li>
                       <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Address</a></li>
                       <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Account Details</a></li>
-                      <li class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
+                      <li id="logout_btn" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
                     </ul>
                   </div>
                 </aside>
@@ -421,6 +421,16 @@
           alert("User UID copied to clipboard.");
         });
         // Fetch users details end
+
+        // Log out current user
+        const logout_btn = document.getElementById("logout_btn");
+        logout_btn.addEventListener("click", ()=>{
+          auth.signOut().then(() => {
+            window.location.href = "/login.html";
+          }).catch((error) => {
+            console.error("Error signing out:", error);
+          });
+        });
      </script>
 
          <!-- ALert functions start -->
