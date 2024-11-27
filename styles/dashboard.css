@@ -34,7 +34,6 @@ body {
     display: grid;
     grid-template-columns: 20rem auto;
     background-color: var(--background-base-color);
-    overflow: hidden;
 }
 
 .side_left {
