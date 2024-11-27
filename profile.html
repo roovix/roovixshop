@@ -78,7 +78,7 @@
     <title>Roovix - My Profile</title>
   </head>
   <body>
-    
+
     <!-- Alert Body start -->
     <div id="alert" class="fixed hidden z-50 inset-0 overflow-y-auto">
       <div class="flex items-center justify-center min-h-screen px-4 sm:px-0 text-center">
@@ -132,7 +132,7 @@
       </div>
     </div>
     <!-- Alert Body end -->
-    
+
       <!-- Side left start-->
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
        <div id="side_left" class="side_left shadow-lg rounded-lg">
@@ -221,7 +221,7 @@
         </div>
         <!-- Main end -->
 
-    <!-- Js logic for manu -->
+    <!-- Js logic for menu -->
      <script>
         document.addEventListener('DOMContentLoaded', function () {
             const items = document.querySelectorAll('.side_left_ul > li');
@@ -384,12 +384,12 @@
             // Check user custom claims
             try {
               const idTokenResult = await user.getIdTokenResult();
-              if (idTokenResult.claims.admin) {
+              if (idTokenResult.claims.admin || idTokenResult.claims.admin) {
                 // Visible the verified badge
-                document.getElementById("verified_badge").classList.remove('hidden');
+                document.getElementById("verified").classList.remove('hidden');
               } else {
                 // Hidden the verified badge
-                document.getElementById("verified_badge").classList.add('hidden');
+                document.getElementById("verified").classList.add('hidden');
               }
             }catch (e) {
               const alertTitle = document.getElementById("alert_title");
@@ -432,8 +432,8 @@
           });
         });
      </script>
-
-         <!-- ALert functions start -->
+     
+     <!-- ALert functions start -->
      <script>
         function closeAlert() {
             const alertBody = document.getElementById("alert");
