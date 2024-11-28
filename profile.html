@@ -515,11 +515,16 @@
                 const link_click = document.getElementById("link_click");
                 const order_count = document.getElementById("order_count");
 
+                // Format user activity snapshot
+                let balance_formatted = numberFormatter(userData.balance);
+                let link_click_formatted = numberFormatter(userData.total_link_click);
+                let order_count_formatted = numberFormatter(userData.order_count);
+
                 // Show user activity details to profile
-                balance.innerText = numberFormatter(userData.balance)?? 0;
+                balance.innerText = balance_formatted?? 0;
                 currency.innerText = userData.currency?? "৳";
-                link_click.innerText = numberFormatter(userData.total_link_click)?? 0;
-                order_count.innerText = numberFormatter(userData.order_count)?? 0;
+                link_click.innerText = link_click_formatted?? 0;
+                order_count.innerText = order_count_formatted?? 0;
 
                 // visible the user uid view after fetch successfully
                 document.getElementById("user_id_container").classList.add('flex'); 
@@ -810,7 +815,7 @@
           } else if (number >= 1_000) {
             return (number / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
           } else {
-            return number.toString();
+            return number;
           }
         }
      </script>
