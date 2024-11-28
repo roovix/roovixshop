@@ -10,6 +10,7 @@
 
     <!-- Link to assets -->
     <script src="config.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Meta Description: Describe the login for both the main company and sub-brand -->
     <meta
@@ -38,244 +39,333 @@
     />
     <meta property="og:url" content="https://roovix.com/login" />
     <meta property="og:type" content="website" />
-    <meta name="robots" content="index, follow">
     <title>Login Roovix</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-      :root {
-        --color-background: #fff;
-        --color-primary: #f36944;
-        --color-base: #fec92b;
-        --color-sky: #74c0fc;
-        --color-green-gray: #63e6be;
-        --color-pink-gray: #e599f7;
-        --text-black-color: #000;
-        --text-white-color: #fff;
-        --text-gray-color: rgb(59, 59, 59);
-        --logo-size: 5rem;
-        --name-size: 1.5rem;
-        --navber-height: 60px;
-        --mneu-item-font-size: 15px;
-        --left-right-padding-size: 10vw;
-        --primary-border-radius: 10px;
-        --background-base-color: #74c1fc15;
-      }
-      * {
-        padding: 0%;
-        margin: 0%;
-        box-sizing: border-box;
-      }
-      body {
-        width: 100vw;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
-        font-family: "Roboto", sans-serif;
-        padding-top: 20%;
-      }
-
-      .container {
-        position: relative;
-        width: 100%;
-        height: 500px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      .container .roovix_title {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
-      .container .roovix_title img {
-        width: var(--logo-size);
-      }
-      .container .roovix_title p {
-        font-size: var(--name-size);
-      }
-      .container .form_container {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .container form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-      .container form label {
-        margin-top: 10px;
-      }
-      .container form input {
-        padding: 15px;
-        border: 1px solid gray;
-        border-radius: 5px;
-        width: 100%;
-      }
-      .container form input:focus {
-        outline-color: #74c0fc;
-      }
-      .container .register_account {
-        margin-top: 50px;
-      }
-      .container .register_account p {
-        font-size: 1rem;
-        color: #000;
-        text-align: center;
-      }
-      .container .register_account a {
-        color: var(--color-sky);
-        margin-left: 5px;
-        text-decoration: none;
-        transition: 0.5s ease;
-      }
-      .container .register_account a:hover {
-        opacity: 0.5;
-      }
-      #login_btn {
-        margin-top: 5px;
-        transition: 0.5s ease;
-        font-weight: 700;
-      }
-      #login_btn:hover {
-        cursor: pointer;
-        box-shadow: 0px 0px 30px rgba(128, 128, 128, 0.404);
-      }
-      .login_with_social {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .login_with_social #login_with_google {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 10px;
-        border-radius: 5px;
-        border: 1px solid gray;
-      }
-      .login_with_social #login_with_google img {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-      }
-    </style>
   </head>
   <body>
-    <div class="container">
-      <div class="roovix_title">
-        <img src="images/logo_png.png" alt="Roovix Shop" />
-        <p>Register new Roovix Account</p>
+
+        <!-- Success popup start -->
+        <div id="success_popup" class="fixed hidden z-10 inset-0 overflow-y-auto">
+          <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+              <div class="fixed inset-0 transition-opacity">
+                  <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+              <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+              <div
+                  class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                  <div class="sm:flex sm:items-start">
+                      <div
+                          class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                          <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                      </div>
+                      <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                          <h3 id="success_title" class="text-lg leading-6 font-medium text-gray-900">
+                              
+                          </h3>
+                          <div class="mt-2">
+                              <p id="success_message" class="text-sm leading-5 text-gray-500">
+                                  
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                      <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                          <button onclick="closeSuccessPopup()" type="button"
+                              class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                              OK
+                          </button>
+                      </span>
+                  </div>
+              </div>
+          </div>
       </div>
-      <div class="form_container">
-        <form id="register">
-          <label for="name">Name</label>
-          <input type="name" name="name" id="name" required />
+        <!-- Success popup end -->
 
-          <label for="phone">Phone Number</label>
-          <input type="phone" name="phone" id="phone" required />
+    
+    <!-- Alert Body start -->
+    <div id="alert" class="fixed hidden z-50 inset-0 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen px-4 sm:px-0 text-center">
+        
+        <!-- Overlay Background -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden transform transition-all w-full max-w-md sm:w-3/4 sm:max-w-lg sm:my-8">
+          <!-- Close Button -->
+          <div class="absolute top-0 right-0 pt-4 pr-4">
+            <button type="button" onclick="closeAlert()" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <span class="sr-only">Close</span>
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Icon and Message -->
+          <div class="p-6">
+            <div class="flex flex-col sm:flex-row items-center">
+              <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div class="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <h3 id="alert_title" class="text-lg font-medium text-gray-900">
+                  Your Confirmation Message
+                </h3>
+                <p id="alert_description" class="mt-2 text-sm text-gray-500">
+                  Your body text goes here.
+                </p>
+              </div>
+            </div>
             
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" required />
-
-          <label for="referral">Referral uid (Optional)</label>
-          <input type="text" name="referral" id="referral"/>
-
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password" required />
-
-          <input id="login_btn" type="submit" value="Register" />
-        </form>
-        <p>-----Or-----</p>
-        <div class="login_with_social" style="display: none;">
-          <button id="login_with_google"><img src="images/google-png.png" alt="google login"> Continue with google</button>
+            <!-- Buttons -->
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+              <button id="alert_confirm_btn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto">
+                Confirm
+              </button>
+              <button onclick="closeAlert()" id="alert_cancel_btn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto">
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="register_account">
-        <p>Already have a account? <a href="/login">Login</a></p>
-      </div>
     </div>
+    <!-- Alert Body end -->
+
+
+    <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+          <img class="mx-auto w-[70px]" src="images/logo.png" alt="Workflow">
+          <h2 class="mt-6 text-center text-3xl leading-9 text-gray-900">
+              Create a new account
+          </h2>
+          <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+              Or
+              <a href="/login"
+                  class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                  login to your account
+              </a>
+          </p>
+      </div>
+  
+      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+              <form method="POST" action="#">
+                  <div>
+                      <label for="email" class="block text-sm font-medium leading-5  text-gray-700">Name</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                          <input id="name" name="name" placeholder="Enter your full name" type="text" required=""
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                          <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                      clip-rule="evenodd">
+                                  </path>
+                              </svg>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="mt-6">
+                      <label for="email" class="block text-sm font-medium leading-5  text-gray-700">Phone</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                          <input id="phone" name="phone" placeholder="Phone number" type="number" required=""
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                          <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                      clip-rule="evenodd">
+                                  </path>
+                              </svg>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="mt-6">
+                      <label for="email" class="block text-sm font-medium leading-5  text-gray-700">Referral uid (Optional)</label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                          <input id="referral" name="referral" placeholder="Referral uid" type="text"
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                          <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                      clip-rule="evenodd">
+                                  </path>
+                              </svg>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="mt-6">
+                      <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
+                          Email address
+                      </label>
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                          <input id="email" name="email" placeholder="user@example.com" type="email"
+                              required=""
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                          <div class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                              <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd"
+                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                      clip-rule="evenodd"></path>
+                              </svg>
+                          </div>
+                      </div>
+                  </div>
+  
+                  <div class="mt-6">
+                      <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
+                          Password
+                      </label>
+                      <div class="mt-1 rounded-md shadow-sm">
+                          <input id="password" name="password" type="password" required=""
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                      </div>
+                  </div>
+  
+                  <div class="mt-6">
+                      <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">
+                          Confirm Password
+                      </label>
+                      <div class="mt-1 rounded-md shadow-sm">
+                          <input id="password_confirmation" name="password_confirmation" type="password" required=""
+                              class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                      </div>
+                  </div>
+  
+                  <div class="mt-6">
+                      <span class="block w-full rounded-md shadow-sm">
+                          <button type="submit"
+                              class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                              Create account
+                          </button>
+                      </span>
+                  </div>
+              </form>
+  
+          </div>
+      </div>
+  </div>
 
     <!-- Script for login to Roovix -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+      import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+      import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
     
       const app = initializeApp(firebaseConfig);
       const db = getDatabase(app);
       const auth = getAuth(app);
-    
-      let user_id = "";
-    
-      // Check for user login state
-      function checkForUser() {
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            user_id = user.uid;
-            window.location.href = "https://www.roovix.com";
-          }
-        });
-      }
-      checkForUser();
-    
-      const registerForm = document.getElementById("register");
-    
-      registerForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-    
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const name = document.getElementById("name").value;
-        const phone_number = document.getElementById("phone").value;
-        const referral = document.getElementById("referral").value;
-    
-        try {
-          // Create user with email and password
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          user_id = userCredential.user.uid;
-    
-          // Save user data in Realtime Database
-          const userRef = ref(db, `users/${user_id}`);
-          const userData = {
-            uid: user_id,
-            name: name,
-            email: email,
-            password: password,
-            profile_picture: "https://roovix.com/images/difault_user_logo.png",
-            phone_number: phone_number,
-            balance: 20,
-            currency: "৳",
-            investment: 0,
-            total_link_click: 0,
-            total_orders: 0,
-            referral: referral,
-            type: "Normal user"
-            description: "null"
-          };
-    
-          await set(userRef, userData);
-          alert("Account created successfully!");
-          window.location.href = "https://roovix.com";
-        } catch (error) {
-          console.error("Error creating account:", error.message);
-          alert("Failed to create account. Please try again.\n" + error.message);
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get the form element
+        const form = document.querySelector("form");
+
+        // Handle form submission
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();  // Prevent the default form submission behavior
+
+          // Capture the values of the form fields by their IDs
+          const name = document.getElementById("name").value;
+          const phone = document.getElementById("phone").value;
+          const referral = document.getElementById("referral").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword = document.getElementById("password_confirmation").value;
+
+          if(password != confirmPassword){
+            let alertTitle = document.getElementById("alert_title");
+              let alertBody = document.getElementById("alert");
+              let alertDescription = document.getElementById("alert_description");
+              alertTitle.innerText = "Error!";
+              alertDescription.innerText = "Confirm password doesn't match to the password";
+
+              document.getElementById("alert_confirm_btn").textContent = "Try Again";
+              document.getElementById("alert_cancel_btn").classList.add("hidden");
+              let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+
+              alertConfirmBtn.addEventListener("click", ()=>{
+                // Hide the alert
+                alertBody.classList.add('hidden');
+              });
+              // Show the alert
+              alertBody.classList.remove('hidden');
+            return;
+          } 
+
+          // Register user with uid
+          createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            // User created, now save data
+            const user = userCredential.user;
+            const userRef = ref(db, `users/${user.uid}`);
+            const userData = {
+              name: name,
+              phone: phone,
+              referral: referral,
+              email: email,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              balance: 20,
+              total_link_click: 0,
+              total_orders: 0,
+              type: "Normal User",
+              uid: user.uid
+            };
+            set(userRef, userData).then(() => {
+              let success_profile_update_popup = document.getElementById("success_popup");
+              document.getElementById("success_title").textContent = "Successful";
+              document.getElementById("success_message").textContent = "You have successfully created your profile!";
+              success_profile_update_popup.classList.remove('hidden');
+            }).catch((err) => {
+              handleError(err, "Profile data could not be saved.");
+            });
+          }).catch((err) => {
+            handleError(err, "User creation failed.");
+          });
+
+        function handleError(err, customMessage) {
+          let alertTitle = document.getElementById("alert_title");
+          let alertBody = document.getElementById("alert");
+          let alertDescription = document.getElementById("alert_description");
+          alertTitle.innerText = "Error!";
+          alertDescription.innerText = customMessage + " " + err.message;
+
+          let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+
+          alertConfirmBtn.addEventListener("click", () => {
+            alertBody.classList.add('hidden');
+            window.location.href = "https://roovix.com";
+          });
+
+          alertBody.classList.remove('hidden');
         }
+        });
       });
     </script>    
+    <!-- Function script start -->
+    <script>
+        function closeAlert() {
+            const alertBody = document.getElementById("alert");
+            alertBody.classList.add("hidden");
+            window.location.href = "https://roovix.com";
+        }
+
+        function closeSuccessPopup() {
+            const success_popup = document.getElementById("success_popup");
+            success_popup.classList.add("hidden");
+            window.location.href = "https://roovix.com";
+        }
+    </script>
+    <!-- Function script end -->
   </body>
 </html>
