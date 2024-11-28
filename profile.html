@@ -516,10 +516,10 @@
                 const order_count = document.getElementById("order_count");
 
                 // Show user activity details to profile
-                balance.innerText = userData.balance?? 0;
+                balance.innerText = numberFormatter(userData.balance)?? 0;
                 currency.innerText = userData.currency?? "৳";
-                link_click.innerText = userData.total_link_click?? 0;
-                order_count.innerText = userData.order_count?? 0;
+                link_click.innerText = numberFormatter(userData.total_link_click)?? 0;
+                order_count.innerText = numberFormatter(userData.order_count)?? 0;
 
                 // visible the user uid view after fetch successfully
                 document.getElementById("user_id_container").classList.add('flex'); 
@@ -798,6 +798,20 @@
         function closeSuccessPopup() {
             const success_popup = document.getElementById("success_popup");
             success_popup.classList.add("hidden");
+        }
+
+       
+        // Number formatter like 1k, 1m, 1b
+        function numberFormatter(number) {
+          if (number >= 1_000_000_000) {
+            return (number / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'B';
+          } else if (number >= 1_000_000) {
+            return (number / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+          } else if (number >= 1_000) {
+            return (number / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
+          } else {
+            return number.toString();
+          }
         }
      </script>
      <!-- functions end -->
