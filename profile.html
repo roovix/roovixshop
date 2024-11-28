@@ -235,6 +235,43 @@
                   </div>
                 </div>
 
+                <!-- Description or bio Section -->
+                <div class="mt-6 text-center">
+                  <p id="profile_description" class="text-gray-600 md:text-lg"></p>
+                </div>
+
+                 <!-- About Section -->
+                <div id="about_section" class="mt-6 flex items-center justify-around bg-gray-100 h-[120px]">
+                  <div class="balance_bg flex-1 flex flex-col items-center">
+                    <div class="balance_bg flex items-center gap-[2px] font-semibold">
+                      <p id="currency" class="text-[0.9rem] mt-1">৳</p>
+                      <p id="balance" class="text-2xl">0</p>
+                    </div>
+                    <p>Balance</p>
+                  </div>
+                  <div class="divider h-10 w-[3px] bg-gray-200"></div>
+                  <div class="link_click_bg flex-1 flex items-center flex-col">
+                    <div class="link_click_bg">
+                      <div class="view_link_bg">
+                        <div class="count_bg font-semibold">
+                          <p id="link_click" class="text-2xl text-center">0</p>
+                        </div>
+                        <p>Link click</p>
+                      </div>
+                      <div class="link_click_shorts_analytics_bg">
+                          <!-- Coming soon -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="divider h-10 w-[3px] bg-gray-200"></div>
+                  <div class="order_bg flex-1 flex flex-col items-center">
+                    <div class="order_count_bg">
+                      <p id="order_count" class="text-2xl font-semibold text-center">0</p>
+                      <p>Orders</p>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Tabs -->
                 <div class="mt-6 border-t border-gray-200">
                   <nav class="flex space-x-4 mt-4">
@@ -244,17 +281,10 @@
                   </nav>
                 </div>
 
-                <!-- About Section -->
-                <div class="mt-6 text-center">
-                  <p id="profile_description" class="text-gray-600 md:text-lg"></p>
-                </div>
-
                 <!-- Sidebar Menu -->
                 <aside class="mt-6">
                   <div class="bg-gray-100 rounded-lg p-4">
                     <ul class="flex flex-col gap-2">
-                      <li id="dashboard_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200 bg-gray-200"><a href="#" class="text-gray-700">Dashboard</a></li>
-                      <li id="orders_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Orders</a></li>
                       <li id="address_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Address</a></li>
                       <li id="account_details_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Account Details</a></li>
                       <li id="logout_item" class="py-2 cursor-pointer rounded-md p-3.5 hover:bg-gray-200"><a href="#" class="text-gray-700 ">Log Out</a></li>
@@ -484,6 +514,18 @@
                 const user_name = document.getElementById("user_name");
                 const user_uid = document.getElementById("user_uid");
                 const profile_description = document.getElementById("profile_description");
+
+                // User activity element find by
+                const balance = document.getElementById("balance");
+                const currency = document.getElementById("currency");
+                const link_click = document.getElementById("link_click");
+                const order_count = document.getElementById("order_count");
+
+                // Show user activity details to profile
+                balance.innerText = userData.balance?? 0;
+                currency.innerText = userData.currency?? "৳";
+                link_click.innerText = userData.total_link_click?? 0;
+                order_count.innerText = userData.order_count?? 0;
 
                 // visible the user uid view after fetch successfully
                 document.getElementById("user_id_container").classList.add('flex'); 
