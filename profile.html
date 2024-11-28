@@ -630,6 +630,8 @@
                           .then(() => {
                             // Hide the uploading popup
                             uploading_popup.style.display = "none";
+
+                            profile_picture = "";
                             
                             let success_profile_update_popup = document.getElementById("success_popup");
                             document.getElementById("success_title").textContent = "Successful";
