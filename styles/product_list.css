@@ -1,0 +1,308 @@
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --logo-size: 50px;
+    --name-size: 20px;
+    --navber-height: 60px;
+    --mneu-item-font-size: 15px;
+    --left-right-padding-size: 10vw;
+    --primary-border-radius: 10px;
+    --background-base-color: #74c1fc1f;
+}
+
+.action_top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+.action_top ul {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    overflow: auto;
+}
+.action_top ul li{
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.action_top ul li:hover{
+    cursor: pointer;
+    opacity: 0.8;
+}
+.selected {
+    color: var(--color-primary);
+    border-radius: 50px;
+    transition: 0.5s ease;
+}
+
+/* Product design here */
+#products_list_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Dynamic columns */
+  gap: 20px; /* Gap between product cards */
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the container */
+}
+  
+  .container {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .image_container {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+    background-color: #f9f9f9;
+  }
+  
+  .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .details_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .product_description_container {
+    padding: 0px 5px;
+    flex: 1;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 10px 0;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit description to 3 lines */
+    -webkit-box-orient: vertical;
+  }
+  
+  .price_container {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 0px 10px;
+  }
+  
+  .action_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0px 10px;
+  }
+  
+  .action_btn, .share_btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action_btn {
+    background-color: #F36944;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .action_btn:hover {
+    background-color: #218838;
+  }
+  
+  .share_btn {
+    background-color: transparent;
+    color: #000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  .share_btn i {
+    font-size: 1.2rem;
+  }
+  
+  .share_btn:hover {
+    background-color: #e4e4e4;
+  }
+  
+  .verify_container {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.8rem;
+    text-align: left;
+    padding: 0px 10px;
+    padding-bottom: 15px;
+  }
+  
+  .product_verify {
+    display: flex;
+    align-items: center;
+  }
+  
+  .product_verify i {
+    color: #ffd700;
+    margin-right: 5px;
+  }
+
+  .price {
+    color: #F36944;
+  }
+  .currency {
+    font-size: 1.7rem;
+  }
+  .price_inside {
+    font-size: 1.2rem;
+  }
+  .discount {
+    color: gray;
+    margin-left: 8px;
+    text-decoration: line-through;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 1225px) {
+    #products_list_container {
+      grid-template-columns: repeat(3, 1fr); /* Set to 3 columns */
+    }
+  }
+
+  @media (max-width: 785px) {
+    .action_btn, .share_btn {
+      font-size: 0.75rem; /* Smaller font size for buttons */
+    }
+  }
+  
+  @media (max-width: 650px) {
+    .action_btn, .share_btn {
+      padding: 5px 8px; /* Smaller button padding */
+    }
+  }
+  
+  @media (max-width: 602px) {
+    .action_btn, .share_btn {
+      padding: 3px 5px; /* Smaller button padding */
+    }
+    .details_container {
+      padding: 5px; /* Compact padding inside the card */
+    }
+  }
+  
+
+/* Media Query for Screens Smaller than 575px (Phone screens) */
+@media (max-width: 575px) {
+  #products_list_container {
+    grid-template-columns: repeat(2, 1fr); /* Keep two-column layout */
+    gap: 10px; /* Reduce gap between items */
+    padding: 10px; /* Less padding for smaller screens */
+  }
+
+  .container {
+    margin-bottom: 10px; /* Add spacing between cards */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adjust shadow */
+  }
+
+  .image_container {
+    padding-top: 100%; /* 1:1 Aspect Ratio for full-width image on mobile */
+  }
+
+  .details_container {
+    padding: 5px; /* Less padding inside the card */
+  }
+
+  .description {
+    font-size: 0.8rem; /* Smaller font for better fit */
+    height: auto; /* Allow full height */
+  }
+
+  .action_container {
+    justify-content: space-between; /* Keep buttons side by side */
+    gap: 5px; /* Small gap between buttons */
+    margin-top: 0px;
+  }
+
+  .action_btn, .share_btn {
+    padding: 5px 8px; /* Adjust button padding for smaller screens */
+    font-size: 0.7rem; /* Smaller font for buttons */
+  }
+}
+
+/* Media Query for Screens Smaller than 357px (Single-column layout) */
+@media (max-width: 357px) {
+  #products_list_container {
+    grid-template-columns: 1fr; /* Single-column layout */
+    gap: 10px; /* Less gap between items */
+    padding: 10px; /* Reduced padding for the overall container */
+  }
+
+  .container {
+    margin-bottom: 10px; /* Space between cards */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+  }
+
+  .image_container {
+    padding-top: 100%; /* 1:1 Aspect Ratio for full-width image on mobile */
+  }
+
+  .details_container {
+    padding: 5px; /* Compact padding inside the card */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .product_description_container {
+    margin-bottom: 0; /* Remove margin below the description */
+  }
+
+  .description {
+    font-size: 0.8rem; /* Smaller font size */
+    height: auto; /* Allow full height */
+    margin: 0; /* Remove top and bottom margin */
+  }
+
+  .action_container {
+    display: flex;
+    justify-content: space-between; /* Keep buttons side by side */
+    gap: 5px; /* Small gap between buttons */
+    margin-top: 0; /* Remove top margin for action container */
+  }
+
+  .action_btn, .share_btn {
+    padding: 5px 8px; /* Smaller button padding */
+    font-size: 0.7rem; /* Smaller button font size */
+  }
+}

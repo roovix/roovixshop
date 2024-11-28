@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+:root {
+    --color-background: #fff;
+    --color-primary: #F36944;
+    --color-base: #FEC92B;
+    --color-sky: #74C0FC;
+    --color-green-gray: #63E6BE;
+    --color-pink-gray: #E599F7;
+    --text-black-color: #000;
+    --text-white-color: #fff;
+    --text-gray-color: rgb(59, 59, 59);
+    --logo-size: 50px;
+    --name-size: 20px;
+    --navber-height: 60px;
+    --mneu-item-font-size: 15px;
+    --left-right-padding-size: 10vw;
+    --primary-border-radius: 10px;
+    --background-base-color: #74c1fc15;
+}
+
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+body {
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 20rem auto;
+    background-color: var(--background-base-color);
+}
+
+.side_left {
+    overflow: hidden;
+    padding: 20px;
+    background-color: #fff;
+}
+.side_left .side_left_title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.side_left .side_left_title .user_name {
+    font-size: 1rem;
+    font-weight: 501;
+}
+.side_left .side_left_title img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    padding: 2px;
+    border: 1px solid rgba(128, 128, 128, 0.26);
+    object-fit: cover;
+}
+.side_left_ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    list-style: none;
+    margin-top: 20px;
+}
+.side_left_ul li {
+    position: relative;
+    padding: 10px;
+    font-size: 1rem;
+    color: #3d3d3dda;
+    -webkit-tap-highlight-color: transparent; /* Disable tap highlight color */
+}
+.side_left_ul li i {
+    margin-right: 8px;
+}
+.side_left_ul li:hover {
+    cursor: pointer;
+    background-color: rgba(216, 216, 216, 0.432);
+    border-radius: 5px;
+}
+.list_hover_design {
+    cursor: pointer;
+    background-color: rgba(216, 216, 216, 0.432);
+    border-radius: 5px;
+}
+
+.dashboard_title {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sub_list {
+    display: none;
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    margin-left: 15px;
+}
+.sub_list_item {
+    opacity: 0.9;
+    margin: 5px;
+}
+
+.sub_item_selected {
+    background-color: #74c1fc33; /* Background color for selected state */
+    border-radius: 5px;
+    color: none; /* Text color for selected state */
+    opacity: 1;
+}
+
+.sub_item_selected i {
+    color: none; /* Icon color for selected state */
+}
+
+
+.sub_list.show {
+    display: block;
+    max-height: 200px; /* Set a reasonable max height */
+    opacity: 1;
+}
+.roate_27deg {
+    transform: rotate(270deg);
+}
+
+.list_arrow {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    transition: 0.5s ease;
+}
+.tag_comment {
+    font-size: 1rem;
+    color: #929292b6;
+    margin-left: 10px;
+}
+
+#side_left_toggle {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: none;
+    position: fixed;
+    border: none;
+    pad: 5px;
+    background-color: transparent;
+    top: 10px;
+    left: 20px;
+    background-color: #74c1fc48;
+    padding: 10px;
+    border-radius: 50%;
+}
+#side_left_toggle i {
+    font-size: 1.5rem;
+    color: #74C0FC;
+}
+#side_left_close {
+    cursor: pointer;
+    display: none;
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+}
+#side_left_close i {
+    font-size: 1.5rem;
+    color: gray;
+}
+
+.main {
+    padding: 20px;
+    padding-top: 0%;
+}
+
+#edit_profile_btn {
+    text-decoration: none;
+}
+#edit_profile_btn svg{
+    fill: #000;
+    width: 20px;
+    height: 30px;
+}
+
+    /* Uploading modal styles start */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width: 80%;
+        max-width: 400px;
+      }
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #F36944;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .modal-message {
+        font-size: 16px;
+        color: #333;
+      }
+      /* Uploading modal styles end */
+
+
+/* Edit profile start */
+#profile_section {
+    height: auto;
+    width: 100%;
+}
+/* Edit profile end */
+
+/* When both sidebars are hidden */
+@media screen and (max-width: 900px) {
+    /* Adjust grid to only have two columns when right sidebar is hidden */
+    body {
+        grid-template-columns: 1fr; /* Only 2 columns: left and main */
+    }
+    .side_left {
+        display: none;
+    }
+    #side_left_toggle {
+        display: block;
+    }
+    .main {
+        margin-top: 40px;
+    }
+}
