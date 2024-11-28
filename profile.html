@@ -121,7 +121,7 @@
             <!-- Buttons -->
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <button id="alert_confirm_btn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto">
-                Commit
+                Confirm
               </button>
               <button onclick="closeAlert()" id="alert_cancel_btn" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto">
                 Cancel
@@ -132,6 +132,55 @@
       </div>
     </div>
     <!-- Alert Body end -->
+
+    <!-- Uploading popup start -->
+    <div class="modal" id="upload-modal">
+      <div class="modal-content">
+        <div class="loader"></div>
+        <p class="modal-message">Uploading... Please wait.</p>
+      </div>
+    </div>
+    <!-- Uploading popup end -->
+
+    <!-- Success popup start -->
+    <div id="success_popup" class="fixed hidden z-10 inset-0 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+          <div class="fixed inset-0 transition-opacity">
+              <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+          <div
+              class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+              <div class="sm:flex sm:items-start">
+                  <div
+                      class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <svg class="h-6 w-6 text-green-600" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                  </div>
+                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3 id="success_title" class="text-lg leading-6 font-medium text-gray-900">
+                          
+                      </h3>
+                      <div class="mt-2">
+                          <p id="success_message" class="text-sm leading-5 text-gray-500">
+                              
+                          </p>
+                      </div>
+                  </div>
+              </div>
+              <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                  <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                      <button onclick="closeSuccessPopup()" type="button"
+                          class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                          OK
+                      </button>
+                  </span>
+              </div>
+          </div>
+      </div>
+  </div>
+    <!-- Success popup end -->
 
       <!-- Side left start-->
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
@@ -181,7 +230,7 @@
                       <svg id="verified" class="hidden" style="fill: #085FEC; width: 1.3rem;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m346.92-70.77-72.77-124.61-141.07-31.39 14.46-145.08L51.85-480l95.69-108.15-14.46-145.08 141.07-31.39 72.77-124.61L480-832.92l133.08-56.31 72.77 124.61 141.07 31.39-14.46 145.08L908.15-480l-95.69 108.15 14.46 145.08-141.07 31.39-72.77 124.61L480-127.08 346.92-70.77ZM438-345.69 658.31-566 611-611.77l-173 173-87-88.54L303.69-480 438-345.69Z"/></svg>
                     </div>
                     <p id="user_id_container" class="hidden items-center gap-1.5">Uid: <span id="user_uid">none</span> <i id="user_uid_copy" class="fa-regular fa-copy text-sm cursor-pointer"></i></p>
-                    <button class="mt-2 px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
+                    <button onclick="openEditProfileModal()" class="mt-2 px-4 py-2 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
                       Edit Profile
                     </button>
                   </div>
@@ -218,9 +267,66 @@
           </section>
           <!-- Profile end -->
 
+          <!-- Edit profile start -->
+          <div id="editProfileModal" class="fixed hidden inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+            <div class="bg-white rounded-lg shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] p-6 relative">
+              <button onclick="closeEditProfileModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">
+                &#10005; <!-- Close icon (X) -->
+              </button>
+              
+              <h1 style="opacity: 0;" class="text-3xl font-serif font-bold mb-2 text-gray-800">Profile</h1>
+              <h2 style="opacity: 0;" class="text-gray-600 text-sm mb-4">Create Profile</h2>
+              
+              <form id="edit_profile_form">
+                <!-- Cover Image -->
+                <div class="w-full rounded-sm bg-cover bg-center bg-no-repeat h-40" style="background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-blue-gradient-web-ui-background-image_518658.jpg');">
+                  <!-- Profile Image -->
+                  <div id="profile_image_preview" class="mx-auto w-[141px] h-[141px] rounded-full bg-cover bg-center bg-no-repeat bg-gray-100 -mt-20">
+                    <label for="upload_profile" class="absolute bg-white p-2 rounded-full cursor-pointer mt-28 ml-20">
+                      <input type="file" id="upload_profile" class="hidden">
+                      <!-- Upload Icon -->
+                      <svg style="fill: rgba(0, 0, 0, 0.493);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Z"/></svg>
+                    </label>
+                  </div>
+                </div>
+                
+                <!-- Form Fields -->
+                <div class="mt-10">
+                  <label class="block mb-1 text-gray-700">Name</label>
+                  <input id="name_edit" type="text" class="w-full p-3 border-2 rounded-lg" placeholder="Edit your name">
+                  
+                  <label class="block mb-1 mt-3 text-gray-700">Bio</label>
+                  <input id="description_edit" type="text" class="w-full p-3 border-2 rounded-lg" placeholder="Your short description">
+                </div>
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
+                  <div class="w-full">
+                    <label class="block mb-1 text-gray-700">Sex</label>
+                    <select id="sex_edit" class="w-full p-3 border-2 rounded-lg">
+                      <option disabled>Select Sex</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
+                  <div class="w-full">
+                    <label class="block mb-1 text-gray-700">Date of Birth</label>
+                    <input id="date_of_birth_edit" type="date" class="w-full p-3 border-2 rounded-lg">
+                  </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="mt-6">
+                  <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg">Confirm</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- Edit profile end -->
+
+          <!-- Dynamic replace start-->
           <section id="dynamic_replace">
-              <iframe id="activity_snapshot" src="activity_snapshot.html" width="100%" height="auto" frameborder="0"></iframe>
+              <iframe id="activity_snapshot" src="activity_snapshot" width="100%" height="auto" frameborder="0"></iframe>
           </section>
+          <!-- Dynamic replace end -->
 
         </div>
         <!-- Main end -->
@@ -354,10 +460,17 @@
           getAuth,
           onAuthStateChanged,
         } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+        import {
+          getStorage,
+          ref as storageRef,
+          uploadBytesResumable,
+          getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-storage.js";
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const auth = getAuth(app);
+        const storage = getStorage(app);
 
         // Fetch users details start
         auth.onAuthStateChanged(async (user)=>{
@@ -382,6 +495,12 @@
                 user_name.innerText = userData.name?? "Anonymous";
                 user_uid.innerText = userData.uid?? "none";
                 profile_description.innerText = userData.description?? "You have no bio yet..!!";
+                
+                // Show profile details in edit profile
+                document.getElementById("profile_image_preview").style.backgroundImage = `url(${userData.profile_picture})`;
+                document.getElementById("name_edit").value = userData.name?? "";
+                document.getElementById("description_edit").value = userData.description?? "";
+
               }
             });
 
@@ -396,13 +515,13 @@
                 document.getElementById("verified").classList.add('hidden');
               }
             }catch (e) {
-              const alertTitle = document.getElementById("alert_title");
-              const alertBody = document.getElementById("alert");
-              const alertDescription = document.getElementById("alert_description");
+              let alertTitle = document.getElementById("alert_title");
+              let alertBody = document.getElementById("alert");
+              let alertDescription = document.getElementById("alert_description");
               alertTitle.innerText = "Error!";
               alertDescription.innerText = "Failed to verify user claims! Do you want to apply for seller?";
 
-              const alertConfirmBtn = document.getElementById("alert_confirm_btn");
+              let alertConfirmBtn = document.getElementById("alert_confirm_btn");
 
               alertConfirmBtn.addEventListener("click", ()=>{
                 // Hide the alert
@@ -425,6 +544,196 @@
           alert("User UID copied to clipboard.");
         });
         // Fetch users details end
+
+        // Edit user profile start
+        const upload_profile = document.getElementById("upload_profile");
+        let profile_picture = "";
+        const uploading_popup = document.getElementById("upload-modal");
+        upload_profile.addEventListener("change", (event) => {
+          const profileImageContainer = document.getElementById('profile_image_preview');
+          const file = event.target.files[0];
+          
+          if (file) {
+            profile_picture = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              profileImageContainer.style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Handle edit confirmation
+        const edit_profile_form = document.getElementById("edit_profile_form");
+        edit_profile_form.addEventListener("submit", ()=>{
+
+            // Show the uploading popup
+            uploading_popup.style.display = "flex";
+
+              // Check if the user is logged in
+              onAuthStateChanged(auth, (user) => {
+                if (user) {
+                  const userId = user.uid;  // Current user's ID
+                  if(profile_picture){
+                    // Create a storage reference
+                    const storageReference = storageRef(storage, `users_profile_picture/${userId}`);
+                    
+                    // Upload the file
+                    const uploadTask = uploadBytesResumable(storageReference, profile_picture);
+
+                    // Monitor the upload process
+                    uploadTask.on(
+                      "state_changed",
+                      (snapshot) => {
+                        // Optional: Track progress
+                        console.log('Uploading...', (snapshot.bytesTransferred / snapshot.totalBytes) * 100 + '%');
+                      },
+                      (error) => {
+                        // Hide the uploading popup
+                        uploading_popup.style.display = "none";
+                        
+                        let alertTitle = document.getElementById("alert_title");
+                        let alertBody = document.getElementById("alert");
+                        let alertDescription = document.getElementById("alert_description");
+                        alertTitle.innerText = "Error during upload!";
+                        alertDescription.innerText = `${error.message}`;
+
+                        let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+                        let alertCancelBtn = document.getElementById("alert_cancel_btn");
+
+                        // Hide error cancel btn
+                        alertCancelBtn.classList.add('hidden');
+
+                        alertConfirmBtn.addEventListener("click", ()=>{
+                          // Hide the alert
+                          alertBody.classList.add('hidden');
+                          // Confirm logic coming soon..
+                        });
+
+                        // Show the alert
+                        alertBody.classList.remove('hidden');
+                      },
+                      () => {
+                        // Get download URL on success
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                          // Update the download URL in the Realtime Database
+
+                          // Save also user input data
+                          let editUserBio = document.getElementById("description_edit").value;
+                          let editUserName = document.getElementById("name_edit").value;
+
+                          const userRef = ref(db, 'users/' + userId);
+                          update(userRef, {
+                            profile_picture: downloadURL,
+                            name: editUserName,
+                            description: editUserBio
+                          })
+                          .then(() => {
+                            // Hide the uploading popup
+                            uploading_popup.style.display = "none";
+                            
+                            let success_profile_update_popup = document.getElementById("success_popup");
+                            document.getElementById("success_title").textContent = "Successful";
+                            document.getElementById("success_message").textContent = "You have successfully updated your profile!";
+                            success_profile_update_popup.classList.remove('hidden');
+                          })
+                          .catch((error) => {
+
+                            // Hide the uploading popup
+                            uploading_popup.style.display = "none";
+
+                            let alertTitle = document.getElementById("alert_title");
+                            let alertBody = document.getElementById("alert");
+                            let alertDescription = document.getElementById("alert_description");
+                            alertTitle.innerText = "Error to update profile!";
+                            alertDescription.innerText = `${error.message}`;
+
+                            let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+                            let alertCancelBtn = document.getElementById("alert_cancel_btn");
+
+                            // Hide error cancel btn
+                            alertCancelBtn.classList.add('hidden');
+
+                            alertConfirmBtn.addEventListener("click", ()=>{
+                              // Hide the alert
+                              alertBody.classList.add('hidden');
+                              // Confirm logic coming soon..
+                            });
+
+                            // Show the alert
+                            alertBody.classList.remove('hidden');
+                          });
+                        });
+                      }
+                    );
+                  }else{
+                    // Handle without profile picture edit profile
+                    // Save also user input data
+                    let editUserBio = document.getElementById("description_edit").value;
+                    let editUserName = document.getElementById("name_edit").value;
+                    const userRefForEditWithoutProfile = ref(db, 'users/' + userId);
+                    update(userRefForEditWithoutProfile, {
+                        name: editUserName,
+                        description: editUserBio
+                    }).then(()=>{
+                      // Hide the uploading popup
+                      uploading_popup.style.display = "none";
+
+                      let success_profile_update_popup = document.getElementById("success_popup");
+                      document.getElementById("success_title").textContent = "Successful";
+                      document.getElementById("success_message").textContent = "You have successfully updated your profile!";
+                      success_profile_update_popup.classList.remove('hidden');
+                    }).catch((error) => {
+                      // Hide the uploading popup
+                      uploading_popup.style.display = "none";
+
+                      let alertTitle = document.getElementById("alert_title");
+                      let alertBody = document.getElementById("alert");
+                      let alertDescription = document.getElementById("alert_description");
+                      alertTitle.innerText = "Error to update profile!";
+                      alertDescription.innerText = `${error.message}`;
+
+                      let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+                      let alertCancelBtn = document.getElementById("alert_cancel_btn");
+
+                      // Hide error cancel btn
+                      alertCancelBtn.classList.add('hidden');
+
+                      alertConfirmBtn.addEventListener("click", ()=>{
+                        // Hide the alert
+                        alertBody.classList.add('hidden');
+                        // Confirm logic coming soon..
+                      });
+
+                      // Show the alert
+                      alertBody.classList.remove('hidden');
+                    });
+                  }
+                } else {
+                  // Hide the uploading popup
+                  uploading_popup.style.display = "none";
+
+                  let alertTitle = document.getElementById("alert_title");
+                  let alertBody = document.getElementById("alert");
+                  let alertDescription = document.getElementById("alert_description");
+                  alertTitle.innerText = "User error!";
+                  alertDescription.innerText = `${error.message}`;
+
+                  let alertConfirmBtn = document.getElementById("alert_confirm_btn");
+                  alertConfirmBtn.textContent = "Login"
+
+                  alertConfirmBtn.addEventListener("click", ()=>{
+                    // Hide the alert
+                    alertBody.classList.add('hidden');
+                    window.location.href = "https://www.roovix.com/login"
+                  });
+
+                  // Show the alert
+                  alertBody.classList.remove('hidden');
+                }
+              });
+        })
+        // Edit user profile end
 
         // Log out current user
         const logout_btn = document.getElementById("logout_item");
@@ -454,13 +763,23 @@
       </script>
      <!-- Handle the dynamic replace end -->
      
-     <!-- ALert functions start -->
+     <!-- functions start -->
      <script>
         function closeAlert() {
             const alertBody = document.getElementById("alert");
             alertBody.classList.add("hidden");
         }
+        function closeEditProfileModal() {
+          document.getElementById('editProfileModal').classList.add('hidden');
+        }
+        function openEditProfileModal() {
+          document.getElementById('editProfileModal').classList.remove('hidden');
+        }
+        function closeSuccessPopup() {
+            const success_popup = document.getElementById("success_popup");
+            success_popup.classList.add("hidden");
+        }
      </script>
-     <!-- ALert functions end -->
+     <!-- functions end -->
   </body>
 </html>
