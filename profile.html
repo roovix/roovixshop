@@ -775,6 +775,7 @@
                             birth_date: date_of_birth_edit,
                             relationship_status: marriage_edit,
                             gender: sex_edit,
+                            updated_at: new Date().toISOString()
                           })
                           .then(() => {
                             // Hide the uploading popup
@@ -834,6 +835,7 @@
                         birth_date: date_of_birth_edit,
                         relationship_status: marriage_edit,
                         gender: sex_edit,
+                        updated_at: new Date().toISOString()
                     }).then(()=>{
                       // Hide the uploading popup
                       uploading_popup.style.display = "none";
