@@ -235,12 +235,12 @@
                   </div>
                 </div>
 
-                <!-- Description or bio Section -->
-                <div class="mt-6 text-center">
-                  <p id="profile_description" class="text-gray-600 md:text-lg"></p>
-                </div>
+                <!-- Description or Bio Section -->
+              <div class="mt-6 text-center">
+                <p id="profile_description" class="text-gray-600 md:text-lg"></p>
+              </div>
 
-                 <!-- Activity snapshot Section -->
+                <!-- Activity snapshot section -->
                 <div id="about_section" class="mt-6 flex items-center justify-around rounded-[5px] bg-gray-100 h-[120px]">
                   <div class="balance_bg flex-1 flex flex-col items-center">
                     <div class="balance_bg flex items-center gap-[2px] font-semibold">
@@ -281,6 +281,32 @@
                   </nav>
                 </div>
 
+                <!-- About section -->
+                 <div class="about_section mt-5 flex flex-col gap-3">
+                  <div class="gender_bg">
+                    <p id="gender" class="text-[#000000b0] text-[1.3rem] font-bold"></p>
+                  </div>
+                  <div class="marriage_status_bg flex gap-2">
+                    <div class="marriage_icon_bg">
+                      <svg style="fill: #d1d1d1;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m479.43-105-67-60.37q-101.52-91.27-167.8-157.93-66.28-66.66-104.85-119.47-38.57-52.82-54.07-97.59Q70.22-585.14 70.22-633q0-99.49 66.36-166.14 66.37-66.64 165.85-66.64 50.73 0 96.52 19.74 45.79 19.73 80.48 57.91 36.2-38.18 81.14-57.91 44.93-19.74 95.86-19.74 99.49 0 166.42 66.64 66.93 66.65 66.93 166.14 0 47.3-15.21 92.07-15.22 44.78-54.07 97.31T715.09-324.14q-66.56 66.94-168.65 158.77L479.43-105Z"/></svg>
+                    </div>
+                    <p id="marriage_status"></p>
+                  </div>
+                  <div class="location_bg flex gap-2">
+                    <div class="location_icon_bg flex gap-2">
+                      <svg style="fill: #d1d1d1;" id="location_icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480.02-476.85q34.81 0 58.97-24.18 24.16-24.19 24.16-58.99 0-34.81-24.18-58.97-24.19-24.16-58.99-24.16-34.81 0-58.97 24.18-24.16 24.19-24.16 58.99 0 34.81 24.18 58.97 24.19 24.16 58.99 24.16ZM480-70.78Q314.46-211.93 232.62-327.1q-81.84-115.16-81.84-225.47 0-153.73 99.55-244.94 99.54-91.21 229.67-91.21t229.67 91.21q99.55 91.21 99.55 244.94 0 110.31-81.84 225.47Q645.54-211.93 480-70.78Z"/></svg>
+                      <p>From</p>
+                    </div>
+                    <p id="location"></p>
+                  </div>
+                  <div class="birth_date flex gap-2">
+                    <div class="birth_date_icon_bg flex gap-2">
+                      <svg style="fill: #d1d1d1;" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480.05-394.46q-12.32 0-21.26-8.89-8.94-8.89-8.94-21.21t8.89-21.27q8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.27q-8.89 8.94-21.21 8.94Zm-160 0q-12.32 0-21.26-8.89-8.94-8.89-8.94-21.21t8.89-21.27q8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.27q-8.89 8.94-21.21 8.94Zm320 0q-12.32 0-21.26-8.89-8.94-8.89-8.94-21.21t8.89-21.27q8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.27q-8.89 8.94-21.21 8.94Zm-160 153.84q-12.32 0-21.26-8.89-8.94-8.88-8.94-21.21 0-12.32 8.89-21.26 8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.26q-8.89 8.94-21.21 8.94Zm-160 0q-12.32 0-21.26-8.89-8.94-8.88-8.94-21.21 0-12.32 8.89-21.26 8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.26q-8.89 8.94-21.21 8.94Zm320 0q-12.32 0-21.26-8.89-8.94-8.88-8.94-21.21 0-12.32 8.89-21.26 8.89-8.94 21.21-8.94t21.26 8.89q8.94 8.89 8.94 21.21t-8.89 21.26q-8.89 8.94-21.21 8.94ZM226.89-126.15q-25.75 0-43.55-17.8-17.8-17.8-17.8-43.56v-506.21q0-25.76 17.8-43.56t43.74-17.8h73.84v-89.23h40v89.23h281.23v-89.23h36.93v89.23h73.84q25.94 0 43.74 17.8t17.8 43.56v506.21q0 25.76-17.8 43.56t-43.55 17.8H226.89Zm.19-36.93h505.84q9.23 0 16.93-7.69 7.69-7.69 7.69-16.92v-346.46H202.46v346.46q0 9.23 7.69 16.92 7.7 7.69 16.93 7.69Z"/></svg>
+                    </div>
+                    <p id="birth_date"></p>
+                  </div>
+                 </div>
+
                 <!-- Sidebar Menu -->
                 <aside class="mt-6">
                   <div class="bg-gray-100 rounded-lg p-4">
@@ -312,9 +338,9 @@
                   <!-- Profile Image -->
                   <div id="profile_image_preview" class="mx-auto w-[141px] h-[141px] rounded-full bg-cover bg-center bg-no-repeat bg-gray-100 -mt-20">
                     <label for="upload_profile" class="absolute bg-white p-2 rounded-full cursor-pointer mt-28 ml-20">
-                      <input type="file" id="upload_profile" class="hidden">
+                      <input type="file" id="upload_profile" accept="image/*" class="hidden">
                       <!-- Upload Icon -->
-                      <svg style="fill: rgba(0, 0, 0, 0.493);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Z"/></svg>
+                      <svg style="fill: rgba(84, 158, 255, 0.493);" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-260q75 0 127.5-52.5T660-440q0-75-52.5-127.5T480-620q-75 0-127.5 52.5T300-440q0 75 52.5 127.5T480-260Zm0-80q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM160-120q-33 0-56.5-23.5T80-200v-480q0-33 23.5-56.5T160-760h126l74-80h240l74 80h126q33 0 56.5 23.5T880-680v480q0 33-23.5 56.5T800-120H160Z"/></svg>
                     </label>
                   </div>
                 </div>
@@ -326,14 +352,27 @@
                   
                   <label class="block mb-1 mt-3 text-gray-700">Bio</label>
                   <input id="description_edit" type="text" class="w-full p-3 border-2 rounded-lg" placeholder="Your short description">
+
+                  <label class="block mb-1 mt-3 text-gray-700">Location</label>
+                  <input id="location_edit" type="text" class="w-full p-3 border-2 rounded-lg" placeholder="Your location (Hint :  Dhaka, Tangail, Manikganj etc.)">
                 </div>
                 <div class="flex flex-col md:flex-row gap-4 mt-4">
                   <div class="w-full">
-                    <label class="block mb-1 text-gray-700">Sex</label>
+                    <label class="block mb-1 text-gray-700">Gender</label>
                     <select id="sex_edit" class="w-full p-3 border-2 rounded-lg">
-                      <option disabled>Select Sex</option>
-                      <option>Male</option>
-                      <option>Female</option>
+                      <option id="female" value="Female">Female</option>
+                      <option id="male" value="Male">Male</option>
+                      <option id="other" value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="w-full">
+                    <label class="block mb-1 text-gray-700">Marriage Status</label>
+                    <select id="marriage_edit" class="w-full p-3 border-2 rounded-lg">
+                      <option id="married" value="Married">Married</option>
+                      <option id="single" value="Single">Single</option>
+                      <option id="is_a_relationship" value="In a Relationship">In a Relationship</option>
+                      <option id="engaged" value="Engaged">Engaged</option>
+                      <option id="it_complecated" value="It's Complicated">It's Complicated</option>
                     </select>
                   </div>
                   <div class="w-full">
@@ -350,6 +389,7 @@
             </div>
           </div>
           <!-- Edit profile end -->
+
 
         </div>
         <!-- Main end -->
@@ -540,6 +580,66 @@
                 document.getElementById("profile_image_preview").style.backgroundImage = `url(${userData.profile_picture})`;
                 document.getElementById("name_edit").value = userData.name?? "";
                 document.getElementById("description_edit").value = userData.description?? "";
+                document.getElementById("location_edit").value = userData.location?? "";
+
+                // Assuming userData.birth_date is already in "YYYY-MM-DD" format
+                let birthDate = userData.birth_date ?? "0000-00-00"; // Fallback to a default value if birth_date is undefined or null
+                // Set the value to the input field
+                document.getElementById("date_of_birth_edit").value = birthDate;
+
+                // Show the gender to edit profile
+                if(userData.gender == "Male") {
+                  document.getElementById("male").selected = true;
+                }else if(userData.gender == "Female"){
+                  document.getElementById("female").selected = true;
+                }else if(userData.gender == "other"){
+                  document.getElementById("other").selected = true;
+                }else{
+                  document.getElementById("female").selected = true;
+                }
+
+                // Assuming userData.relationship_status is the variable that stores the user's relationship status
+                const relationshipStatus = userData.relationship_status ?? "Married"; // Default to "Single" if not provided
+                // Set the selected option based on the relationship status
+                console.log(relationshipStatus)
+                if (relationshipStatus === "Married") {
+                  document.getElementById("married").selected = true;
+                } else if (relationshipStatus === "Single") {
+                  document.getElementById("single").selected = true;
+                } else if (relationshipStatus === "In a Relationship") {
+                  document.getElementById("is_a_relationship").selected = true;
+                } else if (relationshipStatus === "Engaged") {
+                  document.getElementById("engaged").selected = true;
+                } else if (relationshipStatus === "It's Complicated") {
+                  document.getElementById("it_complecated").selected = true;
+                } else {
+                  // If no match, set a default option (e.g., "Single")
+                  document.getElementById("married").selected = true;
+                }
+
+                // About me reference
+                let gender = document.getElementById("gender");
+                let birth_date = document.getElementById("birth_date");
+                let location = document.getElementById("location");
+                let marriage_status = document.getElementById("marriage_status");
+
+                // Show about me
+                birth_date.classList.remove("hidden");
+                location.classList.remove("hidden");
+                marriage_status.classList.remove("hidden");
+                // Set about me data
+                birth_date.innerText = userData.birth_date?? "00-00-0000";
+                location.innerText = userData.location?? "none";
+                marriage_status.innerText = userData.relationship_status?? "none";
+                // If gender is other and not (male or female)
+                if(userData.gender == "other") {
+                  gender.innerText = "Other";
+                  gender.classList.add("hidden");
+                }else{
+                  // If not other and is (male or female)
+                  gender.innerText = userData.gender?? "none";
+                  gender.classList.remove("hidden");
+                }
 
               }
             });
@@ -547,7 +647,7 @@
             // Check user custom claims
             try {
               const idTokenResult = await user.getIdTokenResult();
-              if (idTokenResult.claims.admin || idTokenResult.claims.seller) {
+              if (idTokenResult.claims.admin || idTokenResult.claims.admin) {
                 // Visible the verified badge
                 document.getElementById("verified").classList.remove('hidden');
               } else {
@@ -573,7 +673,7 @@
               alertBody.classList.remove('hidden');
             }
           }else{
-            window.location.href = "/login.html"
+            window.location.href = "/login"
           }
         });
         // Copy user uid to clipboard
@@ -661,12 +761,20 @@
                           // Save also user input data
                           let editUserBio = document.getElementById("description_edit").value;
                           let editUserName = document.getElementById("name_edit").value;
+                          let editLocation = document.getElementById("location_edit").value;
+                          let date_of_birth_edit = document.getElementById("date_of_birth_edit").value;
+                          let marriage_edit = document.getElementById("marriage_edit").value;
+                          let sex_edit = document.getElementById("sex_edit").value;
 
                           const userRef = ref(db, 'users/' + userId);
                           update(userRef, {
                             profile_picture: downloadURL,
                             name: editUserName,
-                            description: editUserBio
+                            description: editUserBio,
+                            location: editLocation,
+                            birth_date: date_of_birth_edit,
+                            relationship_status: marriage_edit,
+                            gender: sex_edit,
                           })
                           .then(() => {
                             // Hide the uploading popup
@@ -713,10 +821,19 @@
                     // Save also user input data
                     let editUserBio = document.getElementById("description_edit").value;
                     let editUserName = document.getElementById("name_edit").value;
+                    let editLocation = document.getElementById("location_edit").value;
+                    let date_of_birth_edit = document.getElementById("date_of_birth_edit").value;
+                    let marriage_edit = document.getElementById("marriage_edit").value;
+                    let sex_edit = document.getElementById("sex_edit").value;
+
                     const userRefForEditWithoutProfile = ref(db, 'users/' + userId);
                     update(userRefForEditWithoutProfile, {
                         name: editUserName,
-                        description: editUserBio
+                        description: editUserBio,
+                        location: editLocation,
+                        birth_date: date_of_birth_edit,
+                        relationship_status: marriage_edit,
+                        gender: sex_edit,
                     }).then(()=>{
                       // Hide the uploading popup
                       uploading_popup.style.display = "none";
@@ -781,13 +898,13 @@
         const logout_btn = document.getElementById("logout_item");
         logout_btn.addEventListener("click", ()=>{
           auth.signOut().then(() => {
-            window.location.href = "/login.html";
+            window.location.href = "/login";
           }).catch((error) => {
             console.error("Error signing out:", error);
           });
         });
      </script>
-     
+
      <!-- functions start -->
      <script>
         function closeAlert() {
@@ -805,7 +922,6 @@
             success_popup.classList.add("hidden");
         }
 
-       
         // Number formatter like 1k, 1m, 1b
         function numberFormatter(number) {
           if (number >= 1_000_000_000) {
@@ -818,6 +934,7 @@
             return number;
           }
         }
+
      </script>
      <!-- functions end -->
   </body>
