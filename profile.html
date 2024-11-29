@@ -647,7 +647,7 @@
             // Check user custom claims
             try {
               const idTokenResult = await user.getIdTokenResult();
-              if (idTokenResult.claims.admin || idTokenResult.claims.admin) {
+              if (idTokenResult.claims.admin || idTokenResult.claims.ceo) {
                 // Visible the verified badge
                 document.getElementById("verified").classList.remove('hidden');
               } else {
