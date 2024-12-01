@@ -41,6 +41,7 @@ body {
     overflow: hidden;
     padding: 20px;
     background-color: #fff;
+    z-index: 100;
 }
 .side_left .side_left_title {
     display: flex;
