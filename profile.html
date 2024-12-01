@@ -722,7 +722,10 @@
         user_uid_copy.addEventListener("click", ()=>{
           const user_uid = document.getElementById("user_uid").innerText;
           navigator.clipboard.writeText(user_uid);
-          alert("User UID copied to clipboard.");
+          let success_profile_update_popup = document.getElementById("success_popup");
+          document.getElementById("success_title").textContent = "Successful";
+          document.getElementById("success_message").textContent = "Your profile uid copied successfully!";
+          success_profile_update_popup.classList.remove('hidden');
         });
         // Fetch users details end
 
