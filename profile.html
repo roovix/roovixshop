@@ -977,6 +977,7 @@
                         <p id="notify_message" class="text-slate-500 text-sm">
                           ${balance.message}
                         </p>
+                        <div class="time">${formatTimestamp(balance.timestamp)}</div>
                       </div>
                     </div>
                   `;
@@ -1035,6 +1036,21 @@
         }
         function openBalanceHistory() {
           document.getElementById("balanceHistory_popup").classList.remove('hidden');
+        }
+
+       function formatTimestamp(timestamp) {
+          const date = new Date(timestamp); // Convert the timestamp to a Date object
+        
+          // Extract date components
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+          const day = String(date.getDate()).padStart(2, '0');
+          const hours = String(date.getHours()).padStart(2, '0');
+          const minutes = String(date.getMinutes()).padStart(2, '0');
+          const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+          // Format as desired, e.g., YYYY-MM-DD HH:MM:SS
+          return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
 
      </script>
