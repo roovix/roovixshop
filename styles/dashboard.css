@@ -233,6 +233,7 @@ body {
 #profile_section {
     height: auto;
     width: 100%;
+    position: relative;
 }
 /* Edit profile end */
 
