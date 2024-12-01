@@ -642,7 +642,6 @@
                 // Assuming userData.relationship_status is the variable that stores the user's relationship status
                 const relationshipStatus = userData.relationship_status ?? "Married"; // Default to "Single" if not provided
                 // Set the selected option based on the relationship status
-                console.log(relationshipStatus)
                 if (relationshipStatus === "Married") {
                   document.getElementById("married").selected = true;
                 } else if (relationshipStatus === "Single") {
