@@ -216,7 +216,10 @@
           <!-- Profile start -->
           <section id="profile_section">
             <!-- Balance history notification view icon start -->
-            <i onclick="openBalanceHistory()" id="balance_history_notification_view_toggle" class="fa-solid fa-wallet" style="position: absolute; right: 10px; top: 10px; font-size: 1.3rem; cursor: pointer;"></i>
+            <i onclick="openBalanceHistory()" id="balance_history_notification_view_toggle" class="fa-solid fa-wallet" style="position: absolute; right: 10px; top: 10px; font-size: 1.4rem; cursor: pointer;   background: linear-gradient(45deg, #8096FE, #C8D2FF, #9DB0FE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;"></i>
             <!-- Balance history notification view icon end -->
             
             <!-- Main Content -->
@@ -950,9 +953,9 @@
           if(user){
             const userWalletRef = ref(db, `wallet/${user.uid}/analysis_balance`);
             get(userWalletRef).then((snapshot) => {
+              let balanceHistoryHtml = ``;
               if(snapshot.exists()){
                 const balances = snapshot.val();
-                let balanceHistoryHtml = ``;
                 for(const balance_id in balances){
                   const balance = balances[balance_id];
                   balanceHistoryHtml += `
@@ -979,6 +982,15 @@
                   `;
                 }
                 notifican_list_container.innerHTML = balanceHistoryHtml;
+              }else{
+                notifican_list_container.innerHTML = `
+
+                <div class="flex flex-col items-center pb-2">
+                  <img src="images/empty state ui png.png" alt="no data found">
+                  <p style="font-size: 1.2rem;">No wallet data found</p>
+                </div>
+                
+                `;
               }
             });
           }else{
