@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://roovix.com/images/logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://roovix.com/images/logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://shop.roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://shop.roovix.com/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://shop.roovix.com/images/logo.png">
 
     <!-- Link to assets -->
     <script src="config.js"></script>
@@ -36,7 +36,7 @@
       property="og:image"
       content="https://firebasestorage.googleapis.com/v0/b/ec-affiliate.appspot.com/o/e%20-%20commerce%20logo%20circle.png?alt=media&token=f4fc5b89-acb2-48a2-924e-e4ae6c6886ee"
     />
-    <meta property="og:url" content="https://roovix.com/login" />
+    <meta property="og:url" content="https://shop.roovix.com/login" />
     <meta property="og:type" content="website" />
     <meta name="robots" content="index, follow">
     <title>Login Roovix</title>
@@ -226,7 +226,7 @@
           isUser = true;
           user_id = user.uid;
           console.log("User is logged in:", user.uid);
-          window.location.href = "https://www.roovix.com";
+          window.location.href = "https://shop.roovix.com";
         }else{
           isUser = false;
         }
@@ -240,7 +240,7 @@
         
         if(isUser){
           alert("User already logged in");
-          window.location.href = "https://roovix.com";
+          window.location.href = "https://shop.roovix.com";
           return;
         }else{
           const email = document.getElementById("email").value;
@@ -249,7 +249,7 @@
           try {
             // Corrected to use the function properly
             await signInWithEmailAndPassword(auth, email, password);
-            window.location.href = "https://roovix.com";
+            window.location.href = "https://shop.roovix.com";
           } catch (error) {
             alert("Invalid username or password!");
           }
@@ -261,7 +261,7 @@
       googleSignInBtn.addEventListener("click", async () => {
         if (isUser) {
           alert("User already logged in");
-          window.location.href = "https://roovix.com";
+          window.location.href = "https://shop.roovix.com";
           return;
         } else {
           try {
@@ -295,7 +295,7 @@
               }
 
               // Redirect to your site
-              window.location.href = "https://roovix.com";
+              window.location.href = "https://shop.roovix.com";
             }
           } catch (error) {
             console.error("Error signing in with Google:", error.message);
