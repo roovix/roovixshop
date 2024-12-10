@@ -61,9 +61,9 @@
     />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://roovix.com/images/logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://roovix.com/images/logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://shop.roovix.com/images/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://shop.roovix.com/images/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://shop.roovix.com/images/logo.png">
 
     <!-- LInk too css -->
      <link rel="stylesheet" href="styles/dashboard.css">
@@ -185,7 +185,7 @@
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
        <div id="side_left" class="side_left z-5 shadow-lg rounded-lg" style="z-index: 2;">
           <div class="side_left_title">
-            <a href="https://roovix.com" class="flex gap-2 items-center">
+            <a href="https://shop.roovix.com" class="flex gap-2 items-center">
               <img src="images/logo.png" alt="profile_picture">
               <p style="font-size: 1.2rem;">Roovix Shop</p>
             </a>
@@ -196,7 +196,7 @@
             <i class="fa-solid fa-user-circle"></i> My Account
           </li>
           <li>
-            <a href="https://roovix.com"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="https://shop.roovix.com"><i class="fa-solid fa-house"></i> Home</a>
           </li>
           <li><i class="fa-regular fa-credit-card"></i> Card</li>
           <li>
@@ -615,7 +615,7 @@
                 document.getElementById("user_id_container").classList.remove('hidden'); 
 
                 // Show user details in profile
-                user_profile_picture.src = userData.profile_picture?? "https://roovix.com/images/difault_user_logo.png";
+                user_profile_picture.src = userData.profile_picture?? "https://shop.roovix.com/images/difault_user_logo.png";
                 user_name.innerText = userData.name?? "Anonymous";
                 user_uid.innerText = userData.uid?? "none";
                 profile_description.innerText = userData.description?? "You have no bio yet..!!";
@@ -932,7 +932,7 @@
                   alertConfirmBtn.addEventListener("click", ()=>{
                     // Hide the alert
                     alertBody.classList.add('hidden');
-                    window.location.href = "https://www.roovix.com/login"
+                    window.location.href = "https://shop.roovix.com/login"
                   });
 
                   // Show the alert
@@ -1000,7 +1000,7 @@
               }
             });
           }else{
-            window.location.href = "https://www.roovix.com";
+            window.location.href = "https://shop.roovix.com";
           }
         })
         // Show balance history notification end
