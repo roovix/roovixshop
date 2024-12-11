@@ -71,6 +71,7 @@
     <!-- Link to js -->
      <script src="config.js"></script>
      <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -183,9 +184,9 @@
 
       <!-- Side left start-->
       <button id="side_left_toggle"><i class="fa-solid fa-bars"></i></button>
-       <div id="side_left" class="side_left z-5 shadow-lg rounded-lg" style="z-index: 2;">
+       <div id="side_left" class="side_left shadow-lg rounded-lg" style="z-index: 2;">
           <div class="side_left_title">
-            <a href="https://shop.roovix.com" class="flex gap-2 items-center">
+            <a href="https://shop.roovix.comm" class="flex gap-2 items-center">
               <img src="images/logo.png" alt="profile_picture">
               <p style="font-size: 1.2rem;">Roovix Shop</p>
             </a>
@@ -202,7 +203,7 @@
           <li>
             <i class="fa-solid fa-chart-line"></i> Charts <i class="fa-solid list_arrow fa-chevron-down"></i>
             <ul class="sub_list">
-              <li class="sub_list_item">Analytics</li>
+              <li class="sub_list_item"><a href="#analytics">Analytics</a></li>
             </ul>
           </li>
           <li id="earnings_item">
@@ -224,7 +225,7 @@
             -webkit-text-fill-color: transparent;
             display: inline-block;"></i>
             <!-- Balance history notification view icon end -->
-            
+
             <!-- Main Content -->
             <main class="h-auto mx-auto mt-6">
               <div class="bg-white shadow-md rounded-lg p-6">
@@ -332,6 +333,13 @@
           </section>
           <!-- Profile end -->
 
+          <!-- Section analytics start -->
+           <section id="analytics" style="scroll-behavior: smooth;" class="w-[600px] mt-[20px] p-[20px] bg-[#FFFFFF] rounded-[20px] shadow-lg flex flex-col items-center">
+            <h1>Your income analytics</h1>  
+            <canvas id="one_chart" class="w-[100%]"></canvas>
+           </section>
+          <!-- Section analytics end -->
+
           <!-- Balance history notification view start -->
           <div id="balanceHistory_popup" class="fixed hidden inset-0 z-40 min-h-full overflow-y-auto overflow-x-hidden transition flex items-center">
             <!-- overlay -->
@@ -367,7 +375,7 @@
           <!-- Balance history notification view end -->
 
           <!-- Edit profile start -->
-          <div id="editProfileModal" class="fixed z-10 hidden inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div id="editProfileModal" class="fixed hidden z-10 inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
             <div class="bg-white mt-3 rounded-lg shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] p-6 relative">
               <button onclick="closeEditProfileModal()" class="absolute top-2 right-2 text-gray-700 hover:text-gray-900">
                 &#10005; <!-- Close icon (X) -->
@@ -433,7 +441,6 @@
             </div>
           </div>
           <!-- Edit profile end -->
-
 
         </div>
         <!-- Main end -->
@@ -561,7 +568,7 @@
           onValue,
           get,
           set,
-          update
+          update,
         } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
         import {
           getAuth,
@@ -602,7 +609,7 @@
                 // Format user activity snapshot
                 let balance_formatted = numberFormatter(userData.balance);
                 let link_click_formatted = numberFormatter(userData.total_link_click);
-                let order_count_formatted = numberFormatter(userData.total_orders);
+                let order_count_formatted = numberFormatter(userData.order_count);
 
                 // Show user activity details to profile
                 balance.innerText = balance_formatted?? 0;
@@ -716,7 +723,7 @@
               alertBody.classList.remove('hidden');
             }
           }else{
-            window.location.href = "https://shop.roovix.com/login"
+            window.location.href = "/login"
           }
         });
         // Copy user uid to clipboard
@@ -932,7 +939,7 @@
                   alertConfirmBtn.addEventListener("click", ()=>{
                     // Hide the alert
                     alertBody.classList.add('hidden');
-                    window.location.href = "https://shop.roovix.com/login"
+                    window.location.href = "https://https://shop.roovix.com/login"
                   });
 
                   // Show the alert
@@ -972,7 +979,7 @@
                         <img id="notify_icon"
                           alt="candice"
                           src="https://cdn-icons-png.flaticon.com/512/583/583985.png"
-                          class="relative inline-block h-8 w-8 object-cover object-center"
+                          class="relative inline-block h-8 w-8   object-cover object-center"
                         />
                       </div>
                       <div>
@@ -1004,6 +1011,108 @@
           }
         })
         // Show balance history notification end
+
+      // Income analytics start
+
+      // Fetch data and listen for real-time updates
+      function fetchAndProcessTransactions() {
+        auth.onAuthStateChanged((userForAnalytics) => {
+          if (userForAnalytics) {
+            const userForAnalytics_uid = userForAnalytics.uid;
+            const walletRef = ref(db, `wallet/${userForAnalytics_uid}/analysis_balance`);
+
+            onValue(walletRef, async (snapshot) => {
+              const firebaseData = snapshot.val();
+              if (firebaseData) {
+                const processedChartData = await processWalletData(firebaseData);
+                // Update the chart with the new data
+                console.log("After processing");
+                console.log(processedChartData.labels);
+                console.log("next");
+                console.log(processedChartData.values);
+                one_chart(processedChartData.labels, processedChartData.values, "", "tk", "Balance");
+              }
+            });
+          }
+        });
+      }
+
+      // Process Firebase Data
+      function processWalletData(data) {
+        const dailyTransactionSums = {};
+        const allTransactions = [];
+
+        // Loop through all nodes in the data object (transactions)
+        for (const transactionKey in data) {
+          const transaction = data[transactionKey];
+
+          console.log(`Processing transaction #${transactionKey}:`, transaction);
+
+          // Check if the transaction has the required fields
+          if (transaction.timestamp === undefined || transaction.value === undefined) {
+            console.log(`Skipping transaction #${transactionKey} due to missing timestamp or value.`);
+            continue;  // Skip if crucial data is missing
+          }
+
+          // Check if the transaction type is 'Add' or missing
+          if (!transaction.transaction_type || transaction.transaction_type === "Add") {
+            // Convert timestamp to a readable date (extract day, month, hour, minute, ignore year)
+            const transactionDate = new Date(transaction.timestamp);
+            console.log(`Transaction timestamp (raw): ${transaction.timestamp}, parsed date: ${transactionDate}`);
+
+            // Check if the transaction date is valid
+            if (isNaN(transactionDate)) {
+              console.log(`Invalid date for transaction #${transactionKey}, skipping.`);
+              continue; // Skip invalid transaction
+            }
+
+            const dayMonth = `${transactionDate.getDate()}/${transactionDate.getMonth() + 1}`;  // Day/Month format (1-based month)
+            const exactTimestamp = transactionDate.getTime();  // Use timestamp for exact tracking
+
+            // Store the transaction with its exact timestamp
+            allTransactions.push({
+              dayMonth,
+              exactTimestamp,
+              value: transaction.value,
+            });
+
+            // Aggregate the values by day and month (ignoring the year)
+            if (transaction.value !== undefined && !isNaN(transaction.value)) {
+              dailyTransactionSums[dayMonth] = (dailyTransactionSums[dayMonth] || 0) + transaction.value;
+              console.log(`Aggregated value for ${dayMonth}: ${dailyTransactionSums[dayMonth]}`);
+            }
+          }
+        }
+
+        console.log(`Final Aggregated dailyTransactionSums:`, dailyTransactionSums);
+        console.log(`All transactions (with exact timestamps):`, allTransactions);
+
+        // If no transactions were processed, log and return empty data
+        if (allTransactions.length === 0) {
+          console.log('No valid transactions processed, returning empty data.');
+          return { labels: [], values: [] };
+        }
+
+        // Sort the transactions by exact timestamp for precise ordering
+        const sortedTransactions = allTransactions.sort((a, b) => a.exactTimestamp - b.exactTimestamp);
+
+        // Now let's prepare the labels for the chart, each label will represent an exact timestamp
+        const sortedLabels = sortedTransactions.map(transaction => {
+          const date = new Date(transaction.exactTimestamp);
+          return `${date.getDate()}/${date.getMonth() + 1} ${date.getHours()}:${date.getMinutes()}`;
+        });
+
+        // The values array will store the value of each transaction based on its exact timestamp
+        const values = sortedTransactions.map(transaction => transaction.value);
+
+        return { labels: sortedLabels, values };
+      }
+
+      // Initialize Chart Update
+      fetchAndProcessTransactions();
+
+      // Income analytics end
+
      </script>
 
      <!-- functions start -->
@@ -1043,9 +1152,9 @@
           document.getElementById("balanceHistory_popup").classList.remove('hidden');
         }
 
-       function formatTimestamp(timestamp) {
+        function formatTimestamp(timestamp) {
           const date = new Date(timestamp); // Convert the timestamp to a Date object
-        
+
           // Extract date components
           const year = date.getFullYear();
           const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
@@ -1053,12 +1162,15 @@
           const hours = String(date.getHours()).padStart(2, '0');
           const minutes = String(date.getMinutes()).padStart(2, '0');
           const seconds = String(date.getSeconds()).padStart(2, '0');
-        
-          // Format as desired, e.g., YYYY-MM-DD HH:MM:SS
-          return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+          return `${month}-${day}`;
         }
 
      </script>
      <!-- functions end -->
+
+     <!-- Income analytics chart start -->
+     <script src="./dg_line_chart.js"></script>
+     <!-- Income analytics chart end -->
   </body>
 </html>
