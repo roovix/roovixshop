@@ -28,7 +28,7 @@ function one_chart(
         data: main_data, // Example dataset values
         borderColor: "rgba(34, 197, 94, 1)", // Main line color (green)
         backgroundColor: "rgba(34, 197, 94, 0.1)", // Fill area under the curve
-        tension: 0.5, // Smooth curve
+        tension: 0, // Smooth curve
         fill: true, // Enable area fill under the line
         pointRadius: 4, // Point size
         pointBackgroundColor: "#ffffff", // Point background color
