@@ -35,13 +35,13 @@ body {
     grid-template-columns: 20rem auto;
     background-color: var(--background-base-color);
     overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .side_left {
     overflow: hidden;
     padding: 20px;
     background-color: #fff;
-    z-index: 2;
 }
 .side_left .side_left_title {
     display: flex;
@@ -253,5 +253,10 @@ body {
     }
     .main {
         margin-top: 40px;
+    }
+}
+@media screen and (max-width: 650px) {
+    #analytics {
+        width: 400px;
     }
 }
