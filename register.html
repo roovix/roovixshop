@@ -319,7 +319,8 @@
               total_link_click: 0,
               total_orders: 0,
               type: "Normal User",
-              uid: user.uid
+              uid: user.uid,
+              profile_picture: "https://shop.roovix.com/images/difault_user_logo.png"
             };
             set(userRef, userData).then(() => {
               let success_profile_update_popup = document.getElementById("success_popup");
