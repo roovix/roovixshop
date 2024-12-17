@@ -79,6 +79,29 @@
   </head>
   <body>
 
+      <!-- Balance withdraw start -->
+     <div class="withdraw_container" id="withdraw_container">
+       <div class="withdraw_content">
+        <i id="withdraw_close" class="fa-solid fa-xmark"></i>
+        <div class="withdraw_title">
+          <h1>WITHDRAW - </h1>
+          <ul id="withdraw_list">
+            <li>Requirement 300tk</span></li>
+            <li>Payment method Bkash</span></li>
+          </ul>
+        </div>
+        <form id="withdraw_form">
+          <h1>Fill the form</h1>
+          <input type="text" id="w_name" name="w_name" placeholder="Your full name" required>
+          <input type="number" id="w_amount" name="w_amount" placeholder="Amount to withdraw" required>
+          <input type="tel" id="w_bkash" name="w_bkash" placeholder="Your bkash number" required>
+          
+          <button type="submit">Confirm</button>
+        </form>
+       </div>
+     </div>
+    <!-- Balance withdraw end -->
+
     <!-- Alert Body start -->
     <div id="alert" class="fixed hidden z-40 inset-0 overflow-y-auto">
       <div class="flex items-center justify-center min-h-screen px-4 sm:px-0 text-center">
@@ -1112,6 +1135,93 @@
       fetchAndProcessTransactions();
 
       // Income analytics end
+
+             // Balance withdraw start
+        //  Reference
+        const earnings_item = document.getElementById("earnings_item");
+        const withdraw_close = document.getElementById("withdraw_close");
+        const withdraw_container = document.getElementById("withdraw_container");
+        const withdraw_form = document.getElementById("withdraw_form");
+
+        // Event listener
+        withdraw_close.addEventListener("click", () => {
+          withdraw_form.reset();
+          withdraw_container.style.display = "none";
+        });
+        earnings_item.addEventListener("click", () => {
+          withdraw_container.style.display = "flex";
+        });
+
+        withdraw_form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const w_name = document.getElementById("w_name").value;
+            const w_amount = document.getElementById("w_amount").value;
+            const w_bkash = document.getElementById("w_bkash").value;
+
+            if (w_name.trim() === "" || w_amount.trim() === "" || w_bkash.trim() === "") {
+              alert("Please fill all the fields");
+              return;
+            }
+
+            // Fetch user data and update balance
+            auth.onAuthStateChanged(async (user) => {
+              if (user) {
+                const userBalanceRef = ref(db, `users/${user.uid}/balance`);
+                try {
+                  const snapshot = await get(userBalanceRef); // Use `get()` to fetch data
+                  if (snapshot.exists()) {
+                    const balance = snapshot.val();
+                    const withdrawalAmount = Number(w_amount);
+
+                    if (balance >= withdrawalAmount && withdrawalAmount >= 300) {
+                      // Update the balance after withdrawal
+                      const updatedBalance = balance - withdrawalAmount;
+                      await set(userBalanceRef, updatedBalance);
+
+                    // Add transaction to withdraw_request
+                    const withdraw_requestRef = ref(db, `withdraw_request/${user.uid}`);
+                    const newRequestRef = push(withdraw_requestRef); // Use push() to create a unique request
+
+                      set(newRequestRef, {
+                        name: w_name,
+                        amount: withdrawalAmount,
+                        bkash: w_bkash,
+                        timestamp: new Date().toISOString(), // Use ISO format for readability
+                        status: "pending"
+                      })
+                      .then(() => {
+                        // Show success popup
+                        const successProfileUpdatePopup = document.getElementById("success_popup");
+                        document.getElementById("success_title").textContent = "Successful";
+                        document.getElementById("success_message").textContent =
+                          "Withdrawal request sent successfully!";
+                        successProfileUpdatePopup.classList.remove("hidden");
+                      })
+                      .catch((error) => {
+                        // Handle errors and show an error message
+                        console.error("Error sending withdrawal request:", error);
+                        alert("An error occurred while sending your withdrawal request. Please try again.");
+                      });
+
+                    } else if (withdrawalAmount < 300) {
+                      alert("The minimum withdrawal amount is 300.");
+                    } else {
+                      alert("Insufficient balance! Please add more money to withdraw.");
+                    }
+                  } else {
+                    alert("You have no balance to withdraw!");
+                  }
+                } catch (error) {
+                  console.error("Error fetching balance:", error);
+                  alert("An error occurred while processing your request.");
+                }
+              } else {
+                alert("No user logged in to withdraw! Please log in and try again.");
+              }
+            });
+          });
+      // Balance withdraw end
 
      </script>
 
